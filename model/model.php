@@ -19,8 +19,9 @@ function postSignUp()
 
   $db = dbConnect();
   $reqData = $db->query("SELECT username, email FROM users WHERE username='$username' OR email='$email'");
-if ($dataVerify = $reqData->fetch())
-  {
+//if ($dataVerify = $reqData->fetch())
+    $dataVerify = $reqData->fetch();
+
     if ($dataVerify['username'] == $username)
     {
       $_SESSION['error'] = "Pseudo déjà prit";
@@ -32,7 +33,7 @@ if ($dataVerify = $reqData->fetch())
       $_SESSION['error'] = "Email déjà utilisé";
       header('Location: view/sign_up.php');
     }
-  }
+
   else
   {
     $reqData->closeCursor();
@@ -234,24 +235,38 @@ function addaword ()
     {
       throw new Exception('Veuillez ajouter un mot et sa traduction');
     }
-
-    elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2'])) {
+    elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
+    {
       $id_language1 = languageId($_POST['language1']);
-      $db= dbConnect();
-      $word = $db->prepare('INSERT INTO words(word, id_user, id_language, add_date) VALUES(:word, :id_user, :id_language, NOW())');
-      $word->execute(array(
-        'word' => $_POST['addWord1'],
-        'id_user' => $_SESSION['login_data']['id_user'],
-        'id_language' => $id_language1,
-      ));
       $id_language2 = languageId($_POST['language2']);
-      $translation = $db->prepare('INSERT INTO translation(translation, id_language, add_date) VALUES (:translation, :id_language, NOW())');
-      $translation->execute(array(
-        'translation' => $_POST['addWord2'],
-        'id_language' => $id_language2,
-  ));
+      $word = $_POST['addWord1'];
+      $translation = $_POST['addWord2'];
+      $idUser = $_SESSION['login_data']['id_user'];
+      $db = dbConnect();
+      $reqData = $db->query("SELECT word, translation FROM words WHERE id_user = '$idUser' AND id_language_word = '$id_language1' AND id_language_translation = '$id_language2' AND word = '$word'");
+          $dataVerify = $reqData->fetch();
+            if (!empty($dataVerify))
+            {
+              throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
+            }
+
+            else
+            {
+              $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
+              $word->execute(array(
+                'word' => $_POST['addWord1'],
+                'translation' => $_POST['addWord2'],
+                'id_language_word' => $id_language1,
+                'id_language_translation' => $id_language2,
+                'id_user' => $_SESSION['login_data']['id_user'],
+                ));
+              }
+
   throw new Exception('Votre mot a bien été ajouté');
    }
+   $reqData->closeCursor();
+   $word->closeCursor();
+  // unset($dataVerify);
 
   } catch (\Exception $e) {
     echo $e->getMessage();
@@ -272,7 +287,7 @@ function showWordList()
     $language_two_id = languageId($_SESSION['personel_language_array'][1]);
     if (isset($_SESSION['login_data']['id_user'])) {
       $db = dbConnect();
-      $wd = $db->prepare('SELECT w.word, t.translation FROM words As w INNER JOIN translation As t ON w.id_word = t.id_translation WHERE w.id_user = :id_user AND w.id_language = :id_language_word AND t.id_language = :id_language_translation');
+      $wd = $db->prepare('SELECT word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
       $wd->execute(array(
         'id_user' => $_SESSION['login_data']['id_user'],
         'id_language_word' => $language_one_id,
