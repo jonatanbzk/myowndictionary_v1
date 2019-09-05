@@ -48,6 +48,3 @@ try {
 {
     echo 'Erreur : ' . $e->getMessage();
 }
-
-//  throw new Exception('Aucun identifiant de billet envoyé');
-// ajouter lorsque l'on mets les vérifs ici + dans contrôleur
