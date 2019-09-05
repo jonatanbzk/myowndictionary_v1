@@ -226,12 +226,11 @@ function languageId ($language)
 function addaword ()
 {
   try {
-
     if (empty($_SESSION['personel_language_array']))
     {
       throw new Exception('Veuillez choisir un dictionnaire');
     }
-    elseif (empty($_POST['addWord1']) or empty($_POST['addWord2']))
+    elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
     {
       throw new Exception('Veuillez ajouter un mot et sa traduction');
     }
