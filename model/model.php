@@ -210,12 +210,27 @@ function languageId ($language)
     case 'Français':
       $language_Id = 2;
       break;
-      case 'Anglais':
-        $language_Id = 3;
-        break;
-      case 'Allemand':
-        $language_Id = 4;
-        break;
+    case 'Anglais':
+      $language_Id = 3;
+      break;
+    case 'Allemand':
+      $language_Id = 4;
+      break;
+    case 'Italien':
+      $language_Id = 5;
+      break;
+    case 'Russe':
+      $language_Id = 6;
+      break;
+    case 'Portugais':
+      $language_Id = 7;
+      break;
+    case 'Espagnol':
+      $language_Id = 8;
+      break;
+    case 'Espéranto':
+      $language_Id = 9;
+      break;
     default:
       $language_Id = 0;
       break;
@@ -281,7 +296,6 @@ function showWordList()
       throw new Exception('Veuillez choisir un dictionnaire');
     }
     else
-
     $language_one_id = languageId($_SESSION['personel_language_array'][0]);
     $language_two_id = languageId($_SESSION['personel_language_array'][1]);
     if (isset($_SESSION['login_data']['id_user'])) {
@@ -299,7 +313,12 @@ function showWordList()
            array_push($_SESSION['wordsListArray'], $wordsList['word']);
            array_push($_SESSION['translationsListArray'], $wordsList['translation']);
          }
-         //print_r($_SESSION);
+          if (empty($_SESSION['wordsListArray']) and empty($_SESSION['translationsListArray']))
+          {
+            array_push($_SESSION['wordsListArray'], 'Votre dictionnaire est vide');
+            array_push($_SESSION['translationsListArray'], '');
+          }
+
             $wd->closeCursor();
     }
   } catch (\Exception $e) {

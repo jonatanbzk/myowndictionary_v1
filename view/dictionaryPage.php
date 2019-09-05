@@ -103,13 +103,16 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
     <tbody>
       <?php
     //  print_r($_SESSION['wordsListArray']);
-      if (isset($_SESSION['wordsListArray'])) {
+      if (isset($_SESSION['wordsListArray']))
+      {
       $length = sizeof($_SESSION['wordsListArray']);
       for ($i = 0; $i < $length; $i++)
       {
 
   echo '<tr>' . '<td>' . $_SESSION['wordsListArray'][$i] . '</td>' . '<td>' . $_SESSION['translationsListArray'][$i] . '</td>' . '</tr>';
-}} ?>
+      }
+    } 
+       ?>
     </tbody>
   </table>
 </div>
