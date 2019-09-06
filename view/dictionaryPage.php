@@ -106,7 +106,7 @@ ob_start(); ?>
         $length = sizeof($_SESSION['wordsListArray']);
         for ($i = 0; $i < $length; $i++)
         {
-          echo '<tr>' . '<td>' . $_SESSION['wordsListArray'][$i] . '</td>' . '<td>' . $_SESSION['translationsListArray'][$i] . '</td>' . '</tr>';
+          echo '<tr>' . '<td>' . htmlspecialchars($_SESSION['wordsListArray'][$i]) . '</td>' . '<td>' . htmlspecialchars($_SESSION['translationsListArray'][$i]) . '</td>' . '</tr>';
         }
       }
        ?>

@@ -1,6 +1,11 @@
 <?php
 function postSignUp() {
-  if (isset($_POST['username'], $_POST['password'], $_POST['email']))
+  if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
+  {
+    $_SESSION['error'] = "Veuiller compléter tout les champs";
+    header('Location: view/sign_up.php');
+  }
+  elseif (isset($_POST['username'], $_POST['password'], $_POST['email']))
   {
     $username=$_POST['username'];
     $password=$_POST['password'];
@@ -91,7 +96,7 @@ function logIn() {
   }
 }
 
-// for language list
+// get language list
 function getLanguages() {
    $_SESSION['languagesArray'] = array();
    $db = dbConnect();
@@ -135,6 +140,9 @@ function addUserDictionary() {
     elseif ($_POST['language1'] == $_POST['language2'])
     {
       throw new Exception('Veuillez choisir deux langues différentes');
+    }
+    elseif (!in_array($_POST['language1'], $_SESSION['languagesArray']) or !in_array($_POST['language2'], $_SESSION['languagesArray'])) {
+      throw new Exception('Ces langues ne font pas partie des choix possibles');
     }
     elseif (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
     {
@@ -187,7 +195,7 @@ function changeTagChoice() {
       'tag_name' => $_POST['tagName']));
       $langue = $lang->fetch();
       $_SESSION['personel_language_array'] = $langue;
-      // empty array in words show dictionary 
+      // empty array in words show dictionary
       $_SESSION['wordsListArray'] = array();
       $_SESSION['translationsListArray'] = array();
     }
@@ -245,6 +253,10 @@ function addaword() {
     elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
     {
       throw new Exception('Veuillez ajouter un mot et sa traduction');
+    }
+    elseif (!is_string($_POST['addWord1']) and !is_string($_POST['addWord2']))
+    {
+      throw new Exception('Veuillez n\'utiliser que des lettres');
     }
     elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
     {
