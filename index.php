@@ -8,27 +8,93 @@ try {
   {
     if ($_GET['action'] == 'signUp')
     {
-      register();
+      if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
+      {
+        throw new Exception('Veuiller compléter tout les champs');
+        header('Location: view/sign_up.php');
+      }
+      elseif (!isset($_POST['username'], $_POST['password'], $_POST['email']))
+      {
+        throw new Exception('Veuiller compléter tout les champs');
+        header('Location: view/sign_up.php');
+      }
+      else
+      {
+        register();
+      }
     }
     elseif ($_GET['action'] == 'logIn')
     {
-      connect();
+      if (!isset($_POST['username'], $_POST['password']))
+      {
+        throw new Exception('Veuiller compléter tout les champs');
+        header('Location: view/login_Page.php');
+        exit();
+      }
+      else
+      {
+        connect();
+      }
     }
     elseif ($_GET['action'] == 'addUserTab')
     {
-      addtab ();
+      if (empty($_POST['language1'] or empty($_POST['language2'])))
+      {
+        throw new Exception('Veuillez choisir deux langues');
+      }
+      elseif ($_POST['language1'] == "select" or $_POST['language2'] == "select")
+      {
+        throw new Exception('Veuillez choisir deux langues');
+      }
+      elseif ($_POST['language1'] == $_POST['language2'])
+      {
+        throw new Exception('Veuillez choisir deux langues différentes');
+      }
+      elseif (!in_array($_POST['language1'], $_SESSION['languagesArray']) or !in_array($_POST['language2'], $_SESSION['languagesArray']))
+      {
+        throw new Exception('Ces langues ne font pas partie des choix possibles');
+      }
+      else
+      {
+        addtab ();
+      }
     }
     elseif ($_GET['action'] == 'changeTag')
     {
-      changeTag ();
+      if (isset($_POST['tagName']))
+      {
+        changeTag ();
+      }
     }
     elseif ($_GET['action'] == 'addWord')
     {
-      addWord ();
+      if (empty($_SESSION['personel_language_array']))
+      {
+        throw new Exception('Veuillez choisir un dictionnaire');
+      }
+      elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
+      {
+        throw new Exception('Veuillez ajouter un mot et sa traduction');
+      }
+      elseif (!is_string($_POST['addWord1']) and !is_string($_POST['addWord2']))
+      {
+        throw new Exception('Veuillez n\'utiliser que des lettres');
+      }
+      elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
+      {
+        addWord ();
+      }
     }
     elseif ($_GET['action'] == 'showWordList')
     {
-      showWord ();
+      if (empty($_SESSION['personel_language_array']))
+      {
+        throw new Exception('Veuillez choisir un dictionnaire');
+      }
+      elseif (isset($_SESSION['login_data']['id_user']))
+      {
+        showWord ();
+      }
     }
     elseif ($_GET['action'] == 'deco')
     {
@@ -39,12 +105,12 @@ try {
       echo 'Erreur : aucun identifiant de billet envoyé';
     }
   }
-  else
-  {
-     header('Location: view/login_Page.php');
-  }
-
-  } catch (\Exception $e)
+else
 {
-    echo 'Erreur : ' . $e->getMessage();
+   header('Location: view/login_Page.php');
+}
+}
+catch (\Exception $e)
+{
+    echo $e->getMessage();
 }

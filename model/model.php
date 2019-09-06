@@ -1,27 +1,13 @@
 <?php
 function postSignUp() {
-  if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
-  {
-    $_SESSION['error'] = "Veuiller compléter tout les champs";
-    header('Location: view/sign_up.php');
-  }
-  elseif (isset($_POST['username'], $_POST['password'], $_POST['email']))
-  {
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    $email=$_POST['email'];
-    $pass_hache = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $_SESSION['form_data'] = array (
+  $username=$_POST['username'];
+  $password=$_POST['password'];
+  $email=$_POST['email'];
+  $pass_hache = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  $_SESSION['form_data'] = array (
     'username' => $_POST['username'],
     'password' => $_POST['password'],
     'email' => $_POST['email']);
-  }
-  else
-  {
-    $_SESSION['error'] = "Veuiller compléter tout les champs";
-    header('Location: view/sign_up.php');
-  }
-
   $db = dbConnect();
   $reqData = $db->query("SELECT username, email FROM users WHERE username='$username' OR email='$email'");
   $dataVerify = $reqData->fetch();
@@ -52,24 +38,16 @@ function postSignUp() {
 
 
 function logIn() {
-  if (isset($_POST['username'], $_POST['password']))
-  {
-    $_SESSION['test_login_data'] = array (
+  $_SESSION['test_login_data'] = array (
     'username' => $_POST['username'],
     'password' => $_POST['password']);
-    $username = $_POST['username'];
-    $db = dbConnect();
-    $log = $db->prepare('SELECT id_user, password FROM users WHERE username = :username');
-    $log->execute(array(
-    'username' => $username));
-    $resultat = $log->fetch();
-  }
-  else
-  {
-    $_SESSION['error'] = "Veuiller compléter tout les champs";
-    header('Location: view/login_Page.php');
-    exit();
-  }
+  $username = $_POST['username'];
+  $db = dbConnect();
+  $log = $db->prepare('SELECT id_user, password FROM users WHERE username = :username');
+  $log->execute(array(
+  'username' => $username));
+  $resultat = $log->fetch();
+
   //password verification
   if (!$resultat)
   {
@@ -127,24 +105,7 @@ function addUserDictionary() {
   // verify if the user have this dictionary
   $IfDictExist1 = $_POST['language1'] . '/' . $_POST['language2'];
   $IfDictExist2 = $_POST['language2'] . '/' . $_POST['language1'];
-  try
-  {
-    if (empty($_POST['language1'] or empty($_POST['language2'])))
-    {
-      throw new Exception('Veuillez choisir deux langues');
-    }
-    elseif ($_POST['language1'] == "select" or $_POST['language2'] == "select")
-    {
-      throw new Exception('Veuillez choisir deux langues');
-    }
-    elseif ($_POST['language1'] == $_POST['language2'])
-    {
-      throw new Exception('Veuillez choisir deux langues différentes');
-    }
-    elseif (!in_array($_POST['language1'], $_SESSION['languagesArray']) or !in_array($_POST['language2'], $_SESSION['languagesArray'])) {
-      throw new Exception('Ces langues ne font pas partie des choix possibles');
-    }
-    elseif (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
+    if (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
     {
       throw new Exception('Vous avez déjà un dictionnaire avec ces langues');
     }
@@ -177,33 +138,20 @@ function addUserDictionary() {
       }
       throw new Exception(' Votre dictionnaire ' . $tabName . ' a bien été crée');
     }
-  } catch (\Exception $e)
-  {
-    echo $e->getMessage();
-  }
 }
 
 
 function changeTagChoice() {
-  try
-  {
-    if (isset($_POST['tagName']))
-    {
-      $db = dbConnect();
-      $lang = $db->prepare('SELECT language_1, language_2 FROM tags WHERE tag_name = :tag_name');
-      $lang->execute(array(
-      'tag_name' => $_POST['tagName']));
-      $langue = $lang->fetch();
-      $_SESSION['personel_language_array'] = $langue;
-      // empty array in words show dictionary
-      $_SESSION['wordsListArray'] = array();
-      $_SESSION['translationsListArray'] = array();
-    }
+  $db = dbConnect();
+  $lang = $db->prepare('SELECT language_1, language_2 FROM tags WHERE tag_name = :tag_name');
+  $lang->execute(array(
+    'tag_name' => $_POST['tagName']));
+  $langue = $lang->fetch();
+  $_SESSION['personel_language_array'] = $langue;
+  // empty array in words show dictionary
+  $_SESSION['wordsListArray'] = array();
+  $_SESSION['translationsListArray'] = array();
   }
-  catch (\Exception $e)
-  {
-  }
-}
 
 
 function languageId($language) {
@@ -244,103 +192,63 @@ function languageId($language) {
 
 
 function addaword() {
-  try
+  $id_language1 = languageId($_POST['language1']);
+  $id_language2 = languageId($_POST['language2']);
+  $word = $_POST['addWord1'];
+  $translation = $_POST['addWord2'];
+  $idUser = $_SESSION['login_data']['id_user'];
+  $db = dbConnect();
+  $reqData = $db->query("SELECT word, translation FROM words WHERE id_user = '$idUser' AND id_language_word = '$id_language1' AND id_language_translation = '$id_language2' AND word = '$word'");
+  $dataVerify = $reqData->fetch();
+  if (!empty($dataVerify))
   {
-    if (empty($_SESSION['personel_language_array']))
-    {
-      throw new Exception('Veuillez choisir un dictionnaire');
-    }
-    elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
-    {
-      throw new Exception('Veuillez ajouter un mot et sa traduction');
-    }
-    elseif (!is_string($_POST['addWord1']) and !is_string($_POST['addWord2']))
-    {
-      throw new Exception('Veuillez n\'utiliser que des lettres');
-    }
-    elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
-    {
-      $id_language1 = languageId($_POST['language1']);
-      $id_language2 = languageId($_POST['language2']);
-      $word = $_POST['addWord1'];
-      $translation = $_POST['addWord2'];
-      $idUser = $_SESSION['login_data']['id_user'];
-      $db = dbConnect();
-      $reqData = $db->query("SELECT word, translation FROM words WHERE id_user = '$idUser' AND id_language_word = '$id_language1' AND id_language_translation = '$id_language2' AND word = '$word'");
-      $dataVerify = $reqData->fetch();
-      if (!empty($dataVerify))
-      {
-        throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
-      }
-      else
-        {
-          $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
-          $word->execute(array(
-            'word' => $_POST['addWord1'],
-            'translation' => $_POST['addWord2'],
-            'id_language_word' => $id_language1,
-            'id_language_translation' => $id_language2,
-            'id_user' => $_SESSION['login_data']['id_user'],
-            ));
-        }
-        throw new Exception('Votre mot a bien été ajouté');
-    }
-    $reqData->closeCursor();
-    $word->closeCursor();
-  } catch (\Exception $e) {
-    echo $e->getMessage();
+    throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
   }
+  else
+  {
+    $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
+    $word->execute(array(
+      'word' => $_POST['addWord1'],
+      'translation' => $_POST['addWord2'],
+      'id_language_word' => $id_language1,
+      'id_language_translation' => $id_language2,
+      'id_user' => $_SESSION['login_data']['id_user'],
+      ));
+  }
+  throw new Exception('Votre mot a bien été ajouté');
+  $reqData->closeCursor();
+  $word->closeCursor();
 }
 
 
 function showWordList() {
-  try
+  $language_one_id = languageId($_SESSION['personel_language_array'][0]);
+  $language_two_id = languageId($_SESSION['personel_language_array'][1]);
+  $db = dbConnect();
+  $wd = $db->prepare('SELECT word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
+  $wd->execute(array(
+    'id_user' => $_SESSION['login_data']['id_user'],
+    'id_language_word' => $language_one_id,
+    'id_language_translation' => $language_two_id,
+    ));
+  $_SESSION['wordsListArray'] = array();
+  $_SESSION['translationsListArray'] = array();
+  while ($wordsList = $wd->fetch())
   {
-    if (empty($_SESSION['personel_language_array']))
-    {
-      throw new Exception('Veuillez choisir un dictionnaire');
-    }
-    else
-      $language_one_id = languageId($_SESSION['personel_language_array'][0]);
-      $language_two_id = languageId($_SESSION['personel_language_array'][1]);
-    if (isset($_SESSION['login_data']['id_user']))
-    {
-      $db = dbConnect();
-      $wd = $db->prepare('SELECT word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
-      $wd->execute(array(
-        'id_user' => $_SESSION['login_data']['id_user'],
-        'id_language_word' => $language_one_id,
-        'id_language_translation' => $language_two_id,
-        ));
-      $_SESSION['wordsListArray'] = array();
-      $_SESSION['translationsListArray'] = array();
-      while ($wordsList = $wd->fetch())
-      {
-        array_push($_SESSION['wordsListArray'], $wordsList['word']);
-        array_push($_SESSION['translationsListArray'], $wordsList['translation']);
-      }
-      if (empty($_SESSION['wordsListArray']) and empty($_SESSION['translationsListArray']))
-      {
-        array_push($_SESSION['wordsListArray'], 'Votre dictionnaire est vide');
-        array_push($_SESSION['translationsListArray'], '');
-      }
-      $wd->closeCursor();
-    }
-  } catch (\Exception $e) {
-    echo $e->getMessage();
+    array_push($_SESSION['wordsListArray'], $wordsList['word']);
+    array_push($_SESSION['translationsListArray'], $wordsList['translation']);
   }
+  if (empty($_SESSION['wordsListArray']) and empty($_SESSION['translationsListArray']))
+  {
+    array_push($_SESSION['wordsListArray'], 'Votre dictionnaire est vide');
+    array_push($_SESSION['translationsListArray'], '');
+  }
+  $wd->closeCursor();
 }
 
 
 function dbConnect() {
-    try
-    {
-      $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      return $db;
-    }
-    catch(Exception $e)
-    {
-      die('Erreur : '.$e->getMessage());
-    }
+  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  return $db;
 }
