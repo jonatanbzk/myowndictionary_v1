@@ -1,4 +1,6 @@
 function toggleForm(f, b) {
+  var form = document.getElementById(f);
+  var button = document.getElementById(b);
   if(form.style.display == 'none')
   {
     form.style.display = 'block';
