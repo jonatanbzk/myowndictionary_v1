@@ -8,18 +8,11 @@ ob_start(); ?>
 <form class="" id="colorform" action="index.html" method="post">
   <select class="" name="tagName" id="colorSelect" onchange='changeColor()'>
     <option value="">Choix thème</option>
-    <option id="red" value="AquaMarine">AquaMarine</option>
-    <option id="green" value="Beige">Beige</option>
-    <option id="blue" value="BlanchedAlmond">BlanchedAlmond</option>
-    <option id="red" value="Brown">Brown</option>
-    <option id="green" value="CadetBlue">CadetBlue</option>
-    <option id="blue" value="CornflowerBlue">CornflowerBlue</option>
-    <option id="red" value="Coral">Coral</option>///
-    <option id="green" value="DarkCyan">DarkCyan</option>
-    <option id="blue" value="DarkGray">DarkGray</option>
-    <option id="red" value="DarkKhaki">DarkKhaki</option>
-    <option id="green" value="DarkSalmon">DarkSalmon</option>
-    <option id="blue" value="LightBlue">LightBlue</option>
+<?php  $colorArray = array ("AquaMarine", "Beige", "BlanchedAlmond", "Brown", "CadetBlue", "CornflowerBlue", "Coral", "DarkCyan", "DarkGray", "DarkKhaki", "DarkSalmon", "LightBlue");
+foreach ($colorArray as $color) {
+  echo '<option value=' . $color . '>' . $color . '</option>';
+}
+?>
   </select>
 </form>
 

@@ -112,7 +112,7 @@ else
 }
 catch (\Exception $e)
 {
-    echo 'Erreur : ' . $e->getMessage();
-    require('view/dictionaryPage.php');  // on essaie why not 
+    echo $e->getMessage();
+    require('view/dictionaryPage.php');  // on essaie why not
   //  echo $e->getMessage();
 }

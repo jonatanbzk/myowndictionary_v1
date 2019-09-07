@@ -155,39 +155,10 @@ function changeTagChoice() {
 
 
 function languageId($language) {
-  switch ($language) {
-    case 'Polonais':
-      $language_Id = 1;
-      break;
-    case 'Français':
-      $language_Id = 2;
-      break;
-    case 'Anglais':
-      $language_Id = 3;
-      break;
-    case 'Allemand':
-      $language_Id = 4;
-      break;
-    case 'Italien':
-      $language_Id = 5;
-      break;
-    case 'Russe':
-      $language_Id = 6;
-      break;
-    case 'Portugais':
-      $language_Id = 7;
-      break;
-    case 'Espagnol':
-      $language_Id = 8;
-      break;
-    case 'Espéranto':
-      $language_Id = 9;
-      break;
-    default:
-      $language_Id = 0;
-      break;
-  }
-  return $language_Id;
+$languageArray = array('Polonais', 'Français', 'Anglais', 'Allemand', 'Italien', 'Russe', 'Portugais', 'Espagnol', 'Espéranto');
+$key = array_search('$language', $languageArray);
+$language_Id = $key + 1;
+return $language_Id;
 }
 
 
