@@ -1,4 +1,4 @@
-<?php
+ <?php
 function postSignUp() {
   $username=$_POST['username'];
   $password=$_POST['password'];
@@ -204,10 +204,12 @@ function showWordList() {
     ));
   $_SESSION['wordsListArray'] = array();
   $_SESSION['translationsListArray'] = array();
+  $_SESSION['id_word'] = array();
   while ($wordsList = $wd->fetch())
   {
     array_push($_SESSION['wordsListArray'], $wordsList['word']);
     array_push($_SESSION['translationsListArray'], $wordsList['translation']);
+    array_push($_SESSION['id_word'], $wordsList['id_word']);
   }
   if (empty($_SESSION['wordsListArray']) and empty($_SESSION['translationsListArray']))
   {
@@ -218,8 +220,52 @@ function showWordList() {
 }
 
 
+function eraseAWord() {
+  $idWord = $_POST['idWord'];
+  if (!empty($idWord))
+  {
+    $db = dbConnect();
+    $ew = $db->query("DELETE FROM words WHERE id_word = '$idWord'");
+    $ew->closeCursor();
+  }
+}
+
+
 function dbConnect() {
   $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $db;
 }
+
+
+
+/*
+$wordsListArray = array();
+$translationsListArray = array();
+$_SESSION['wordsListArray'] = array();
+$_SESSION['translationsListArray'] = array();
+while ($wordsList = $wd->fetch())
+{
+//  array_push($wordsListArray, $wordsList['word']);
+//  array_push($translationsListArray, $wordsList['translation']);
+  array_push($_SESSION['wordsListArray'], $wordsList['word']);
+  array_push($_SESSION['translationsListArray'], $wordsList['translation']);
+}
+if (empty($wordsListArray) and empty($translationsListArray))
+{
+  array_push($wordsListArray, 'Votre dictionnaire est vide');
+  array_push($translationsListArray, '');
+}
+else {
+  $countWord = count($wordsListArray);
+  $_SESSION['wordsAndTranslationArray'] = array(
+    'words' => '',
+    'translations' => '');
+  for ($i=0; $i < $countWord; $i++) {
+    $_SESSION['wordsAndTranslationArray']['words'][$i]=$_SESSION['wordsListArray'][$i];
+    $_SESSION['wordsAndTranslationArray']['translations'][$i]=$_SESSION['translationsListArray'][$i];
+  }
+}
+$wd->closeCursor();
+}
+*/

@@ -105,7 +105,7 @@ foreach ($colorArray as $color) {
         for ($i = 0; $i < $length; $i++)
         {
           echo '<tr><td>' . htmlspecialchars($_SESSION['wordsListArray'][$i]) . '</td><td>' . htmlspecialchars($_SESSION['translationsListArray'][$i]) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
-          echo '<tr class="trHide" id="trHide' . ($i+1) . '"><td><input type="text" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><button type="submit">Edit</button><button type="submit" action="index.php?action=eraseWord" method="post">Erase</button></td></tr>';
+          echo '<tr class="trHide" id="trHide' . ($i+1) . '"><td><input type="text" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><button type="submit">Edit</button><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['id_word'][$i] . '" /><button type="submit">Erase</button></form></td></tr>';
         }
       }
        ?>

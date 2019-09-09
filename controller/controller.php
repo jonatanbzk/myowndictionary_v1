@@ -38,6 +38,13 @@ function showWord ()
   require('view/dictionaryPage.php');
 }
 
+function erase ()
+{
+  $ew = eraseAWord();
+  $wd = showWordList();
+  require('view/dictionaryPage.php');
+}
+
 function disconnect ()
 {
   session_unset();

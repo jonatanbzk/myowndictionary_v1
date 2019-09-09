@@ -96,6 +96,9 @@ try {
         showWord ();
       }
     }
+    elseif ($_GET['action'] == 'eraseWord') {
+      erase ();
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();
