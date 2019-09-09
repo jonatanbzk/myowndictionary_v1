@@ -196,7 +196,7 @@ function showWordList() {
   $language_one_id = languageId($_SESSION['personel_language_array'][0]);
   $language_two_id = languageId($_SESSION['personel_language_array'][1]);
   $db = dbConnect();
-  $wd = $db->prepare('SELECT word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
+  $wd = $db->prepare('SELECT id_word, word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
   $wd->execute(array(
     'id_user' => $_SESSION['login_data']['id_user'],
     'id_language_word' => $language_one_id,

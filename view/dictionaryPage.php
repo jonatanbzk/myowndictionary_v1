@@ -5,6 +5,11 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 }
 ob_start(); ?>
 
+<script type="text/javascript">
+var lengthWordList='<?php if (array_key_exists('wordsListArray', $_SESSION)):echo count($_SESSION['wordsListArray']);endif; ?>';
+</script>
+<script type="text/javascript" src="dictionaryPage.js"></script>
+
 <form class="" id="colorform" action="index.html" method="post">
   <select class="" name="tagName" id="colorSelect" onchange='changeColor()'>
     <option value="">Choix thème</option>
@@ -89,17 +94,18 @@ foreach ($colorArray as $color) {
   <table>
     <thead>
       <tr>
-        <th colspan="2"><?php if (array_key_exists('personel_language_array', $_SESSION)):echo $_SESSION['personel_language_array'][0] . " / " . $_SESSION['personel_language_array'][1];endif;?></th>
+        <th colspan="2"><?php if (array_key_exists('personel_language_array', $_SESSION)):echo $_SESSION['personel_language_array'][0] . " / " . $_SESSION['personel_language_array'][1];endif;?></th> <th>modifier <br> supprimer</th>
       </tr>
     </thead>
     <tbody>
       <?php
       if (isset($_SESSION['wordsListArray']))
       {
-        $length = sizeof($_SESSION['wordsListArray']);
+        $length = count($_SESSION['wordsListArray']);
         for ($i = 0; $i < $length; $i++)
         {
-          echo '<tr>' . '<td>' . htmlspecialchars($_SESSION['wordsListArray'][$i]) . '</td>' . '<td>' . htmlspecialchars($_SESSION['translationsListArray'][$i]) . '</td>' . '</tr>';
+          echo '<tr><td>' . htmlspecialchars($_SESSION['wordsListArray'][$i]) . '</td><td>' . htmlspecialchars($_SESSION['translationsListArray'][$i]) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
+          echo '<tr class="trHide" id="trHide' . ($i+1) . '"><td><input type="text" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><button type="submit">Edit</button><button type="submit" action="index.php?action=eraseWord" method="post">Erase</button></td></tr>';
         }
       }
        ?>
