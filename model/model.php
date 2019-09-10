@@ -243,36 +243,3 @@ function dbConnect() {
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $db;
 }
-
-
-
-/*
-$wordsListArray = array();
-$translationsListArray = array();
-$_SESSION['wordsListArray'] = array();
-$_SESSION['translationsListArray'] = array();
-while ($wordsList = $wd->fetch())
-{
-//  array_push($wordsListArray, $wordsList['word']);
-//  array_push($translationsListArray, $wordsList['translation']);
-  array_push($_SESSION['wordsListArray'], $wordsList['word']);
-  array_push($_SESSION['translationsListArray'], $wordsList['translation']);
-}
-if (empty($wordsListArray) and empty($translationsListArray))
-{
-  array_push($wordsListArray, 'Votre dictionnaire est vide');
-  array_push($translationsListArray, '');
-}
-else {
-  $countWord = count($wordsListArray);
-  $_SESSION['wordsAndTranslationArray'] = array(
-    'words' => '',
-    'translations' => '');
-  for ($i=0; $i < $countWord; $i++) {
-    $_SESSION['wordsAndTranslationArray']['words'][$i]=$_SESSION['wordsListArray'][$i];
-    $_SESSION['wordsAndTranslationArray']['translations'][$i]=$_SESSION['translationsListArray'][$i];
-  }
-}
-$wd->closeCursor();
-}
-*/

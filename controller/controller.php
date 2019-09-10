@@ -26,16 +26,17 @@ function changeTag()
   require('view/dictionaryPage.php');
 }
 
-function addWord ()
-{
-   addaword ();
-   require('view/dictionaryPage.php');
-}
-
 function showWord ()
 {
   $wd = showWordList();
   require('view/dictionaryPage.php');
+}
+
+function addWord ()
+{
+   $word = addaword ();
+   $wd = showWordList();   
+   require('view/dictionaryPage.php');
 }
 
 function erase ()
