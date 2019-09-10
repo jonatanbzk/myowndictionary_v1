@@ -202,20 +202,15 @@ function showWordList() {
     'id_language_word' => $language_one_id,
     'id_language_translation' => $language_two_id,
     ));
-  $_SESSION['wordsListArray'] = array();
-  $_SESSION['translationsListArray'] = array();
-  $_SESSION['id_word'] = array();
-  while ($wordsList = $wd->fetch())
-  {
-    array_push($_SESSION['wordsListArray'], $wordsList['word']);
-    array_push($_SESSION['translationsListArray'], $wordsList['translation']);
-    array_push($_SESSION['id_word'], $wordsList['id_word']);
-  }
-  if (empty($_SESSION['wordsListArray']) and empty($_SESSION['translationsListArray']))
-  {
-    array_push($_SESSION['wordsListArray'], 'Votre dictionnaire est vide');
-    array_push($_SESSION['translationsListArray'], '');
-  }
+    $_SESSION['wordsAndTranslationArray'] = array(
+      'words' => array(), 'translations' => array(), 'ids' => array()
+    );
+    while ($wordsList = $wd->fetch())
+    {
+      array_push($_SESSION['wordsAndTranslationArray']['words'], $wordsList['word']);
+      array_push($_SESSION['wordsAndTranslationArray']['translations'], $wordsList['translation']);
+      array_push($_SESSION['wordsAndTranslationArray']['ids'], $wordsList['id_word']);
+    }
   $wd->closeCursor();
 }
 

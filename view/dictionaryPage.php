@@ -6,7 +6,8 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 ob_start(); ?>
 
 <script type="text/javascript">
-var lengthWordList='<?php if (array_key_exists('wordsListArray', $_SESSION)):echo count($_SESSION['wordsListArray']);endif; ?>';
+// for pass length of words list to dictionaryPage.js
+var lengthWordList='<?php if (array_key_exists('wordsAndTranslationArray', $_SESSION)):echo count($_SESSION['wordsAndTranslationArray']['words']);endif; ?>';
 </script>
 <script type="text/javascript" src="dictionaryPage.js"></script>
 
@@ -99,13 +100,13 @@ foreach ($colorArray as $color) {
     </thead>
     <tbody>
       <?php
-      if (isset($_SESSION['wordsListArray']))
+      if (isset($_SESSION['wordsAndTranslationArray']))
       {
-        $length = count($_SESSION['wordsListArray']);
+        $length = count($_SESSION['wordsAndTranslationArray']['words']);
         for ($i = 0; $i < $length; $i++)
         {
-          echo '<tr><td>' . htmlspecialchars($_SESSION['wordsListArray'][$i]) . '</td><td>' . htmlspecialchars($_SESSION['translationsListArray'][$i]) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
-          echo '<tr class="trHide" id="trHide' . ($i+1) . '"><form method="post" action="index.php?action=editWord"><td><input type="text" name="newWord" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="newTranslation" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><input type="hidden" name="idWord" value="' . $_SESSION['id_word'][$i] . '"><button type="submit">Edit</button></form><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['id_word'][$i] . '" /><button type="submit">Erase</button></form></td></tr>';
+          echo '<tr><td>' . htmlspecialchars($_SESSION['wordsAndTranslationArray']['words'][$i]) . '</td><td>' . htmlspecialchars($_SESSION['wordsAndTranslationArray']['translations'][$i]) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
+          echo '<tr class="trHide" id="trHide' . ($i+1) . '"><form method="post" action="index.php?action=editWord"><td><input type="text" name="newWord" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="newTranslation" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '"><button type="submit">Edit</button></form><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '" /><button type="submit">Erase</button></form></td></tr>';
         }
       }
        ?>
