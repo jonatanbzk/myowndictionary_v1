@@ -238,8 +238,52 @@ function editAWord() {
   }
 }
 
+
+function startTest () {
+  if (!empty($_POST['numberQuestion']) and $_POST['numberQuestion']>0)
+  {
+    $nbrQuestion = $_POST['numberQuestion'];
+  } else
+  {
+    $nbrQuestion = 10;
+  }
+  $language = explode("/", $_POST['typeTest']);
+  $db = dbConnect();
+  $test = $db->prepare('SELECT word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation ORDER BY RAND() LIMIT :limit');
+  $test->execute(array(
+    'id_user' => $_SESSION['login_data']['id_user'],
+    'id_language_word' => languageId($_SESSION['personel_language_array'][0]),
+    'id_language_translation' => languageId($_SESSION['personel_language_array'][1]),
+    'limit' => $nbrQuestion,
+  ));
+  $_SESSION['testArray'] = array(
+    'words' => array(), 'translations' => array()
+  );
+  while ($testList = $test->fetch())
+  {
+    array_push($_SESSION['testArray']['words'], $testList['word']);
+    array_push($_SESSION['testArray']['translations'], $testList['translation']);
+  }
+$test->closeCursor();
+  $_SESSION['testDirection'] = '';
+  if ($_SESSION['personel_language_array'][0]==$language[0] and $_SESSION['personel_language_array'][1]==$language[1])
+  {
+    $_SESSION['testDirection'] = 0;
+  }
+  elseif ($_SESSION['personel_language_array'][1]==$language[0] and $_SESSION['personel_language_array'][0]==$language[1])
+  {
+    $_SESSION['testDirection'] = 1;
+  }
+  elseif ($_POST['typeTest'] == "random")
+  {
+    $_SESSION['testDirection'] = 2;
+  }
+}
+
+
 function dbConnect() {
   $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
 }

@@ -35,7 +35,7 @@ function showWord ()
 function addWord ()
 {
    $word = addaword ();
-   $wd = showWordList();   
+   $wd = showWordList();
    require('view/dictionaryPage.php');
 }
 
@@ -52,6 +52,13 @@ function edit ()
   $wd = showWordList();
   require('view/dictionaryPage.php');
 }
+
+function lunchtest ()
+{
+  $test = startTest ();
+  require('view/dictionaryPage.php');
+}
+
 
 function disconnect ()
 {

@@ -115,7 +115,21 @@ foreach ($colorArray as $color) {
 </div>
 
 <div id="test">
-  <input type="button" name="" value="Faire un test">
+  <input type="button" name="button" id="show_test" value="Faire un test" style="display: block;" onclick="toggleForm('show_test_form', 'show_test')">
+  <form class="" action="index.php?action=lunchTest" method="post" id="show_test_form" style="display: none;">
+    <select name="typeTest">    <!-- données dans $_POST['choix'] -->
+      <option value="select">Choisissez le type de test</option>
+      <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<option value="' . $_SESSION["personel_language_array"][0] . '/' . $_SESSION["personel_language_array"][1] . '">' . $_SESSION["personel_language_array"][0] . '=>' . $_SESSION["personel_language_array"][1] . '</option>
+      <option value="' . $_SESSION["personel_language_array"][1] . '/' . $_SESSION["personel_language_array"][0] . '">' . $_SESSION["personel_language_array"][1] . '=>' . $_SESSION["personel_language_array"][0] . '</option>
+      <option value="random">Random</option>' ;endif;?>
+    </select>  <br>
+    <input type="text" name="numberQuestion" maxlength="100" placeholder="default: 10 questions"/>
+    <input type="submit" name="" value="Start">
+    <button type="button" name="button" id="cancel_shows_test_button" onclick="toggleForm('show_test_form', 'show_test')">Annuler</button>
+  </form>
+  <div class="">
+    <?php include("test.php"); ?>
+  </div>
 </div>
 
 <div id="deconnexion">

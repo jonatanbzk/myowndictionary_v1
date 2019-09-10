@@ -117,6 +117,23 @@ try {
         edit ();
       }
     }
+    elseif ($_GET['action'] == 'lunchTest') {
+      if (empty($_SESSION['personel_language_array']))
+      {
+        throw new Exception('Veuillez choisir un dictionnaire');
+      }
+      elseif (isset($_POST['numberQuestion']) and $_POST['numberQuestion'] > 100)
+      {
+        throw new Exception('Le test ne peut pas contenir plus de 100 questions');
+      }
+      elseif ($_POST['typeTest'] == 'select') {
+        throw new Exception('Veuillez choisir le type de test voulu');
+      }
+      elseif (isset($_POST['typeTest'], $_POST['numberQuestion'], $_SESSION['login_data']['id_user']))
+      {
+        lunchTest ();
+      }
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();
