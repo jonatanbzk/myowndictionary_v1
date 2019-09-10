@@ -45,6 +45,13 @@ function erase ()
   require('view/dictionaryPage.php');
 }
 
+function edit ()
+{
+  $editw = editAWord();
+  $wd = showWordList();
+  require('view/dictionaryPage.php');
+}
+
 function disconnect ()
 {
   session_unset();

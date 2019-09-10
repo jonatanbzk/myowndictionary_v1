@@ -99,6 +99,24 @@ try {
     elseif ($_GET['action'] == 'eraseWord') {
       erase ();
     }
+    elseif ($_GET['action'] == 'editWord') {
+      if (empty($_SESSION['personel_language_array']))
+      {
+        throw new Exception('Veuillez choisir un dictionnaire');
+      }
+      elseif (empty(trim($_POST['newWord'])) or empty(trim($_POST['newTranslation'])))
+      {
+        throw new Exception('Veuillez ajouter un mot et sa traduction');
+      }
+      elseif (!is_string($_POST['newWord']) and !is_string($_POST['newTranslation']))
+      {
+        throw new Exception('Veuillez n\'utiliser que des lettres');
+      }
+      elseif (isset($_POST['idWord'], $_POST['newWord'], $_POST['newTranslation']))
+      {
+        edit ();
+      }
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();

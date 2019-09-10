@@ -231,6 +231,18 @@ function eraseAWord() {
 }
 
 
+function editAWord() {
+  $idWord = $_POST['idWord'];
+  $newWord = $_POST['newWord'];
+  $newTranslation = $_POST['newTranslation'];
+  if (!empty($idWord))
+  {
+    $db = dbConnect();
+    $editw = $db->query("UPDATE words SET word = '$newWord', translation = '$newTranslation' WHERE id_word = '$idWord'");
+    $editw->closeCursor();
+  }
+}
+
 function dbConnect() {
   $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
