@@ -95,7 +95,7 @@ foreach ($colorArray as $color) {
   <table>
     <thead>
       <tr>
-        <th colspan="2"><?php if (array_key_exists('personel_language_array', $_SESSION)):echo $_SESSION['personel_language_array'][0] . " / " . $_SESSION['personel_language_array'][1];endif;?></th> <th>modifier <br> supprimer</th>
+        <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<th colspan="2">' . $_SESSION['personel_language_array'][0] . " / " . $_SESSION['personel_language_array'][1] . '</th> <th>modifier <br> supprimer</th>';endif;?>
       </tr>
     </thead>
     <tbody>
