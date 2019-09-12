@@ -59,6 +59,11 @@ function lunchtest ()
   require('view/dictionaryPage.php');
 }
 
+function testVerify ()
+{
+    testRecord ();
+    require('view/dictionaryPage.php');
+}
 
 function disconnect ()
 {

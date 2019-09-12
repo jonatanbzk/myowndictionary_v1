@@ -134,6 +134,11 @@ try {
         lunchTest ();
       }
     }
+    elseif ($_GET['action'] == 'test') {
+      if (isset($_SESSION['testDirection'], $_SESSION['testArray'])) {
+        testVerify ();
+      }
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();

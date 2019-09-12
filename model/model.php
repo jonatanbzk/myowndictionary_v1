@@ -281,6 +281,102 @@ $test->closeCursor();
 }
 
 
+function testRecord() {
+  $testLength = $_POST['testLength'];
+  $point = 0;
+  $_SESSION['testLength'] = $testLength;
+  $_SESSION['resultArray'] = array(
+    'goodwords' => array(), 'goodtranslations' => array(), 'badwords' => array(), 'badtranslations' => array(), 'response' => array()
+  );
+  for ($i=0; $i < $testLength; $i++)
+  {
+    /////////////////////////////////////////////////////////
+    $answerName = 'answer' . ($i+1);
+    if ($_SESSION['testDirection']==0)
+    {
+      if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['translations'][$i]) == 0))
+      {
+        $point++;
+        array_push($_SESSION['resultArray']['goodwords'], $_SESSION['testArray']['words'][$i]);
+        array_push($_SESSION['resultArray']['goodtranslations'], $_POST[$answerName]);
+      }
+      else
+      {
+        array_push($_SESSION['resultArray']['badwords'], $_SESSION['testArray']['words'][$i]);
+        array_push($_SESSION['resultArray']['badtranslations'], $_POST[$answerName]);
+        array_push($_SESSION['resultArray']['response'], $_SESSION['testArray']['translations'][$i]);
+      }
+    }
+    elseif ($_SESSION['testDirection']==1)
+    {
+      if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['words'][$i]) == 0))
+      {
+        $point++;
+        array_push($_SESSION['resultArray']['goodwords'], $_SESSION['testArray']['translations'][$i]);
+        array_push($_SESSION['resultArray']['goodtranslations'], $_POST[$answerName]);
+      }
+      else
+      {
+        array_push($_SESSION['resultArray']['badwords'], $_SESSION['testArray']['translations'][$i]);
+        array_push($_SESSION['resultArray']['badtranslations'], $_POST[$answerName]);
+        array_push($_SESSION['resultArray']['response'], $_SESSION['testArray']['words'][$i]);
+      }
+    }
+    elseif ($_SESSION['testDirection']==2)
+    {
+      $index = 'indexTest' . ($i+1);
+      if ($_POST[$index]==0)
+      {
+        if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['translations'][$i]) == 0))
+        {
+          $point++;
+          array_push($_SESSION['resultArray']['goodwords'], $_SESSION['testArray']['words'][$i]);
+          array_push($_SESSION['resultArray']['goodtranslations'], $_POST[$answerName]);
+        }
+        else
+        {
+          array_push($_SESSION['resultArray']['badwords'], $_SESSION['testArray']['words'][$i]);
+          array_push($_SESSION['resultArray']['badtranslations'], $_POST[$answerName]);
+          array_push($_SESSION['resultArray']['response'], $_SESSION['testArray']['translations'][$i]);
+        }
+      }
+      elseif ($_POST[$index]==1)
+      {
+        if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['words'][$i]) == 0))
+        {
+          $point++;
+          array_push($_SESSION['resultArray']['goodwords'], $_SESSION['testArray']['translations'][$i]);
+          array_push($_SESSION['resultArray']['goodtranslations'], $_POST[$answerName]);
+        }
+        else
+        {
+          array_push($_SESSION['resultArray']['badwords'], $_SESSION['testArray']['translations'][$i]);
+          array_push($_SESSION['resultArray']['badtranslations'], $_POST[$answerName]);
+          array_push($_SESSION['resultArray']['response'], $_SESSION['testArray']['words'][$i]);
+        }
+      }
+    }
+  }
+  $evaluation = $point/$testLength;
+  $comment = "";
+  if ($evaluation<(1/3))
+  {
+    $comment = "Travailles encore un peu !";
+  }
+  elseif ($evaluation>=(1/3) and $evaluation<(2/3)) {
+    $comment = "Continue les efforts !";
+  }
+  elseif ($evaluation>=(2/3) and $evaluation<(4/5)) {
+    $comment = "Bien !";
+  }
+  elseif ($evaluation>=(4/5)) {
+    $comment = "Excellent !";
+  }
+  $_SESSION['evaluation']['note'] = ($evaluation*$testLength) . "/" . $testLength;
+  $_SESSION['evaluation']['comment'] = $comment;
+}
+
+
 function dbConnect() {
   $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
