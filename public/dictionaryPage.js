@@ -13,14 +13,14 @@ function toggleForm(f, b) {
   }
 }
 
+
+
 document.getElementById("colorSelect").addEventListener("change", function (e) {
 document.body.style.backgroundColor = e.target.value;
 });
 
-////////////////////////////////////////////
-///////////////////////////////////////////
 
-
+// show form to edit/erase word when checkbox is checked
 var element=[];
 
     for (var i = 1; i <= lengthWordList; i++)     //lengthWordList
@@ -54,45 +54,3 @@ var element=[];
         };
 
     }
-
-
-
-
-
-////////////////////////////////////////////
-////////////////////////////////////////////
-
-/*
-var tr = document.getElementById("trHide1");
-var check = document.getElementById("checkboxId1");
-check.onchange = function() {
-    if(check.checked)
-    {
-      tr.style.display = 'contents';
-    }
-    else
-    {
-      tr.style.display = 'none';
-    }
-};
-*/
-// show tr change/erase word
-/*
-for (var i = 1; i <= lengthWordList; i++)
-{
-var trId = 'trHide' + i;
-var checkId = 'checkboxId' + i;
-var tr = document.getElementById(trId);
-var check = document.getElementById(checkId);
-check.onchange = function() {
-    if(check.checked)
-    {
-      tr.style.display = 'contents';
-    }
-    else
-    {
-      tr.style.display = 'none';
-    }
-};
-}
-*/

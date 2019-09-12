@@ -105,7 +105,7 @@ foreach ($colorArray as $color) {
         $length = count($_SESSION['wordsAndTranslationArray']['words']);
         for ($i = 0; $i < $length; $i++)
         {
-          echo '<tr><td>' . htmlspecialchars($_SESSION['wordsAndTranslationArray']['words'][$i]) . '</td><td>' . htmlspecialchars($_SESSION['wordsAndTranslationArray']['translations'][$i]) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
+          echo '<tr><td>' . htmlspecialchars(ucfirst($_SESSION['wordsAndTranslationArray']['words'][$i])) . '</td><td>' . htmlspecialchars(ucfirst($_SESSION['wordsAndTranslationArray']['translations'][$i])) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
           echo '<tr class="trHide" id="trHide' . ($i+1) . '"><form method="post" action="index.php?action=editWord"><td><input type="text" name="newWord" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="newTranslation" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '"><button type="submit">Edit</button></form><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '" /><button type="submit">Erase</button></form></td></tr>';
         }
       }
@@ -115,7 +115,22 @@ foreach ($colorArray as $color) {
 </div>
 
 <div id="test">
-  <input type="button" name="" value="Faire un test">
+  <input type="button" name="button" id="show_test" value="Faire un test" style="display: block;" onclick="toggleForm('show_test_form', 'show_test')">
+  <form class="" action="index.php?action=lunchTest" method="post" id="show_test_form" style="display: none;">
+    <select name="typeTest">    <!-- données dans $_POST['choix'] -->
+      <option value="select">Choisissez le type de test</option>
+      <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<option value="' . $_SESSION["personel_language_array"][0] . '/' . $_SESSION["personel_language_array"][1] . '">' . $_SESSION["personel_language_array"][0] . '=>' . $_SESSION["personel_language_array"][1] . '</option>
+      <option value="' . $_SESSION["personel_language_array"][1] . '/' . $_SESSION["personel_language_array"][0] . '">' . $_SESSION["personel_language_array"][1] . '=>' . $_SESSION["personel_language_array"][0] . '</option>
+      <option value="random">Random</option>' ;endif;?>
+    </select>  <br>
+    <label for="numberQuestion">Nombre de questions </label> <input type="text" name="numberQuestion" maxlength="100" placeholder="default: 10 questions"/>
+    <input type="submit" name="" value="Start">
+    <button type="button" name="button" id="cancel_shows_test_button" onclick="toggleForm('show_test_form', 'show_test')">Annuler</button>
+  </form>
+  <div class="">
+    <?php include("test.php");
+          include("result.php");?>
+  </div>
 </div>
 
 <div id="deconnexion">
