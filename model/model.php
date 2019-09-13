@@ -9,7 +9,11 @@ function postSignUp() {
     'password' => $_POST['password'],
     'email' => $_POST['email']);
   $db = dbConnect();
-  $reqData = $db->query("SELECT username, email FROM users WHERE username='$username' OR email='$email'");
+  $reqData = $db->prepare('SELECT username, email FROM users WHERE username= :username OR email= :email');
+  $reqData->execute(array(
+  'username' => $username,
+  'email' => $email,
+));
   $dataVerify = $reqData->fetch();
   if ($dataVerify['username'] == $username)
   {
@@ -47,7 +51,6 @@ function logIn() {
   $log->execute(array(
   'username' => $username));
   $resultat = $log->fetch();
-
   //password verification
   if (!$resultat)
   {
@@ -156,7 +159,7 @@ function changeTagChoice() {
 
 function languageId($language) {
 $languageArray = array('Polonais', 'Français', 'Anglais', 'Allemand', 'Italien', 'Russe', 'Portugais', 'Espagnol', 'Espéranto');
-$key = array_search('$language', $languageArray);
+$key = array_search($language, $languageArray);
 $language_Id = $key + 1;
 return $language_Id;
 }
@@ -165,11 +168,19 @@ return $language_Id;
 function addaword() {
   $id_language1 = languageId($_POST['language1']);
   $id_language2 = languageId($_POST['language2']);
+  $_SESSION['testLanguage1'] = languageId($_POST['language1']);
+  $_SESSION['testLanguage2'] = languageId($_POST['language2']);
   $word = $_POST['addWord1'];
   $translation = $_POST['addWord2'];
   $idUser = $_SESSION['login_data']['id_user'];
   $db = dbConnect();
-  $reqData = $db->query("SELECT word, translation FROM words WHERE id_user = '$idUser' AND id_language_word = '$id_language1' AND id_language_translation = '$id_language2' AND word = '$word'");
+  $reqData = $db->prepare('SELECT word, translation FROM words WHERE id_user = :iduser AND id_language_word = :id_language1 AND id_language_translation = :id_language2 AND word = :word');
+  $reqData->execute(array(
+    'iduser' => $idUser,
+    'id_language1' => $id_language1,
+    'id_language2' => $id_language2,
+    'word' => $word,
+  ));
   $dataVerify = $reqData->fetch();
   if (!empty($dataVerify))
   {
@@ -217,12 +228,12 @@ function showWordList() {
 
 function eraseAWord() {
   $idWord = $_POST['idWord'];
-  if (!empty($idWord))
-  {
     $db = dbConnect();
-    $ew = $db->query("DELETE FROM words WHERE id_word = '$idWord'");
+    $ew = $db->prepare('DELETE FROM words WHERE id_word = :idWord');
+    $ew->execute(array(
+      'idWord' => $idWord,
+    ));
     $ew->closeCursor();
-  }
 }
 
 
@@ -233,7 +244,12 @@ function editAWord() {
   if (!empty($idWord))
   {
     $db = dbConnect();
-    $editw = $db->query("UPDATE words SET word = '$newWord', translation = '$newTranslation' WHERE id_word = '$idWord'");
+    $editw = $db->prepare('UPDATE words SET word = :newWord, translation = :newTranslation WHERE id_word = :idWord');
+    $editw->execute(array(
+      'newWord' => $newWord,
+      'newTranslation' => $newTranslation,
+      'idWord' => $idWord,
+    ));
     $editw->closeCursor();
   }
 }
@@ -290,7 +306,6 @@ function testRecord() {
   );
   for ($i=0; $i < $testLength; $i++)
   {
-    /////////////////////////////////////////////////////////
     $answerName = 'answer' . ($i+1);
     if ($_SESSION['testDirection']==0)
     {

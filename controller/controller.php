@@ -23,11 +23,6 @@ function addtab ()
 function changeTag()
 {
   $lang = changeTagChoice ();
-  require('view/dictionaryPage.php');
-}
-
-function showWord ()
-{
   $wd = showWordList();
   require('view/dictionaryPage.php');
 }

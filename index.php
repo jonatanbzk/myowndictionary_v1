@@ -85,19 +85,11 @@ try {
         addWord ();
       }
     }
-    elseif ($_GET['action'] == 'showWordList')
-    {
-      if (empty($_SESSION['personel_language_array']))
-      {
-        throw new Exception('Veuillez choisir un dictionnaire');
-      }
-      elseif (isset($_SESSION['login_data']['id_user']))
-      {
-        showWord ();
-      }
-    }
     elseif ($_GET['action'] == 'eraseWord') {
+      if (isset($_POST['idWord']))
+      {
       erase ();
+      }
     }
     elseif ($_GET['action'] == 'editWord') {
       if (empty($_SESSION['personel_language_array']))
@@ -156,6 +148,5 @@ else
 catch (\Exception $e)
 {
     echo $e->getMessage();
-    require('view/dictionaryPage.php');  // on essaie why not
-  //  echo $e->getMessage();
+    require('view/dictionaryPage.php');
 }

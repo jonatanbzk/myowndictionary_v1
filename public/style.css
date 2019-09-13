@@ -17,6 +17,7 @@ div {
     background: white;
     padding: 20px;
     margin-bottom: 20px;
+
 }
 
 #header {
@@ -44,6 +45,7 @@ div {
 #addWordDiv {
   display: flex;
   justify-content: center;
+  text-align: center;
 }
 
 #viewDictionary {
@@ -68,9 +70,8 @@ div {
    right: 20px;
 }
 
-#otherValue
-{
-  /*display: none; */
+#show_add_words_button, #show_words_button, #show_test, #words_table {
+  margin: 0 auto;
 }
 
 td,

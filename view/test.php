@@ -50,7 +50,6 @@
           $rand = rand(0, 99);
           if ($rand % 2 == 0)
           {
-//////////////////////////////////////////////////////////////////////////////
             if ($i==0)
             {
               echo '<div id="question' . ($i+1) . '" style="display: block;">' . ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i]) . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="La traduction en ' . $_SESSION['personel_language_array'][1] . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="0"> <button type="button" name="button" onclick="toggleForm(`question' . ($i+2) . '`, `question' . ($i+1) . '`)">Valider</button></div>';
