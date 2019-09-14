@@ -13,7 +13,6 @@
   $_SESSION['error'] = ""; ?>
 
 <p>Pas encore de compte MyOwnDictionary ?  <a href="sign_up.php">Je m'inscris</a></p>
-
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>

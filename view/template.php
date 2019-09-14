@@ -5,9 +5,8 @@
     <title>MyOwnDictionary</title>
     <link href="public/style.css" rel="stylesheet" />
   </head>
-
-  <body>
-    <h1>MyOwnDictionary</h1>
-    <?= $content ?>
-  </body>
+    <body>
+      <h1>MyOwnDictionary</h1>
+      <?= $content ?>
+    </body>
 </html>
