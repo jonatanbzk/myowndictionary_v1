@@ -60,9 +60,15 @@ function testVerify ()
     require('view/dictionaryPage.php');
 }
 
+function closeTest()
+{
+    eraseTest ();
+    require('view/dictionaryPage.php');
+}
+
 function disconnect ()
 {
-  session_unset();
+  session_destroy();
   $_SESSION['error'] = 'Vous êtes bien déconnecté';
   header('Location: view/login_Page.php');
 }

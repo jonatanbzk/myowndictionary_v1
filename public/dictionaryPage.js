@@ -2,16 +2,10 @@
 function toggleForm(f, b) {
   var form = document.getElementById(f);
   var button = document.getElementById(b);
-  var index = f;
-  console.log(index + "A");   //  verif index
   if(form.style.display == 'none')
   {
     form.style.display = 'block';
     button.style.display = 'none';
-  /*  if (index==="show_words_div")
-    {
-      localStorage.setItem('wordsList', true);
-    } */
   }
   else
   {

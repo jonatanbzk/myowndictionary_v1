@@ -113,9 +113,9 @@ foreach ($colorArray as $color) {
 </div>
 
 <div id="test"  style="display: <?php if (array_key_exists('personel_language_array', $_SESSION)): echo "block"; else: echo "none"; endif; ?>">
-  <input type="button" name="button" id="show_test" value="Faire un test" style="display: block;" onclick="toggleForm('show_test_form', 'show_test')">
+  <input type="button" name="button" id="show_test" value="Faire un test" style="display: <?php if (((array_key_exists('testArray', $_SESSION)) and !empty($_SESSION['testArray']['words'])) or (array_key_exists('evaluation', $_SESSION))): echo "none"; else: echo "block"; endif; ?>" onclick="toggleForm('show_test_form', 'show_test')">
   <form class="" action="index.php?action=lunchTest" method="post" id="show_test_form" style="display: none;">
-    <select name="typeTest">    <!-- données dans $_POST['choix'] -->
+    <select name="typeTest">
       <option value="select">Choisissez le type de test</option>
       <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<option value="' . $_SESSION["personel_language_array"][0] . '/' . $_SESSION["personel_language_array"][1] . '">' . $_SESSION["personel_language_array"][0] . '=>' . $_SESSION["personel_language_array"][1] . '</option>
       <option value="' . $_SESSION["personel_language_array"][1] . '/' . $_SESSION["personel_language_array"][0] . '">' . $_SESSION["personel_language_array"][1] . '=>' . $_SESSION["personel_language_array"][0] . '</option>
@@ -125,9 +125,11 @@ foreach ($colorArray as $color) {
     <input type="submit" name="" value="Start">
     <button type="button" name="button" id="cancel_shows_test_button" onclick="toggleForm('show_test_form', 'show_test')">Annuler</button>
   </form>
-  <div class="" id="result">
-    <?php include("test.php");
-          include("result.php");?>
+  <div id="test_include" style="display: <?php if ((array_key_exists('testArray', $_SESSION)) and !empty($_SESSION['testArray']['words'])): echo "block"; else: echo "none"; endif; ?>">
+    <?php include("test.php");?>
+  </div>
+  <div id="result_include" style="display: <?php if (array_key_exists('evaluation', $_SESSION)): echo "block"; else: echo "none"; endif; ?>" >
+    <?php include("result.php");?>
   </div>
 </div>
 
@@ -136,7 +138,6 @@ foreach ($colorArray as $color) {
     <input id="logOutButton" type="submit" name="deco" value="Déconnexion">
   </form>
 </div>
-<?php print_r($_SESSION['wordsAndTranslationArray']['words']); ?>
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
   $_SESSION['error'] = ""; ?>
 <script src="public/dictionaryPage.js" charset="utf-8"></script>

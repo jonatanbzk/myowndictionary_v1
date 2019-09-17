@@ -85,13 +85,15 @@ try {
         addWord ();
       }
     }
-    elseif ($_GET['action'] == 'eraseWord') {
+    elseif ($_GET['action'] == 'eraseWord')
+    {
       if (isset($_POST['idWord']))
       {
       erase ();
       }
     }
-    elseif ($_GET['action'] == 'editWord') {
+    elseif ($_GET['action'] == 'editWord')
+    {
       if (empty($_SESSION['personel_language_array']))
       {
         throw new Exception('Veuillez choisir un dictionnaire');
@@ -109,12 +111,13 @@ try {
         edit ();
       }
     }
-    elseif ($_GET['action'] == 'lunchTest') {
+    elseif ($_GET['action'] == 'lunchTest')
+    {
       if (empty($_SESSION['personel_language_array']))
       {
         throw new Exception('Veuillez choisir un dictionnaire');
       }
-      elseif (isset($_POST['numberQuestion']) and $_POST['numberQuestion'] > 100)
+      elseif (isset($_POST['numberQuestion']) and is_int($_POST['numberQuestion']) and $_POST['numberQuestion'] > 100)
       {
         throw new Exception('Le test ne peut pas contenir plus de 100 questions');
       }
@@ -126,10 +129,15 @@ try {
         lunchTest ();
       }
     }
-    elseif ($_GET['action'] == 'test') {
+    elseif ($_GET['action'] == 'test')
+    {
       if (isset($_SESSION['testDirection'], $_SESSION['testArray'])) {
         testVerify ();
       }
+    }
+    elseif ($_GET['action'] == 'closeTest')
+    {
+      closeTest();
     }
     elseif ($_GET['action'] == 'deco')
     {

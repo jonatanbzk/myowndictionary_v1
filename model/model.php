@@ -185,7 +185,7 @@ function addaword() {
   if (!empty($dataVerify))
   {
     throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
-    $reqData->closeCursor();  
+    $reqData->closeCursor();
   }
   else
   {
@@ -204,7 +204,6 @@ function addaword() {
 
 
 function showWordList() {
-  $_SESSION['error']="erreur 1";
   $language_one_id = languageId($_SESSION['personel_language_array'][0]);
   $language_two_id = languageId($_SESSION['personel_language_array'][1]);
   $db = dbConnect();
@@ -260,7 +259,8 @@ function startTest () {
   if (!empty($_POST['numberQuestion']) and $_POST['numberQuestion']>0)
   {
     $nbrQuestion = $_POST['numberQuestion'];
-  } else
+  }
+  else
   {
     $nbrQuestion = 10;
   }
@@ -390,6 +390,15 @@ function testRecord() {
   }
   $_SESSION['evaluation']['note'] = ($evaluation*$testLength) . "/" . $testLength;
   $_SESSION['evaluation']['comment'] = $comment;
+  unset($_SESSION['testArray']);
+}
+
+
+function eraseTest () {
+  if (array_key_exists('evaluation', $_SESSION))
+  {
+    unset($_SESSION['evaluation']);
+  }
 }
 
 

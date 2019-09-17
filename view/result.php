@@ -1,13 +1,15 @@
+<div id="responseId" style="display: block;">
 <?php
-//echo $_SESSION['point'] . "/" . $_SESSION['testLength'];
 if (isset($_SESSION['evaluation']))
 {
 echo $_SESSION['evaluation']['note'] . "  ";
-echo $_SESSION['evaluation']['comment'];
+echo $_SESSION['evaluation']['comment'] . "<br>";
 }
  ?>
-<div id="responseId" style="display: block;">
-<button type="button" name="button">Voir mon résultat en détail</button>
+
+<button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')">Voir mon résultat en détail</button>
+</div>
+<div id="response_div" style="display: none">
 <p>Réponse(s) correcte(s):</p>
 <?php
 if (!empty($_SESSION['resultArray']['goodwords']) and !empty($_SESSION['resultArray']['goodtranslations']))
@@ -30,4 +32,7 @@ $badResponseLength = count($_SESSION['resultArray']['badwords']);
   }
 }
 ?>
+<form class="" action="index.php?action=closeTest" method="post">
+<input type="submit" name="" value="Fermer le test">
+</form>
 </div>
