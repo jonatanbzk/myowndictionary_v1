@@ -185,9 +185,11 @@ function addaword() {
   if (!empty($dataVerify))
   {
     throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
+    $reqData->closeCursor();  
   }
   else
   {
+    $reqData->closeCursor();
     $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
     $word->execute(array(
       'word' => $_POST['addWord1'],
@@ -197,13 +199,12 @@ function addaword() {
       'id_user' => $_SESSION['login_data']['id_user'],
       ));
   }
-  throw new Exception('Votre mot a bien été ajouté');
-  $reqData->closeCursor();
   $word->closeCursor();
 }
 
 
 function showWordList() {
+  $_SESSION['error']="erreur 1";
   $language_one_id = languageId($_SESSION['personel_language_array'][0]);
   $language_two_id = languageId($_SESSION['personel_language_array'][1]);
   $db = dbConnect();

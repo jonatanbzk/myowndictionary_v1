@@ -136,7 +136,7 @@ foreach ($colorArray as $color) {
     <input id="logOutButton" type="submit" name="deco" value="Déconnexion">
   </form>
 </div>
-
+<?php print_r($_SESSION['wordsAndTranslationArray']['words']); ?>
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
   $_SESSION['error'] = ""; ?>
 <script src="public/dictionaryPage.js" charset="utf-8"></script>
