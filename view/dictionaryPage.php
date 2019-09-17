@@ -125,7 +125,7 @@ foreach ($colorArray as $color) {
     <input type="submit" name="" value="Start">
     <button type="button" name="button" id="cancel_shows_test_button" onclick="toggleForm('show_test_form', 'show_test')">Annuler</button>
   </form>
-  <div class="">
+  <div class="" id="result">
     <?php include("test.php");
           include("result.php");?>
   </div>
@@ -133,13 +133,12 @@ foreach ($colorArray as $color) {
 
 <div id="deconnexion">
   <form class="" action="index.php?action=deco" method="post">
-    <input type="submit" name="deco" value="Déconnexion">
+    <input id="logOutButton" type="submit" name="deco" value="Déconnexion">
   </form>
 </div>
 
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
   $_SESSION['error'] = ""; ?>
 <script src="public/dictionaryPage.js" charset="utf-8"></script>
-
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+<?php $content = ob_get_clean();
+ require('template.php'); ?>

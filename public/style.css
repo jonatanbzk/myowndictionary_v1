@@ -79,6 +79,9 @@ div {
   width: 500px;
 }
 
+#formLogin, #formSignUp {
+}
+
 td,
 th {
     border: 1px solid rgb(190, 190, 190);
