@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <title>MyOwnDictionary</title>
-    <link href="/dictionary/public/style.css" rel="stylesheet" />  
+    <link href="/dictionary/public/style.css" rel="stylesheet" />
   </head>
-    <body>
-      <h1>MyOwnDictionary</h1>
-      <?= $content ?>
-    </body>
+  <body>
+    <h1>MyOwnDictionary</h1>
+    <?= $content ?>
+  </body>
 </html>

@@ -6,7 +6,7 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 ob_start(); ?>
 
 <script type="text/javascript">
-// for pass length of words list to dictionaryPage.js
+// pass length of words list to dictionaryPage.js
 var lengthWordList='<?php if (array_key_exists('wordsAndTranslationArray', $_SESSION)):echo count($_SESSION['wordsAndTranslationArray']['words']);endif; ?>';
 </script>
 <script type="text/javascript" src="dictionaryPage.js"></script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  jeu. 05 sep. 2019 à 16:57
+-- Généré le :  mer. 18 sep. 2019 à 11:51
 -- Version du serveur :  10.4.6-MariaDB
 -- Version de PHP :  7.3.9
 
@@ -75,7 +75,7 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `add_date` datetime NOT NULL
+  `registration_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -88,8 +88,8 @@ CREATE TABLE `words` (
   `id_word` int(11) NOT NULL,
   `word` varchar(255) NOT NULL,
   `translation` varchar(255) NOT NULL,
-  `id_langue_word` int(11) NOT NULL,
-  `id_langue_translation` int(11) NOT NULL,
+  `id_language_word` int(11) NOT NULL,
+  `id_language_translation` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `add_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -125,9 +125,9 @@ ALTER TABLE `users`
 --
 ALTER TABLE `words`
   ADD PRIMARY KEY (`id_word`),
-  ADD UNIQUE KEY `word` (`word`,`translation`,`id_langue_word`,`id_langue_translation`,`id_user`),
-  ADD KEY `fk_id_langue_word_words` (`id_langue_word`),
-  ADD KEY `fk_id_langue_translation_words` (`id_langue_translation`),
+  ADD UNIQUE KEY `word` (`word`,`translation`,`id_language_word`,`id_language_translation`,`id_user`),
+  ADD KEY `fk_id_language_word_words` (`id_language_word`),
+  ADD KEY `fk_id_language_translation_words` (`id_language_translation`),
   ADD KEY `fk_id_user_words` (`id_user`);
 
 --
@@ -172,8 +172,8 @@ ALTER TABLE `tags`
 -- Contraintes pour la table `words`
 --
 ALTER TABLE `words`
-  ADD CONSTRAINT `fk_id_langue_translation_words` FOREIGN KEY (`id_langue_translation`) REFERENCES `languages` (`id_language`),
-  ADD CONSTRAINT `fk_id_langue_word_words` FOREIGN KEY (`id_langue_word`) REFERENCES `languages` (`id_language`),
+  ADD CONSTRAINT `fk_id_language_translation_words` FOREIGN KEY (`id_language_translation`) REFERENCES `languages` (`id_language`),
+  ADD CONSTRAINT `fk_id_language_word_words` FOREIGN KEY (`id_language_word`) REFERENCES `languages` (`id_language`),
   ADD CONSTRAINT `fk_id_user_words` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 COMMIT;
 

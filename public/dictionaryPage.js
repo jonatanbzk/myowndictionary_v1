@@ -32,23 +32,21 @@ window.onload = function() {
 
 // keep dictionary words list open when window refresh event
     document.getElementById('show_words_button').addEventListener("click", function(event){
-      localStorage.setItem('wordsList', true);
+      sessionStorage.setItem('wordsList', true);
     });
     document.getElementById('hide_words_button').addEventListener("click", function(event){
-      localStorage.setItem('wordsList', false);
+      sessionStorage.setItem('wordsList', false);
     });
     document.getElementById('logOutButton').addEventListener("click", function(event){
     sessionStorage.removeItem('wordsList');
     });
-//  Essai methode 1 basique /////////////////////////////
-window.addEventListener('DOMContentLoaded', function() {             //  load
-    var show = localStorage.getItem('wordsList');
-    console.log(show + "B");
-    if(show === 'true'){
+
+window.addEventListener('DOMContentLoaded', function() {
+    if(sessionStorage.getItem('wordsList') === 'true'){
          document.getElementById('show_words_div').style.display = "block";
          document.getElementById('show_words_button').style.display = "none";
     }
-    else if (show === 'false') {
+    else if (sessionStorage.getItem('wordsList') === 'false') {
       document.getElementById('show_words_div').style.display = "none";
     }
 });
@@ -56,7 +54,7 @@ window.addEventListener('DOMContentLoaded', function() {             //  load
 
 // show form to edit/erase word when checkbox is checked
 var element=[];
-    for (var i = 1; i <= lengthWordList; i++)     //lengthWordList
+    for (var i = 1; i <= lengthWordList; i++)     
     {
       var trId = 'trHide' + i;
       var checkId = 'checkboxId' + i;
@@ -81,3 +79,19 @@ var element=[];
       }
       };
     }
+
+
+// Don't scroll to the top when refresh window
+const body = document.querySelector('body');
+body.addEventListener('click', event => {
+  var y = event.clientY;
+  sessionStorage.setItem('yPos', y);
+});
+window.addEventListener('DOMContentLoaded', function() {
+  var yPos = sessionStorage.getItem('yPos');
+  if (yPos !== undefined)
+  {
+    window.scroll(0, yPos);
+    console.log(yPos);
+  }
+});

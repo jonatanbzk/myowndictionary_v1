@@ -1,3 +1,4 @@
+// Verify user's data
 var form = document.querySelector("form");
 form.addEventListener("submit", function (e) {
   var mdp1 = document.querySelector("form").elements.password.value;

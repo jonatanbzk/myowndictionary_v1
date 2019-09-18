@@ -1,5 +1,7 @@
  <?php
-function postSignUp() {
+// create account
+function postSignUp()
+{
   $username=$_POST['username'];
   $password=$_POST['password'];
   $email=$_POST['email'];
@@ -41,7 +43,8 @@ function postSignUp() {
 }
 
 
-function logIn() {
+function logIn()
+{
   $_SESSION['test_login_data'] = array (
     'username' => $_POST['username'],
     'password' => $_POST['password']);
@@ -77,8 +80,10 @@ function logIn() {
   }
 }
 
+
 // get language list
-function getLanguages() {
+function getLanguages()
+{
    $_SESSION['languagesArray'] = array();
    $db = dbConnect();
    $languages = $db->query('SELECT language FROM languages ORDER BY language');
@@ -89,8 +94,10 @@ function getLanguages() {
    $languages->closeCursor();
 }
 
+
 // get user dictionary tag
-function getTag() {
+function getTag()
+{
   $_SESSION['tagArray'] = array();
   $db = dbConnect();
   $tag = $db->prepare('SELECT tag_name, language_1, language_2 FROM tags INNER JOIN users ON tags.id_user = users.id_user WHERE users.username = :username');
@@ -104,7 +111,8 @@ function getTag() {
 }
 
 
-function addUserDictionary() {
+function addUserDictionary()
+{
   // verify if the user have this dictionary
   $IfDictExist1 = $_POST['language1'] . '/' . $_POST['language2'];
   $IfDictExist2 = $_POST['language2'] . '/' . $_POST['language1'];
@@ -144,7 +152,8 @@ function addUserDictionary() {
 }
 
 
-function changeTagChoice() {
+function changeTagChoice()
+{
   $db = dbConnect();
   $lang = $db->prepare('SELECT language_1, language_2 FROM tags WHERE tag_name = :tag_name');
   $lang->execute(array(
@@ -157,7 +166,9 @@ function changeTagChoice() {
   }
 
 
-function languageId($language) {
+// convert String language name to language id
+function languageId($language)
+{
 $languageArray = array('Polonais', 'Français', 'Anglais', 'Allemand', 'Italien', 'Russe', 'Portugais', 'Espagnol', 'Espéranto');
 $key = array_search($language, $languageArray);
 $language_Id = $key + 1;
@@ -165,7 +176,8 @@ return $language_Id;
 }
 
 
-function addaword() {
+function addaword()
+{
   $id_language1 = languageId($_POST['language1']);
   $id_language2 = languageId($_POST['language2']);
   $_SESSION['testLanguage1'] = languageId($_POST['language1']);
@@ -203,11 +215,12 @@ function addaword() {
 }
 
 
-function showWordList() {
+function showWordList()
+{
   $language_one_id = languageId($_SESSION['personel_language_array'][0]);
   $language_two_id = languageId($_SESSION['personel_language_array'][1]);
   $db = dbConnect();
-  $wd = $db->prepare('SELECT id_word, word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation');
+  $wd = $db->prepare('SELECT id_word, word, translation FROM words WHERE id_user = :id_user AND id_language_word = :id_language_word AND id_language_translation = :id_language_translation ORDER BY word');
   $wd->execute(array(
     'id_user' => $_SESSION['login_data']['id_user'],
     'id_language_word' => $language_one_id,
@@ -226,7 +239,8 @@ function showWordList() {
 }
 
 
-function eraseAWord() {
+function eraseAWord()
+{
   $idWord = $_POST['idWord'];
     $db = dbConnect();
     $ew = $db->prepare('DELETE FROM words WHERE id_word = :idWord');
@@ -237,7 +251,8 @@ function eraseAWord() {
 }
 
 
-function editAWord() {
+function editAWord()
+{
   $idWord = $_POST['idWord'];
   $newWord = $_POST['newWord'];
   $newTranslation = $_POST['newTranslation'];
@@ -255,7 +270,8 @@ function editAWord() {
 }
 
 
-function startTest () {
+function startTest ()
+{
   if (!empty($_POST['numberQuestion']) and $_POST['numberQuestion']>0)
   {
     $nbrQuestion = $_POST['numberQuestion'];
@@ -298,7 +314,8 @@ $test->closeCursor();
 }
 
 
-function testRecord() {
+function testRecord()
+{
   $testLength = $_POST['testLength'];
   $point = 0;
   $_SESSION['testLength'] = $testLength;
@@ -394,7 +411,8 @@ function testRecord() {
 }
 
 
-function eraseTest () {
+function eraseTest ()
+{
   if (array_key_exists('evaluation', $_SESSION))
   {
     unset($_SESSION['evaluation']);
@@ -402,7 +420,8 @@ function eraseTest () {
 }
 
 
-function dbConnect() {
+function dbConnect()
+{
   $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );

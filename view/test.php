@@ -3,7 +3,7 @@
   window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
   </script>
   <?php
-
+// test direction = language1 => language2 or languague2 => language1 or Random
   if (isset($_SESSION['testDirection']) and isset($_SESSION['testArray']) and isset($_SESSION['personel_language_array']))
   {
       $testLength = count($_SESSION['testArray']['words']);
