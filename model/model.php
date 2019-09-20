@@ -422,7 +422,8 @@ function eraseTest ()
 
 function dbConnect()
 {
-  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+//  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+  $db = new PDO('mysql:host=DataBaseURL;dbname=dictionary;charset=utf8', 'XXXXXUSERNAMEXXXXX', 'XXXXXPASSWORDXXXXX');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
