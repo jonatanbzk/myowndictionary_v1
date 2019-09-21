@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mer. 18 sep. 2019 à 11:51
+-- Généré le :  sam. 21 sep. 2019 à 22:25
 -- Version du serveur :  10.4.6-MariaDB
 -- Version de PHP :  7.3.9
 
@@ -75,8 +75,17 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `user_activation_code` varchar(255) NOT NULL,
+  `email_verify` varchar(4) NOT NULL,
   `registration_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `password`, `email`, `user_activation_code`, `email_verify`, `registration_date`) VALUES
+(3, 'jonatan', '$2y$10$B524wuvxTG187ueXNbXjZeK6DidMUJpRtWMViA.ljHuG9KvS2KSIy', 'wallasdu44@hotmail.Com', '4fb4b69f577efa90683d05e75eb0cb19', 'no', '2019-09-21 22:06:36');
 
 -- --------------------------------------------------------
 
@@ -144,19 +153,19 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT pour la table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id_tag` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `words`
 --
 ALTER TABLE `words`
-  MODIFY `id_word` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_word` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Contraintes pour les tables déchargées

@@ -10,6 +10,8 @@ function postSignUp()
     'username' => $_POST['username'],
     'password' => $_POST['password'],
     'email' => $_POST['email']);
+  $user_activation_code = md5(rand());
+  $email_verify = "no";
   $db = dbConnect();
   $reqData = $db->prepare('SELECT username, email FROM users WHERE username= :username OR email= :email');
   $reqData->execute(array(
@@ -30,11 +32,13 @@ function postSignUp()
   else
   {
     $reqData->closeCursor();
-    $userCreate = $db->prepare('INSERT INTO users(username, password, email, registration_date) VALUES(:username, :password, :email, NOW())');
+    $userCreate = $db->prepare('INSERT INTO users(username, password, email, user_activation_code, email_verify, registration_date) VALUES(:username, :password, :email, :user_activation_code, :email_verify, NOW())');
     $userCreate->execute(array(
     'username' => $username,
 	  'password' => $pass_hache,
     'email' => $email,
+    'user_activation_code' => $user_activation_code,
+    'email_verify' => $email_verify
     ));
     $_SESSION['error'] = "Votre compte a été créer";
     $_SESSION['form_data'] = array();
@@ -422,8 +426,8 @@ function eraseTest ()
 
 function dbConnect()
 {
-//  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-  $db = new PDO('mysql:host=DataBaseURL;dbname=dictionary;charset=utf8', 'XXXXXUSERNAMEXXXXX', 'XXXXXPASSWORDXXXXX');
+  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+//  $db = new PDO('mysql:host=DataBaseURL;dbname=dictionary;charset=utf8', 'XXXXXUSERNAMEXXXXX', 'XXXXXPASSWORDXXXXX');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
