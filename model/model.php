@@ -1,4 +1,4 @@
- <?php
+<?php
 // create account
 function postSignUp()
 {
