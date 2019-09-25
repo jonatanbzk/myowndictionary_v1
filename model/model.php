@@ -1,4 +1,4 @@
- <?php
+<?php
 /* Namespace alias. */
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
