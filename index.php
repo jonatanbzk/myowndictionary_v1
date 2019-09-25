@@ -139,6 +139,13 @@ try {
     {
       closeTest();
     }
+    elseif ($_GET['action'] == 'emailconfirm')
+    {
+      if (!empty($_GET['email']) and !empty($_GET['code']))
+      {
+        emailconfirm();
+      }
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();

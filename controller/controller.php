@@ -66,6 +66,12 @@ function closeTest()
     require('view/dictionaryPage.php');
 }
 
+function emailconfirm()
+{
+    $mail = verifyEmailAdress ();
+    require('view/dictionaryPage.php');
+}
+
 function disconnect ()
 {
   session_destroy();

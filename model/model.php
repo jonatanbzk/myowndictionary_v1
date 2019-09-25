@@ -1,7 +1,39 @@
  <?php
+/* Namespace alias. */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// function send email
+function emailSend($subject, $body, $email)
+{
+  require 'vendor/autoload.php';
+  $mail= new PHPMailer();
+  $mail->Host = "smtp.gmail.com";
+  $mail->isSMTP();
+  $mail->SMTPAuth = true;
+  $mail->Username = "myowndictionaryinfo@gmail.com";
+  $mail->Password = "xxxxxxxxxx";
+  $mail->SMTPSecure = "ssl"; // or TLS
+  $mail->Port = 465; //or 587 if TLS
+  $mail->Subject = $subject;
+  $mail->isHTML(true);
+  $mail->Body = $body;
+  $mail->setFrom('myowndictionaryinfo@gmail.com', 'myowndictionary');
+  $mail->addAddress($email);
+  if ($mail->send())
+  {
+     $_SESSION['error'] = "email send";
+  }
+  else
+  {
+      $_SESSION['error'] = "email not send";
+  }
+}
+
 // create account
 function postSignUp()
 {
+
   $username=$_POST['username'];
   $password=$_POST['password'];
   $email=$_POST['email'];
@@ -40,7 +72,11 @@ function postSignUp()
     'user_activation_code' => $user_activation_code,
     'email_verify' => $email_verify
     ));
-    $_SESSION['error'] = "Votre compte a été créer";
+    //email verification send
+    $subject = "Email verification";
+    $body = "Hello .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+    emailSend($subject, $body, $email);
+    $_SESSION['error'] = "You have been registered, please check your email";
     $_SESSION['form_data'] = array();
     header('Location: view/login_Page.php');
   }
@@ -54,7 +90,7 @@ function logIn()
     'password' => $_POST['password']);
   $username = $_POST['username'];
   $db = dbConnect();
-  $log = $db->prepare('SELECT id_user, password FROM users WHERE username = :username');
+  $log = $db->prepare('SELECT id_user, password, email_verify FROM users WHERE username = :username');
   $log->execute(array(
   'username' => $username));
   $resultat = $log->fetch();
@@ -69,11 +105,20 @@ function logIn()
   {
     if (password_verify($_POST['password'], $resultat['password']))
     {
-      $_SESSION['test_login_data'] = array();
-      $_SESSION['login_data'] = array (
-      'username' => $_POST['username'],
-      'id_user' => $resultat['id_user']);
-      $log->closeCursor();
+      if ($resultat['email_verify'] == "no")
+      {
+        $_SESSION['error'] = 'Please confirm your email adress !';
+        header('Location: view/login_Page.php');
+        exit();
+      }
+      elseif ($resultat['email_verify']=="yes")
+      {
+        $_SESSION['test_login_data'] = array();
+        $_SESSION['login_data'] = array (
+          'username' => $_POST['username'],
+          'id_user' => $resultat['id_user']);
+          $log->closeCursor();
+      }
     }
     else
     {
@@ -424,10 +469,50 @@ function eraseTest ()
 }
 
 
+function verifyEmailAdress ()
+{
+  $email = $_GET['email'];
+  $code = $_GET['code'];
+  $db = dbConnect();
+  $mail = $db->prepare('SELECT id_user, email_verify FROM users WHERE email = :email AND user_activation_code = :user_activation_code AND email_verify="no"');
+  $mail->execute(array(
+    'email' => $email,
+    'user_activation_code' => $code,
+  ));
+  $dataUser = $mail->fetch();
+  if (empty($dataUser))
+  {
+    throw new Exception("Vous n'avez pas de compte créé");
+    header('Location: view/login_Page.php');
+  }
+  else
+  {
+    if ($dataUser['email_verify']=="no")
+    {
+      $editUser = $db->prepare('UPDATE users SET email_verify = :email_verify WHERE email = :email');
+      $editUser->execute(array(
+        'email_verify' => "yes",
+        'email' => $email,
+      ));
+      $_SESSION['error'] = "Your email is now validated";
+      header('Location: view/login_Page.php');
+      exit();
+    }
+    elseif ($dataUser['email_verify']=="yes")
+    {
+      $_SESSION['error'] = "Your email is already validated";
+      header('Location: view/login_Page.php');
+      exit();
+    }
+  }
+  $mail->closeCursor();
+}
+
+
 function dbConnect()
 {
-  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-//  $db = new PDO('mysql:host=DataBaseURL;dbname=dictionary;charset=utf8', 'XXXXXUSERNAMEXXXXX', 'XXXXXPASSWORDXXXXX');
+//  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
