@@ -72,6 +72,12 @@ function emailconfirm()
     require('view/dictionaryPage.php');
 }
 
+function emailconfirmresend()
+{
+  resendActivationEmail();
+  require('view/dictionaryPage.php');
+}
+
 function disconnect ()
 {
   session_destroy();

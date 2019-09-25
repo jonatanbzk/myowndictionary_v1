@@ -146,6 +146,13 @@ try {
         emailconfirm();
       }
     }
+    elseif ($_GET['action'] == 'emailconfirmresend')
+    {
+      if (!empty($_GET['email']) and !empty($_GET['code']))
+      {
+        emailconfirmresend();
+      }
+    }
     elseif ($_GET['action'] == 'deco')
     {
       disconnect ();

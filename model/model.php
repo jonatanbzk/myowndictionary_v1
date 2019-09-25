@@ -12,7 +12,7 @@ function emailSend($subject, $body, $email)
   $mail->isSMTP();
   $mail->SMTPAuth = true;
   $mail->Username = "myowndictionaryinfo@gmail.com";
-  $mail->Password = "xxxxxxxxxx";
+  $mail->Password = "wY77R&bVxa&q&A4j";
   $mail->SMTPSecure = "ssl"; // or TLS
   $mail->Port = 465; //or 587 if TLS
   $mail->Subject = $subject;
@@ -29,6 +29,7 @@ function emailSend($subject, $body, $email)
       $_SESSION['error'] = "email not send";
   }
 }
+
 
 // create account
 function postSignUp()
@@ -90,7 +91,7 @@ function logIn()
     'password' => $_POST['password']);
   $username = $_POST['username'];
   $db = dbConnect();
-  $log = $db->prepare('SELECT id_user, password, email_verify FROM users WHERE username = :username');
+  $log = $db->prepare('SELECT id_user, password, email, email_verify, user_activation_code FROM users WHERE username = :username');
   $log->execute(array(
   'username' => $username));
   $resultat = $log->fetch();
@@ -107,7 +108,9 @@ function logIn()
     {
       if ($resultat['email_verify'] == "no")
       {
-        $_SESSION['error'] = 'Please confirm your email adress !';
+        $userMail = $resultat['email'];
+        $userCode = $resultat['user_activation_code'];
+        $_SESSION['error'] = 'Please confirm your email adress ! <br> You are not received your confirmation email ?  <br> <a href="http://35.181.46.138/index.php?action=emailconfirmresend&amp;email=' . $userMail . '&amp;code=' . $userCode . '">click here</a>';
         header('Location: view/login_Page.php');
         exit();
       }
@@ -474,7 +477,7 @@ function verifyEmailAdress ()
   $email = $_GET['email'];
   $code = $_GET['code'];
   $db = dbConnect();
-  $mail = $db->prepare('SELECT id_user, email_verify FROM users WHERE email = :email AND user_activation_code = :user_activation_code AND email_verify="no"');
+  $mail = $db->prepare('SELECT id_user, email_verify FROM users WHERE email = :email AND user_activation_code = :user_activation_code');
   $mail->execute(array(
     'email' => $email,
     'user_activation_code' => $code,
@@ -509,10 +512,24 @@ function verifyEmailAdress ()
 }
 
 
+function resendActivationEmail()
+{
+  $subject = "Email verification";
+  $email = $_GET['email'];
+  $user_activation_code = $_GET['code'];
+  $body = "Hello .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+  emailSend($subject, $body, $email);
+  $_SESSION['error'] = "An new verification email has been send";
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
 function dbConnect()
 {
 //  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
+  $db = new PDO('mysql:host=dbinstance.co3x1h7komiw.eu-west-3.rds.amazonaws.com;dbname=dictionary;charset=utf8', 'rbmk', '9kB$1VB4mon$HSPh');
+//  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
