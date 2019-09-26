@@ -12,7 +12,7 @@ function emailSend($subject, $body, $email)
   $mail->isSMTP();
   $mail->SMTPAuth = true;
   $mail->Username = "myowndictionaryinfo@gmail.com";
-  $mail->Password = "wY77R&bVxa&q&A4j";
+  $mail->Password = "xxxxxxxxxxxxx";
   $mail->SMTPSecure = "ssl"; // or TLS
   $mail->Port = 465; //or 587 if TLS
   $mail->Subject = $subject;
@@ -75,7 +75,7 @@ function postSignUp()
     ));
     //email verification send
     $subject = "Email verification";
-    $body = "Hello .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+    $body = "Hello $username .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
     emailSend($subject, $body, $email);
     $_SESSION['error'] = "You have been registered, please check your email";
     $_SESSION['form_data'] = array();
@@ -517,9 +517,63 @@ function resendActivationEmail()
   $subject = "Email verification";
   $email = $_GET['email'];
   $user_activation_code = $_GET['code'];
-  $body = "Hello .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+  $body = "Hello ... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
   emailSend($subject, $body, $email);
   $_SESSION['error'] = "An new verification email has been send";
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
+function resetpasswordverify()
+{
+  $email = $_POST['email'];
+  $db = dbConnect();
+  $emailverify = $db->prepare('SELECT username, user_activation_code FROM users WHERE email = :email');
+  $emailverify->execute(array(
+    'email' => $email,
+  ));
+  $datapasswordverify = $emailverify->fetch();
+  if (empty($datapasswordverify))
+  {
+    $_SESSION['error'] = "Vous n'avez pas de compte créé avec cette adresse email";
+  }
+  else
+  {
+    $username = $datapasswordverify['username'];
+    $code = $datapasswordverify['user_activation_code'];
+    $subject = "Password reset";
+    $body ="Hello $username .... <br> <a href='http://35.181.46.138/index.php?action=resetpasswordlink&amp;username=$username&amp;code=$code'>Please click this link to reset your password</a>";
+    emailSend($subject, $body, $email);
+  }
+  $emailverify->closeCursor();
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
+function resetpasswordredirection()
+{
+    $username = $_GET['username'];
+    $code = $_GET['code'];
+    header("Location: view/reset_password_password.php?username=$username&code=$code");
+}
+
+
+function newpasswordedit()
+{
+  $username = $_POST['username'];
+  $code = $_POST['code'];
+  $password_hache = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
+  $db = dbConnect();
+  $changepassword = $db->prepare('UPDATE users SET password = :password WHERE username = :username AND user_activation_code = :code');
+  $changepassword->execute(array(
+    'password' => $password_hache,
+    'username' => $username,
+    'code' => $code,
+  ));
+  $changepassword->closeCursor();
+  $_SESSION['error'] = "Your password has been successfully changed";
   header('Location: view/login_Page.php');
   exit();
 }
@@ -528,8 +582,7 @@ function resendActivationEmail()
 function dbConnect()
 {
 //  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-  $db = new PDO('mysql:host=dbinstance.co3x1h7komiw.eu-west-3.rds.amazonaws.com;dbname=dictionary;charset=utf8', 'rbmk', '9kB$1VB4mon$HSPh');
-//  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
+  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;

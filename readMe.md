@@ -11,7 +11,7 @@ ToDo Before finish version
 ========================
 1. Add function erase dictionary.
 2. Function show words : show just words and translations by letter ( [a], [b], [c], [d]...)
-3. Registration : verify email, add function "I forgot my password", captcha.
+3. Registration :  captcha.
 4. Responsive design.
 5. React.js
 6. Add function change app language.
