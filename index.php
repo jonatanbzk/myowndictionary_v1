@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('controller/controller.php');
+require('config.php');
 
 try {
 
@@ -183,7 +184,7 @@ try {
         {
           $_SESSION['error'] = 'Passwords are different';
           header('Location: view/login_Page.php');
-        }  
+        }
       }
       else
       {
