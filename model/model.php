@@ -8,17 +8,17 @@ function emailSend($subject, $body, $email)
 {
   require 'vendor/autoload.php';
   $mail= new PHPMailer();
-  $mail->Host = "smtp.gmail.com";
+  $mail->Host = PHPMailer_HOST;
   $mail->isSMTP();
   $mail->SMTPAuth = true;
-  $mail->Username = "myowndictionaryinfo@gmail.com";
-  $mail->Password = "xxxxxxxxxxxxx";
-  $mail->SMTPSecure = "ssl"; // or TLS
-  $mail->Port = 465; //or 587 if TLS
+  $mail->Username = PHPMailer_USER;
+  $mail->Password = PHPMailer_PASSWORD;
+  $mail->SMTPSecure = PHPMailer_SMTP; // or TLS
+  $mail->Port = PHPMailer_PORT; //or 587 if TLS
   $mail->Subject = $subject;
   $mail->isHTML(true);
   $mail->Body = $body;
-  $mail->setFrom('myowndictionaryinfo@gmail.com', 'myowndictionary');
+  $mail->setFrom(PHPMailer_USER, 'myowndictionary');
   $mail->addAddress($email);
   if ($mail->send())
   {
@@ -170,7 +170,7 @@ function addUserDictionary()
   $IfDictExist2 = $_POST['language2'] . '/' . $_POST['language1'];
     if (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
     {
-      throw new Exception('Vous avez déjà un dictionnaire avec ces langues');
+      $_SESSION['error'] = 'Vous avez déjà un dictionnaire avec ces langues';
     }
     else
     {
@@ -190,6 +190,7 @@ function addUserDictionary()
         'language_1' => $language1,
         'language_2' => $language2,
       ));
+      $tabCreate->closeCursor();
       // refresh tagArray on dictionaryPage.php when new dictionary is add
       $_SESSION['tagArray'] = array();
       $tag = $db->prepare('SELECT tag_name FROM tags INNER JOIN users ON tags.id_user = users.id_user WHERE users.username = :username');
@@ -199,7 +200,8 @@ function addUserDictionary()
       {
         array_push($_SESSION['tagArray'], $tag_data['tag_name']);
       }
-      throw new Exception(' Votre dictionnaire ' . $tabName . ' a bien été crée');
+      $_SESSION['error'] = ' Votre dictionnaire ' . $tabName . ' a bien été crée';
+      $tag->closeCursor();
     }
 }
 
@@ -248,22 +250,22 @@ function addaword()
   $dataVerify = $reqData->fetch();
   if (!empty($dataVerify))
   {
-    throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
+    $_SESSION['error'] = 'Vous avez déjà ce mot dans votre dictionnaire';
     $reqData->closeCursor();
   }
   else
   {
     $reqData->closeCursor();
-    $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
-    $word->execute(array(
+    $words = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
+    $words->execute(array(
       'word' => $_POST['addWord1'],
       'translation' => $_POST['addWord2'],
       'id_language_word' => $id_language1,
       'id_language_translation' => $id_language2,
       'id_user' => $_SESSION['login_data']['id_user'],
       ));
+      $words->closeCursor();
   }
-  $word->closeCursor();
 }
 
 
@@ -582,7 +584,7 @@ function newpasswordedit()
 function dbConnect()
 {
 //  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-  $db = new PDO('mysql:host=xxxxxxxxxx;dbname=xxxxxxxxxx;charset=utf8', 'xxxxxxxxxx', 'xxxxxxxxxx');
+  $db = new PDO(DB_HOST_NAME_CHARSET, DB_USER, DB_PASSWORD);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;

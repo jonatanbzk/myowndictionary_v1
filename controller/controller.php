@@ -29,7 +29,7 @@ function changeTag()
 
 function addWord ()
 {
-   $word = addaword ();
+   $words = addaword ();
    $wd = showWordList();
    require('view/dictionaryPage.php');
 }

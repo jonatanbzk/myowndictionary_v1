@@ -18,6 +18,13 @@ ToDo Before finish version
 7. Google Play .... :)
 
 
+Config File
+======================
+To push the code to server, you need to:
+1. Complete config-template.php  file with your own database and email values (username, password ...).
+2. Change the name of config-template.php to config.php   (cp config-template.php config.php).
+
+
 Other idea of Function
 ======================
 1. Function search by word or translation.
