@@ -1,5 +1,6 @@
 <?php
-  require_once('model/model.php');
+require_once('language/locales.php');
+require_once('model/model.php');
 
 function register ()
 {
