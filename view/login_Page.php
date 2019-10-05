@@ -8,7 +8,7 @@
   <label for="password"> <?_('login_password');?> </label> <br> <input type="password" name="password" value="<?php if (array_key_exists('test_login_data', $_SESSION) && array_key_exists('password', $_SESSION['test_login_data'])):echo $_SESSION['test_login_data']['password'];endif; ?>" required> <br>
   <input type="submit" name="" value="Valider">
 </form>
-
+<br>
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
   $_SESSION['error'] = ""; ?>
 <p><?_('login_not_registered_yet');?> <a href="sign_up.php"><?_('login_register');?></a></p>

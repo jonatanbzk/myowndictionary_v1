@@ -30,7 +30,7 @@ function changeTag()
 
 function addWord ()
 {
-   $word = addaword ();
+   $words = addaword ();
    $wd = showWordList();
    require('view/dictionaryPage.php');
 }
@@ -57,14 +57,43 @@ function lunchtest ()
 
 function testVerify ()
 {
-    testRecord ();
-    require('view/dictionaryPage.php');
+  testRecord ();
+  require('view/dictionaryPage.php');
 }
 
 function closeTest()
 {
-    eraseTest ();
-    require('view/dictionaryPage.php');
+  eraseTest ();
+  require('view/dictionaryPage.php');
+}
+
+function emailconfirm()
+{
+  $mail = verifyEmailAdress ();
+  require('view/dictionaryPage.php');
+}
+
+function emailconfirmresend()
+{
+  resendActivationEmail();
+  require('view/dictionaryPage.php');
+}
+
+function resetpassword()
+{
+  $emailverify = resetpasswordverify();
+  require('view/dictionaryPage.php');
+}
+
+function formresetpasswordredirection()
+{
+  resetpasswordredirection();
+}
+
+function newpasswordform()
+{
+  $changepassword = newpasswordedit ();
+  require('view/dictionaryPage.php');
 }
 
 function disconnect ()

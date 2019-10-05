@@ -11,11 +11,18 @@ ToDo Before finish version
 ========================
 1. Add function erase dictionary.
 2. Function show words : show just words and translations by letter ( [a], [b], [c], [d]...)
-3. Registration : verify email, add function "I forgot my password", captcha.
+3. Registration :  captcha.
 4. Responsive design.
 5. React.js
 6. Add function change app language.
 7. Google Play .... :)
+
+
+Config File
+======================
+To push the code to server, you need to:
+1. Complete config-template.php  file with your own database and email values (username, password ...).
+2. Change the name of config-template.php to config.php   (cp config-template.php config.php).
 
 
 Other idea of Function

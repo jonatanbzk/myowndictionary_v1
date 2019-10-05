@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('controller/controller.php');
+require('config.php');
 
 try {
 
@@ -138,6 +139,58 @@ try {
     elseif ($_GET['action'] == 'closeTest')
     {
       closeTest();
+    }
+    elseif ($_GET['action'] == 'emailconfirm')
+    {
+      if (!empty($_GET['email']) and !empty($_GET['code']))
+      {
+        emailconfirm();
+      }
+    }
+    elseif ($_GET['action'] == 'emailconfirmresend')
+    {
+      if (!empty($_GET['email']) and !empty($_GET['code']))
+      {
+        emailconfirmresend();
+      }
+    }
+    elseif ($_GET['action'] == 'resetpassword')
+    {
+      if (!empty($_POST['email']))
+      {
+        resetpassword();
+      }
+      else
+      {
+        header('Location: view/login_Page.php');
+      }
+    }
+    elseif ($_GET['action'] == 'resetpasswordlink')
+    {
+      if (!empty($_GET['username']) and !empty($_GET['code']))
+      {
+        formresetpasswordredirection();
+      }
+    }
+    elseif ($_GET['action'] == 'newpasswordform')
+    {
+      if (isset($_POST['newpassword'], $_POST['newpassword2'], $_POST['username'], $_POST['code']))
+      {
+        if (!empty($_POST['newpassword']) and $_POST['newpassword'] == $_POST['newpassword2'])
+        {
+          newpasswordform();
+        }
+        else
+        {
+          $_SESSION['error'] = 'Passwords are different';
+          header('Location: view/login_Page.php');
+        }
+      }
+      else
+      {
+        $_SESSION['error'] = "Error, your password was not changed";
+        header('Location: view/login_Page.php');
+      }
     }
     elseif ($_GET['action'] == 'deco')
     {

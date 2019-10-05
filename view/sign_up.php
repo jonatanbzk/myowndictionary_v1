@@ -11,7 +11,7 @@
   <label for="repeatpassword"> Confirmer votre mot de passe </label> <br>
   <input type="password" name="repeatpassword" value="<?php if (array_key_exists('form_data', $_SESSION) && array_key_exists('password', $_SESSION['form_data'])):echo $_SESSION['form_data']['password'];endif; ?>" required> <br>
   <label for="email">Adresse e-mail </label> <br>
-  <input type="text" name="email" id="email" value="<?php if (array_key_exists('form_data', $_SESSION) && array_key_exists('email', $_SESSION['form_data'])):echo $_SESSION['form_data']['email'];endif; ?>" required> <br>
+  <input type="email" name="email" id="email" value="<?php if (array_key_exists('form_data', $_SESSION) && array_key_exists('email', $_SESSION['form_data'])):echo $_SESSION['form_data']['email'];endif; ?>" required> <br>
   <p id="validiteCourriel"></p>
   <input type="submit" name="" value="Valider">
 </form>

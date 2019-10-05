@@ -1,7 +1,40 @@
 <?php
+/* Namespace alias. */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// function send email
+function emailSend($subject, $body, $email)
+{
+  require 'vendor/autoload.php';
+  $mail= new PHPMailer();
+  $mail->Host = PHPMailer_HOST;
+  $mail->isSMTP();
+  $mail->SMTPAuth = true;
+  $mail->Username = PHPMailer_USER;
+  $mail->Password = PHPMailer_PASSWORD;
+  $mail->SMTPSecure = PHPMailer_SMTP; // or TLS
+  $mail->Port = PHPMailer_PORT; //or 587 if TLS
+  $mail->Subject = $subject;
+  $mail->isHTML(true);
+  $mail->Body = $body;
+  $mail->setFrom(PHPMailer_USER, 'myowndictionary');
+  $mail->addAddress($email);
+  if ($mail->send())
+  {
+     $_SESSION['error'] = "email send";
+  }
+  else
+  {
+      $_SESSION['error'] = "email not send";
+  }
+}
+
+
 // create account
 function postSignUp()
 {
+
   $username=$_POST['username'];
   $password=$_POST['password'];
   $email=$_POST['email'];
@@ -10,6 +43,8 @@ function postSignUp()
     'username' => $_POST['username'],
     'password' => $_POST['password'],
     'email' => $_POST['email']);
+  $user_activation_code = md5(rand());
+  $email_verify = "no";
   $db = dbConnect();
   $reqData = $db->prepare('SELECT username, email FROM users WHERE username= :username OR email= :email');
   $reqData->execute(array(
@@ -30,13 +65,19 @@ function postSignUp()
   else
   {
     $reqData->closeCursor();
-    $userCreate = $db->prepare('INSERT INTO users(username, password, email, registration_date) VALUES(:username, :password, :email, NOW())');
+    $userCreate = $db->prepare('INSERT INTO users(username, password, email, user_activation_code, email_verify, registration_date) VALUES(:username, :password, :email, :user_activation_code, :email_verify, NOW())');
     $userCreate->execute(array(
     'username' => $username,
 	  'password' => $pass_hache,
     'email' => $email,
+    'user_activation_code' => $user_activation_code,
+    'email_verify' => $email_verify
     ));
-    $_SESSION['error'] = "Votre compte a été créer";
+    //email verification send
+    $subject = "Email verification";
+    $body = "Hello $username .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+    emailSend($subject, $body, $email);
+    $_SESSION['error'] = "You have been registered, please check your email";
     $_SESSION['form_data'] = array();
     header('Location: view/login_Page.php');
   }
@@ -50,7 +91,7 @@ function logIn()
     'password' => $_POST['password']);
   $username = $_POST['username'];
   $db = dbConnect();
-  $log = $db->prepare('SELECT id_user, password FROM users WHERE username = :username');
+  $log = $db->prepare('SELECT id_user, password, email, email_verify, user_activation_code FROM users WHERE username = :username');
   $log->execute(array(
   'username' => $username));
   $resultat = $log->fetch();
@@ -65,11 +106,22 @@ function logIn()
   {
     if (password_verify($_POST['password'], $resultat['password']))
     {
-      $_SESSION['test_login_data'] = array();
-      $_SESSION['login_data'] = array (
-      'username' => $_POST['username'],
-      'id_user' => $resultat['id_user']);
-      $log->closeCursor();
+      if ($resultat['email_verify'] == "no")
+      {
+        $userMail = $resultat['email'];
+        $userCode = $resultat['user_activation_code'];
+        $_SESSION['error'] = 'Please confirm your email adress ! <br> You are not received your confirmation email ?  <br> <a href="http://35.181.46.138/index.php?action=emailconfirmresend&amp;email=' . $userMail . '&amp;code=' . $userCode . '">click here</a>';
+        header('Location: view/login_Page.php');
+        exit();
+      }
+      elseif ($resultat['email_verify']=="yes")
+      {
+        $_SESSION['test_login_data'] = array();
+        $_SESSION['login_data'] = array (
+          'username' => $_POST['username'],
+          'id_user' => $resultat['id_user']);
+          $log->closeCursor();
+      }
     }
     else
     {
@@ -118,7 +170,7 @@ function addUserDictionary()
   $IfDictExist2 = $_POST['language2'] . '/' . $_POST['language1'];
     if (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
     {
-      throw new Exception('Vous avez déjà un dictionnaire avec ces langues');
+      $_SESSION['error'] = 'Vous avez déjà un dictionnaire avec ces langues';
     }
     else
     {
@@ -138,6 +190,7 @@ function addUserDictionary()
         'language_1' => $language1,
         'language_2' => $language2,
       ));
+      $tabCreate->closeCursor();
       // refresh tagArray on dictionaryPage.php when new dictionary is add
       $_SESSION['tagArray'] = array();
       $tag = $db->prepare('SELECT tag_name FROM tags INNER JOIN users ON tags.id_user = users.id_user WHERE users.username = :username');
@@ -147,7 +200,8 @@ function addUserDictionary()
       {
         array_push($_SESSION['tagArray'], $tag_data['tag_name']);
       }
-      throw new Exception(' Votre dictionnaire ' . $tabName . ' a bien été crée');
+      $_SESSION['error'] = ' Votre dictionnaire ' . $tabName . ' a bien été crée';
+      $tag->closeCursor();
     }
 }
 
@@ -196,22 +250,22 @@ function addaword()
   $dataVerify = $reqData->fetch();
   if (!empty($dataVerify))
   {
-    throw new Exception('Vous avez déjà ce mot dans votre dictionnaire');
+    $_SESSION['error'] = 'Vous avez déjà ce mot dans votre dictionnaire';
     $reqData->closeCursor();
   }
   else
   {
     $reqData->closeCursor();
-    $word = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
-    $word->execute(array(
+    $words = $db->prepare('INSERT INTO words(word, translation, id_language_word, id_language_translation ,id_user,  add_date) VALUES(:word, :translation, :id_language_word, :id_language_translation, :id_user,  NOW())');
+    $words->execute(array(
       'word' => $_POST['addWord1'],
       'translation' => $_POST['addWord2'],
       'id_language_word' => $id_language1,
       'id_language_translation' => $id_language2,
       'id_user' => $_SESSION['login_data']['id_user'],
       ));
+      $words->closeCursor();
   }
-  $word->closeCursor();
 }
 
 
@@ -420,10 +474,117 @@ function eraseTest ()
 }
 
 
+function verifyEmailAdress ()
+{
+  $email = $_GET['email'];
+  $code = $_GET['code'];
+  $db = dbConnect();
+  $mail = $db->prepare('SELECT id_user, email_verify FROM users WHERE email = :email AND user_activation_code = :user_activation_code');
+  $mail->execute(array(
+    'email' => $email,
+    'user_activation_code' => $code,
+  ));
+  $dataUser = $mail->fetch();
+  if (empty($dataUser))
+  {
+    throw new Exception("Vous n'avez pas de compte créé");
+    header('Location: view/login_Page.php');
+  }
+  else
+  {
+    if ($dataUser['email_verify']=="no")
+    {
+      $editUser = $db->prepare('UPDATE users SET email_verify = :email_verify WHERE email = :email');
+      $editUser->execute(array(
+        'email_verify' => "yes",
+        'email' => $email,
+      ));
+      $_SESSION['error'] = "Your email is now validated";
+      header('Location: view/login_Page.php');
+      exit();
+    }
+    elseif ($dataUser['email_verify']=="yes")
+    {
+      $_SESSION['error'] = "Your email is already validated";
+      header('Location: view/login_Page.php');
+      exit();
+    }
+  }
+  $mail->closeCursor();
+}
+
+
+function resendActivationEmail()
+{
+  $subject = "Email verification";
+  $email = $_GET['email'];
+  $user_activation_code = $_GET['code'];
+  $body = "Hello ... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
+  emailSend($subject, $body, $email);
+  $_SESSION['error'] = "An new verification email has been send";
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
+function resetpasswordverify()
+{
+  $email = $_POST['email'];
+  $db = dbConnect();
+  $emailverify = $db->prepare('SELECT username, user_activation_code FROM users WHERE email = :email');
+  $emailverify->execute(array(
+    'email' => $email,
+  ));
+  $datapasswordverify = $emailverify->fetch();
+  if (empty($datapasswordverify))
+  {
+    $_SESSION['error'] = "Vous n'avez pas de compte créé avec cette adresse email";
+  }
+  else
+  {
+    $username = $datapasswordverify['username'];
+    $code = $datapasswordverify['user_activation_code'];
+    $subject = "Password reset";
+    $body ="Hello $username .... <br> <a href='http://35.181.46.138/index.php?action=resetpasswordlink&amp;username=$username&amp;code=$code'>Please click this link to reset your password</a>";
+    emailSend($subject, $body, $email);
+  }
+  $emailverify->closeCursor();
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
+function resetpasswordredirection()
+{
+    $username = $_GET['username'];
+    $code = $_GET['code'];
+    header("Location: view/reset_password_password.php?username=$username&code=$code");
+}
+
+
+function newpasswordedit()
+{
+  $username = $_POST['username'];
+  $code = $_POST['code'];
+  $password_hache = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
+  $db = dbConnect();
+  $changepassword = $db->prepare('UPDATE users SET password = :password WHERE username = :username AND user_activation_code = :code');
+  $changepassword->execute(array(
+    'password' => $password_hache,
+    'username' => $username,
+    'code' => $code,
+  ));
+  $changepassword->closeCursor();
+  $_SESSION['error'] = "Your password has been successfully changed";
+  header('Location: view/login_Page.php');
+  exit();
+}
+
+
 function dbConnect()
 {
 //  $db = new PDO('mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
-  $db = new PDO('mysql:host=DataBaseURL;dbname=dictionary;charset=utf8', 'XXXXXUSERNAMEXXXXX', 'XXXXXPASSWORDXXXXX');
+  $db = new PDO(DB_HOST_NAME_CHARSET, DB_USER, DB_PASSWORD);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
   return $db;
