@@ -7,6 +7,21 @@ try {
 
   if (isset($_GET['action']))
   {
+    if ($_GET['action'] == 'signUpLink')
+    {
+      signUpLink();
+      exit();
+    }
+    if ($_GET['action'] == 'forgotPasswordLink')
+    {
+      forgotPasswordLink();
+      exit();
+    }
+    if ($_GET['action'] == 'haveAccountLink')
+    {
+      haveAccountLink();
+      exit();
+    }
     if ($_GET['action'] == 'signUp')
     {
       if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
@@ -198,12 +213,12 @@ try {
     }
     else
     {
-      echo 'Erreur : aucun identifiant de billet envoyé';
+      echo 'Erreur : aucun identifiant de billet envoyétest';
     }
   }
 else
 {
-   include('view/login_Page.php');
+    include('view/login_Page.php');    // header('Location: view/login_Page.php');
 }
 }
 catch (\Exception $e)

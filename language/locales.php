@@ -8,10 +8,10 @@ if (!isset($_SESSION['locale'])) {
 
 $loc = array();
 
-require('language/fr_FR.php');
-require('language/en_US.php');
+require('fr_FR.php');
+require('en_US.php');
 
-function _($key) {
+function I($key) {
   global $loc;
   $lang = $_SESSION['locale'];
   $default = 'fr_FR';

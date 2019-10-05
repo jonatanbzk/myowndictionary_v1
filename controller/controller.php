@@ -7,6 +7,21 @@ function register ()
   $userCreate = postSignUp();
 }
 
+function signUpLink()
+{
+  require('view/sign_up.php');
+}
+
+function forgotPasswordLink ()
+{
+  require('view/reset_password_email.php');
+}
+
+function haveAccountLink ()
+{
+  require('view/login_Page.php');
+}
+
 function connect ()
 {
   $log = logIn();

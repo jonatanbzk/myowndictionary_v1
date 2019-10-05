@@ -1,9 +1,9 @@
 <?php ob_start(); ?>
 
 <form class="" action="../index.php?action=resetpassword" method="post">
-  <label for="email">Adresse email</label> <br>
+  <label for="email"><?echo I('sign_email');?></label> <br>
   <input type="email" name="email" placeholder="@" required> <br>
-  <input type="submit" name="" value="Valider">
+  <input type="submit" name="" value=<?echo I('login_submit');?>>
 </form>
 
 
