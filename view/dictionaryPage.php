@@ -119,7 +119,7 @@ foreach ($colorArray as $color) {
       <option value="select"><?php echo I('dictionary_test_type');?></option>
       <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<option value="' . $_SESSION["personel_language_array"][0] . '/' . $_SESSION["personel_language_array"][1] . '">' . $_SESSION["personel_language_array"][0] . '=>' . $_SESSION["personel_language_array"][1] . '</option>
       <option value="' . $_SESSION["personel_language_array"][1] . '/' . $_SESSION["personel_language_array"][0] . '">' . $_SESSION["personel_language_array"][1] . '=>' . $_SESSION["personel_language_array"][0] . '</option>
-      <option value="random">' . echo I('dictionary_random') . '</option>' ;endif;?>
+      <option value="random">' . I('dictionary_random') . '</option>' ;endif;?>
     </select>  <br>
     <label for="numberQuestion"><?php echo I('dictionary_number_quest');?></label> <input type="text" name="numberQuestion" maxlength="100" placeholder="<?php echo I('dictionary_default');?>: 10 questions"/>
     <input type="submit" name="" value="Start">
