@@ -7,10 +7,10 @@ echo $_SESSION['evaluation']['comment'] . "<br>";
 }
  ?>
 
-<button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')"><?echo I('result_detail');?></button>
+<button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')"><?php echo I('result_detail');?></button>
 </div>
 <div id="response_div" style="display: none">
-<p><?echo I('result_good');?></p>
+<p><?php echo I('result_good');?></p>
 <?php
 if (!empty($_SESSION['resultArray']['goodwords']) and !empty($_SESSION['resultArray']['goodtranslations']))
 {
@@ -21,7 +21,7 @@ $goodResponseLength = count($_SESSION['resultArray']['goodwords']);
   }
 }
 ?>
-<p><?echo I('result_wrong');?></p>
+<p><?php echo I('result_wrong');?></p>
 <?php
 if (isset($_SESSION['resultArray'], $_SESSION['testLength']))
 {
@@ -33,6 +33,6 @@ $badResponseLength = count($_SESSION['resultArray']['badwords']);
 }
 ?>
 <form class="" action="index.php?action=closeTest" method="post">
-<input type="submit" name="" value=<?echo I('result_close');?>>
+<input type="submit" name="" value=<?php echo I('result_close');?>>
 </form>
 </div>
