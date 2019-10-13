@@ -48,7 +48,43 @@ $lang['result_good'] = "Réponse(s) correcte(s):";
 $lang['result_wrong'] = "Réponse(s) fausse(s):";
 $lang['result_good_answer'] = "Bonne réponse : ";
 $lang['result_close'] = "Fermer le test";
-
+// model.php
+$lang['model_email_send'] = "email envoyé";
+$lang['model_email_no_send'] = "email non envoyé";
+$lang['model_username_used'] = "Pseudo déjà prit";
+$lang['model_email_used'] = "Email déjà utilisé";
+$lang['model_check_email'] = "Vous êtes inscrit, vérifier votre boite mail";
+$lang['model_wrong_id'] = "Mauvais identifiant ou mot de passe !";
+$lang['model_dictionary_exist'] = "Vous avez déjà un dictionnaire avec ces langues";
+$lang['model_dictionary'] = "Votre dictionnaire";
+$lang['model_create'] = " a bien été crée";
+$lang['model_word_exist'] = "Vous avez déjà ce mot dans votre dictionnaire";
+$lang['model_count_noexist'] = "Vous n'avez pas de compte créé";
+$lang['model_email_valid'] = "Votre email est vérifié";
+$lang['model_email_already_valid'] = "Your email is already validated";
+$lang['model_email_resend'] = "Un nouveau email de vérification vous a été envoyé";
+$lang['model_no_count'] = "Vous n'avez pas de compte créé avec cette adresse email";
+$lang['model_password'] = "Votre mot de passe a bien été changé";
+// model.php results test
+$lang['test_comment_one'] = "Travailles encore un peu !";
+$lang['test_comment_two'] = "Continue les efforts !";
+$lang['test_comment_three'] = "Bien !";
+$lang['test_comment_four'] = "Excellent !";
+// controller.php
+$lang['controller_disconnect'] = "Vous êtes bien déconnecté";
+// index.php
+$lang['index_empty_input'] = "Veuiller compléter tout les champs";
+$lang['index_two_languages'] = "Veuillez choisir deux langues";
+$lang['index_different_languages'] = "Veuillez choisir deux langues différentes";
+$lang['index_no_choice'] = "Ces langues ne font pas partie des choix possibles";
+$lang['index_choose_dictionary'] = "Veuillez choisir un dictionnaire";
+$lang['index_add_word'] = "Veuillez ajouter un mot et sa traduction";
+$lang['index_letter'] = "Veuillez n\'utiliser que des lettres";
+$lang['index_test_length'] = "Le test ne peut pas contenir plus de 100 questions";
+$lang['index_test_type'] = "Veuillez choisir le type de test voulu";
+$lang['index_password'] = "Les mot de passe ne sont pas identique";
+$lang['index_error_password'] = "Erreur, votre mot de passe n'a pas été changé";
+$lang['index_id'] = "Erreur : aucun identifiant de billet envoyé";
 
 
 $loc['fr_FR'] = $lang;

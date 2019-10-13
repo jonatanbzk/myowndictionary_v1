@@ -32,7 +32,7 @@ $lang['dictionary_edit'] = "edit";
 $lang['dictionary_erase'] = "erase";
 $lang['dictionary_add_word'] = "Add a word";
 $lang['dictionary_in'] = "In";
-$lang['dictionary_translation_in'] = "The translation in";
+$lang['dictionary_translation_in'] = "The translation in ";
 $lang['dictionary_cancel'] = "Cancel";
 $lang['dictionary_show_test'] = "Do a test";
 $lang['dictionary_test_type'] = "Choose test type ";
@@ -48,7 +48,42 @@ $lang['result_good'] = "Good answer";
 $lang['result_wrong'] = "Bad answer";
 $lang['result_good_answer'] = "Good answer : ";
 $lang['result_close'] = "Close the test";
+// model.php
+$lang['model_email_send'] = "email send";
+$lang['model_email_no_send'] = "email not send";
+$lang['model_username_used'] = "Username already used";
+$lang['model_email_used'] = "Email already used";
+$lang['model_check_email'] = "You have been registered, please check your email";
+$lang['model_wrong_id'] = "Wrong username or password";
+$lang['model_dictionary_exist'] = "You already have a dictionary with these langues";
+$lang['model_dictionary'] = "Your dictionary";
+$lang['model_create'] = " has been created";
+$lang['model_word_exist'] = "You already have this word in your dictionary";
+$lang['model_count_noexist'] = "You don't have any account";
+$lang['model_email_valid'] = "Your email is now validated";
+$lang['model_email_already_valid'] = "Your email is already validated";
+$lang['model_email_resend'] = "An new verification email has been send";
+$lang['model_no_count'] = "You don't have any account with this email adress";
+$lang['model_password'] = "Your password has been successfully changed";
+// model.php results test
+$lang['test_comment_one'] = "Work a bit more !";
+$lang['test_comment_two'] = "Continue the efforts !";
+$lang['test_comment_three'] = "Good !";
+$lang['test_comment_four'] = "Excellent !";
+// controller.php
+$lang['controller_disconnect'] = "You are disconnect";
+// index.php
+$lang['index_empty_input'] = "Please complete all required fields";
+$lang['index_two_languages'] = "Please select two languages";
+$lang['index_different_languages'] = "Please select two different languages";
+$lang['index_no_choice'] = "This languages are not available";
+$lang['index_choose_dictionary'] = "Please choose a dictionary";
+$lang['index_add_word'] = "Add a word and his translation";
+$lang['index_letter'] = "Use only letter";
+$lang['index_test_length'] = "Max test length is 100 questions";
+$lang['index_test_type'] = "Please choose the test type";
+$lang['index_password'] = "Passwords are different";
+$lang['index_error_password'] = "Error, your password was not changed";
+$lang['index_id'] = "Error : No id send";
 
-
-
-$loc['en_EN'] = $lang;
+$loc['en_US'] = $lang;

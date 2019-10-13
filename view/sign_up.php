@@ -15,8 +15,10 @@
   <input type="submit" name="" value=<?php echo I('login_submit');?>>
 </form>
 
-<?php echo $_SESSION['error'];
-    $_SESSION['error'] = "";
+<?php if (array_key_exists('error', $_SESSION)):echo $_SESSION['error'] . '<br>';
+    $_SESSION['error'] = "";endif;
+    if (array_key_exists('mail', $_SESSION)):echo $_SESSION['mail'];
+        $_SESSION['error'] = "";endif;
 ?>
 
 <p><?php echo I('sign_I_already_have_account');?></p>

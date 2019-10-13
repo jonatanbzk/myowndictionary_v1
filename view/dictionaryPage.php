@@ -1,7 +1,7 @@
 <?php
 if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data']['username']))
 {
-    header('location:../index.php');
+    require('../index.php');
 }
 ob_start(); ?>
 
@@ -23,7 +23,7 @@ foreach ($colorArray as $color) {
 </form>
 
 <div id="hello">
-  <p><?php echo I('dictionary_hello') . "   " . $_SESSION['login_data']['username']; ?></p>
+  <p><?php echo I('dictionary_hello') . '   ' . $_SESSION['login_data']['username']; ?></p>
 </div>
 
 <div id="dictionary">
@@ -55,7 +55,7 @@ foreach ($colorArray as $color) {
         } ?>
       </select> <br>
       <input type="hidden" name="user_name" value="<?php echo $_SESSION['login_data']['username'] ?>" />  <br>
-      <input type="submit" name=""></button> <button type="button" name="button" id="" onclick="toggleForm('add_languages_form', 'add_languages_button')">Annuler</button>
+      <input type="submit" name="" value="<?php I('login_submit'); ?>"></> <button type="button" name="button" id="" onclick="toggleForm('add_languages_form', 'add_languages_button')"><?php echo I('dictionary_cancel'); ?></button>
     </form>
     <!--  Choose dictionary  -->
     <form class="" action="index.php?action=changeTag" method="post">
@@ -77,11 +77,18 @@ foreach ($colorArray as $color) {
 <div id="viewDictionary" style="display: <?php if (array_key_exists('personel_language_array', $_SESSION)): echo "block"; else: echo "none"; endif; ?>">
     <button type="button" name="button" id="show_words_button" style="display: block;" onclick="toggleForm('show_words_div', 'show_words_button')"><?php echo I('dictionary_open_dictionary');?></button>
   <div id="show_words_div" style="display: none;">
-    <button type="button" id="hide_words_button" onclick="toggleForm('show_words_div', 'show_words_button')"><?php echo I('dictionnaire_close_dictionary');?></button>
+    <button type="button" id="hide_words_button" onclick="toggleForm('show_words_div', 'show_words_button')"><?php echo I('dictionary_close_dictionary');?></button>
     <table id="words_table">
       <thead>
         <tr>
-          <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<th colspan="2">' . $_SESSION['personel_language_array'][0] . " / " . $_SESSION['personel_language_array'][1] . '</th> <th>' . I('dictionary_edit') . '<br>' . I('dictionary_erase') . '</th>';endif;?>
+          <?php if (array_key_exists('personel_language_array', $_SESSION)):echo
+           '<th colspan="2">' . $_SESSION['personel_language_array'][0] . ' / ' .
+           $_SESSION["personel_language_array"][1] . '</th><th>';endif;
+           if (array_key_exists('personel_language_array', $_SESSION)):echo
+           I('dictionary_edit');endif;
+           if (array_key_exists('personel_language_array', $_SESSION)):echo '<br>';endif;
+           if (array_key_exists('personel_language_array', $_SESSION)):echo
+           I('dictionary_erase') . '</th>';endif?>
         </tr>
       </thead>
       <tbody>
@@ -92,7 +99,9 @@ foreach ($colorArray as $color) {
           for ($i = 0; $i < $length; $i++)
           {
             echo '<tr><td>' . htmlspecialchars(ucfirst($_SESSION['wordsAndTranslationArray']['words'][$i])) . '</td><td>' . htmlspecialchars(ucfirst($_SESSION['wordsAndTranslationArray']['translations'][$i])) . '</td><td><input type="checkbox" id="checkboxId' . ($i+1) . '"/></td></tr>';
-            echo '<tr class="trHide" id="trHide' . ($i+1) . '"><form method="post" action="index.php?action=editWord"><td><input type="text" name="newWord" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="newTranslation" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '"><button type="submit">' . I('dictionary_edit') . '</button></form><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '" /><button type="submit">' . I('dictionary_erase') . '</button></form></td></tr>';
+            echo '<tr class="trHide" id="trHide' . ($i+1) . '"><form method="post" action="index.php?action=editWord"><td><input type="text" name="newWord" placeholder=' . $_SESSION['personel_language_array'][0] . '></td><td><input type="text" name="newTranslation" name="other" placeholder=' . $_SESSION['personel_language_array'][1] . '></td><td><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '"><button type="submit">';
+            echo I('dictionary_edit') . '</button></form><form method="post" action="index.php?action=eraseWord"><input type="hidden" name="idWord" value="' . $_SESSION['wordsAndTranslationArray']['ids'][$i] . '" /><button type="submit">';
+            echo I('dictionary_erase') . '</button></form></td></tr>';
           }
         }
         ?>
@@ -119,7 +128,9 @@ foreach ($colorArray as $color) {
       <option value="select"><?php echo I('dictionary_test_type');?></option>
       <?php if (array_key_exists('personel_language_array', $_SESSION)):echo '<option value="' . $_SESSION["personel_language_array"][0] . '/' . $_SESSION["personel_language_array"][1] . '">' . $_SESSION["personel_language_array"][0] . '=>' . $_SESSION["personel_language_array"][1] . '</option>
       <option value="' . $_SESSION["personel_language_array"][1] . '/' . $_SESSION["personel_language_array"][0] . '">' . $_SESSION["personel_language_array"][1] . '=>' . $_SESSION["personel_language_array"][0] . '</option>
-      <option value="random">' . I('dictionary_random') . '</option>' ;endif;?>
+      <option value="random">';endif;
+      if (array_key_exists('personel_language_array', $_SESSION)):echo
+      I('dictionary_random') . '</option>' ;endif;?>
     </select>  <br>
     <label for="numberQuestion"><?php echo I('dictionary_number_quest');?></label> <input type="text" name="numberQuestion" maxlength="100" placeholder="<?php echo I('dictionary_default');?>: 10 questions"/>
     <input type="submit" name="" value="Start">

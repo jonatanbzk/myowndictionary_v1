@@ -114,6 +114,6 @@ function newpasswordform()
 function disconnect ()
 {
   session_destroy();
-  $_SESSION['error'] = 'Vous êtes bien déconnecté';
-  header('Location: view/login_Page.php');
+  $_SESSION['error'] = I('controller_disconnect');
+  require('view/login_Page.php');
 }

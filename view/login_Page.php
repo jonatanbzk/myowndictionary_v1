@@ -12,8 +12,10 @@
   <input type="submit" name="" value=<?php echo I('login_submit');?>>
 </form>
 <br>
-<?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
-  $_SESSION['error'] = ""; ?>
+<?php if (isset($_SESSION['error'])): echo $_SESSION['error'] . '<br>';endif;
+  $_SESSION['error'] = "";
+  if (isset($_SESSION['mail'])): echo $_SESSION['mail'];endif;
+    $_SESSION['mail'] = ""; ?>
 
 <br>
 <form action="index.php?action=forgotPasswordLink" method="post">

@@ -22,11 +22,11 @@ function emailSend($subject, $body, $email)
   $mail->addAddress($email);
   if ($mail->send())
   {
-     $_SESSION['error'] = "email send";
+     $_SESSION['mail'] = I('model_email_send') . '  ';
   }
   else
   {
-      $_SESSION['error'] = "email not send";
+      $_SESSION['mail'] = I('model_email_no_send');
   }
 }
 
@@ -54,13 +54,13 @@ function postSignUp()
   $dataVerify = $reqData->fetch();
   if ($dataVerify['username'] == $username)
   {
-    $_SESSION['error'] = "Pseudo déjà prit";
-    header('Location: view/sign_up.php');
+    $_SESSION['error'] = I('model_username_used');
+    require('view/sign_up.php');
   }
   elseif ($dataVerify['email'] == $email)
   {
-    $_SESSION['error'] = "Email déjà utilisé";
-    header('Location: view/sign_up.php');
+    $_SESSION['error'] = I('model_email_used');
+    require('view/sign_up.php');
   }
   else
   {
@@ -77,9 +77,9 @@ function postSignUp()
     $subject = "Email verification";
     $body = "Hello $username .... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
     emailSend($subject, $body, $email);
-    $_SESSION['error'] = "You have been registered, please check your email";
+    $_SESSION['error'] = I('model_check_email');
     $_SESSION['form_data'] = array();
-    header('Location: view/login_Page.php');
+    require('view/login_Page.php');
   }
 }
 
@@ -98,8 +98,8 @@ function logIn()
   //password verification
   if (!$resultat)
   {
-    $_SESSION['error'] = 'Mauvais identifiant ou mot de passe !';
-    header('Location: view/login_Page.php');
+    $_SESSION['error'] = I('model_wrong_id');
+    require('view/login_Page.php');
     exit();
   }
   else
@@ -111,7 +111,7 @@ function logIn()
         $userMail = $resultat['email'];
         $userCode = $resultat['user_activation_code'];
         $_SESSION['error'] = 'Please confirm your email adress ! <br> You are not received your confirmation email ?  <br> <a href="http://35.181.46.138/index.php?action=emailconfirmresend&amp;email=' . $userMail . '&amp;code=' . $userCode . '">click here</a>';
-        header('Location: view/login_Page.php');
+        require('view/login_Page.php');
         exit();
       }
       elseif ($resultat['email_verify']=="yes")
@@ -125,8 +125,8 @@ function logIn()
     }
     else
     {
-      $_SESSION['error'] = 'Mauvais identifiant ou mot de passe !';
-      header('Location: view/login_Page.php');
+      $_SESSION['error'] = I('model_wrong_id');
+      require('view/login_Page.php');
       exit();
     }
   }
@@ -170,7 +170,7 @@ function addUserDictionary()
   $IfDictExist2 = $_POST['language2'] . '/' . $_POST['language1'];
     if (in_array($IfDictExist1, $_SESSION['tagArray']) or in_array($IfDictExist2, $_SESSION['tagArray']))
     {
-      $_SESSION['error'] = 'Vous avez déjà un dictionnaire avec ces langues';
+      $_SESSION['error'] = I('model_dictionary_exist');
     }
     else
     {
@@ -200,7 +200,7 @@ function addUserDictionary()
       {
         array_push($_SESSION['tagArray'], $tag_data['tag_name']);
       }
-      $_SESSION['error'] = ' Votre dictionnaire ' . $tabName . ' a bien été crée';
+      $_SESSION['error'] = I('model_dictionary') . $tabName . I('model_create');
       $tag->closeCursor();
     }
 }
@@ -250,7 +250,7 @@ function addaword()
   $dataVerify = $reqData->fetch();
   if (!empty($dataVerify))
   {
-    $_SESSION['error'] = 'Vous avez déjà ce mot dans votre dictionnaire';
+    $_SESSION['error'] = I('model_word_exist');
     $reqData->closeCursor();
   }
   else
@@ -448,16 +448,16 @@ function testRecord()
   $comment = "";
   if ($evaluation<(1/3))
   {
-    $comment = "Travailles encore un peu !";
+    $comment = I('test_comment_one');
   }
   elseif ($evaluation>=(1/3) and $evaluation<(2/3)) {
-    $comment = "Continue les efforts !";
+    $comment = I('test_comment_two');
   }
   elseif ($evaluation>=(2/3) and $evaluation<(4/5)) {
-    $comment = "Bien !";
+    $comment = I('test_comment_three');
   }
   elseif ($evaluation>=(4/5)) {
-    $comment = "Excellent !";
+    $comment = I('test_comment_four');
   }
   $_SESSION['evaluation']['note'] = ($evaluation*$testLength) . "/" . $testLength;
   $_SESSION['evaluation']['comment'] = $comment;
@@ -487,8 +487,8 @@ function verifyEmailAdress ()
   $dataUser = $mail->fetch();
   if (empty($dataUser))
   {
-    throw new Exception("Vous n'avez pas de compte créé");
-    header('Location: view/login_Page.php');
+    throw new Exception(I('model_count_noexist'));
+    require('view/login_Page.php');
   }
   else
   {
@@ -499,14 +499,14 @@ function verifyEmailAdress ()
         'email_verify' => "yes",
         'email' => $email,
       ));
-      $_SESSION['error'] = "Your email is now validated";
-      header('Location: view/login_Page.php');
+      $_SESSION['error'] = I('model_email_valid');
+      require('view/login_Page.php');
       exit();
     }
     elseif ($dataUser['email_verify']=="yes")
     {
-      $_SESSION['error'] = "Your email is already validated";
-      header('Location: view/login_Page.php');
+      $_SESSION['error'] = I('model_email_already_valid');
+      require('view/login_Page.php');
       exit();
     }
   }
@@ -521,8 +521,8 @@ function resendActivationEmail()
   $user_activation_code = $_GET['code'];
   $body = "Hello ... <br> <a href='http://35.181.46.138/index.php?action=emailconfirm&amp;email=$email&amp;code=$user_activation_code'>Please click this link to confirm your email</a>";
   emailSend($subject, $body, $email);
-  $_SESSION['error'] = "An new verification email has been send";
-  header('Location: view/login_Page.php');
+  $_SESSION['error'] = I('model_email_resend');
+  require('view/login_Page.php');
   exit();
 }
 
@@ -538,7 +538,7 @@ function resetpasswordverify()
   $datapasswordverify = $emailverify->fetch();
   if (empty($datapasswordverify))
   {
-    $_SESSION['error'] = "Vous n'avez pas de compte créé avec cette adresse email";
+    $_SESSION['error'] = I('model_no_count');
   }
   else
   {
@@ -549,8 +549,7 @@ function resetpasswordverify()
     emailSend($subject, $body, $email);
   }
   $emailverify->closeCursor();
-  header('Location: view/login_Page.php');
-  exit();
+  require('view/login_Page.php');
 }
 
 
@@ -558,7 +557,7 @@ function resetpasswordredirection()
 {
     $username = $_GET['username'];
     $code = $_GET['code'];
-    header("Location: view/reset_password_password.php?username=$username&code=$code");
+    require("view/reset_password_password.php");
 }
 
 
@@ -575,9 +574,8 @@ function newpasswordedit()
     'code' => $code,
   ));
   $changepassword->closeCursor();
-  $_SESSION['error'] = "Your password has been successfully changed";
-  header('Location: view/login_Page.php');
-  exit();
+  $_SESSION['error'] = I('model_password');
+  require('view/login_Page.php');
 }
 
 

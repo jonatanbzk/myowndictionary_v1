@@ -1,11 +1,9 @@
-<div id="responseId" style="display: block;">
-<?php
-if (isset($_SESSION['evaluation']))
+<div id="responseId" style="display: block">
+<?php if (isset($_SESSION['evaluation']))
 {
-echo $_SESSION['evaluation']['note'] . "  ";
-echo $_SESSION['evaluation']['comment'] . "<br>";
-}
- ?>
+echo $_SESSION['evaluation']['note'] . ' ';
+echo $_SESSION['evaluation']['comment'] . '<br>';
+}?>
 
 <button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')"><?php echo I('result_detail');?></button>
 </div>
@@ -28,7 +26,8 @@ if (isset($_SESSION['resultArray'], $_SESSION['testLength']))
 $badResponseLength = count($_SESSION['resultArray']['badwords']);
   for ($i=0; $i<$badResponseLength; $i++)
   {
-    echo ucfirst($_SESSION['resultArray']['badwords'][$i]) . " ≠ " . ucfirst($_SESSION['resultArray']['badtranslations'][$i]) . I('result_good_answer') . ucfirst($_SESSION['resultArray']['response'][$i]) . "<br>";
+    echo ucfirst($_SESSION['resultArray']['badwords'][$i]) . " ≠ " . ucfirst($_SESSION['resultArray']['badtranslations'][$i]) . '   ';
+    echo I('result_good_answer') . ucfirst($_SESSION['resultArray']['response'][$i]) . "<br>";
   }
 }
 ?>

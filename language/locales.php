@@ -1,6 +1,7 @@
 <?php
 if (isset($_GET['locale'])) {
   $_SESSION['locale'] = $_GET['locale'];
+//  $_SESSION['error'] = $_GET['locale'];
 }
 if (!isset($_SESSION['locale'])) {
   $_SESSION['locale'] = 'fr_FR';
