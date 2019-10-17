@@ -37,20 +37,21 @@ foreach ($colorArray as $color) {
       <select class="language_1" name="language1">
         <option value="select"><?php echo I('dictionary_select_language_one');?></option>
         <?php
-        foreach ($_SESSION['languagesArray'] as $key)
+        $listLength = count($_SESSION['languagesArray']['language_id']);
+        for (var i=0; i<$listLength; i++)
         {
           ?>
-          <option value="<?php echo $key ?>"><?php echo $key ?></option>
+          <option value="<?php echo $_SESSION['languagesArray']['language_id'][i] ?>"><?php echo $_SESSION['languagesArray']['language'][i] ?></option>
           <?php
         } ?>
       </select> <br>
       <select class="language_2" name="language2">
         <option value="select"><?php echo I('dictionary_select_language_two');?></option>
         <?php
-        foreach ($_SESSION['languagesArray'] as $key)
+        for (var i=0; i<$listLength; i++)
         {
           ?>
-          <option value="<?php echo $key ?>"><?php echo $key ?></option>
+          <option value="<?php echo $_SESSION['languagesArray']['language_id'][i] ?>"><?php echo $_SESSION['languagesArray']['language'][i] ?></option>
           <?php
         } ?>
       </select> <br>
