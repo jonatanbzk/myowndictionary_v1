@@ -20,6 +20,25 @@ modified form add tag :
   change loop return id language
 
 2. now change getTag
-first verify step 1!! commit
 change tags db just use id lang change old user
 change function get tag use only id and change with function languageId
+Before :
+CREATE TABLE `tags` (
+  `id_tag` int(11) NOT NULL,
+  `tag_name` varchar(255) NOT NULL,
+  `tag_name2` varchar(255) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `language_1` varchar(255) NOT NULL,
+  `language_2` varchar(255) NOT NULL,
+  `add_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+After :
+CREATE TABLE `tags` (
+  `id_tag` int(11) NOT NULL,
+  `tag_name` int(11) NOT NULL,
+  `tag_name2` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `language_1` int(11) NOT NULL,
+  `language_2` int(11) NOT NULL,
+  `add_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
