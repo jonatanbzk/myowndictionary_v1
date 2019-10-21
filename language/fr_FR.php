@@ -85,6 +85,16 @@ $lang['index_test_type'] = "Veuillez choisir le type de test voulu";
 $lang['index_password'] = "Les mot de passe ne sont pas identique";
 $lang['index_error_password'] = "Erreur, votre mot de passe n'a pas été changé";
 $lang['index_id'] = "Erreur : aucun identifiant de billet envoyé";
+// db languages list
+$lang['Polish'] = "Polonais";
+$lang['French'] = "Français";
+$lang['English'] = "Anglais";
+$lang['German'] = "Allemand";
+$lang['Italian'] = "Italien";
+$lang['Russian'] = "Russe";
+$lang['Portuguese'] = "Portugais";
+$lang['Spanish'] = "Espagnol";
+$lang['Esperanto'] = "Esperanto";
 
 
 $loc['fr_FR'] = $lang;

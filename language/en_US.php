@@ -85,5 +85,16 @@ $lang['index_test_type'] = "Please choose the test type";
 $lang['index_password'] = "Passwords are different";
 $lang['index_error_password'] = "Error, your password was not changed";
 $lang['index_id'] = "Error : No id send";
+// db languages list
+$lang['Polish'] = "Polish";
+$lang['French'] = "French";
+$lang['English'] = "English";
+$lang['German'] = "German";
+$lang['Italian'] = "Italian";
+$lang['Russian'] = "Russian";
+$lang['Portuguese'] = "Portuguese";
+$lang['Spanish'] = "Spanish";
+$lang['Esperanto'] = "Esperanto";
+
 
 $loc['en_US'] = $lang;
