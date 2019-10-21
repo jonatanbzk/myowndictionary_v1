@@ -117,7 +117,9 @@ function logIn()
       elseif ($resultat['email_verify']=="yes")
       {
         $_SESSION['test_login_data'] = array();
-
+        $_SESSION['login_data'] = array (
+          'username' => $_POST['username'],
+          'id_user' => $resultat['id_user']);
           $log->closeCursor();
       }
     }
@@ -132,7 +134,7 @@ function logIn()
 
 
 // convert id language to language string
-function languageId($id_lang)
+function languageToId($id_lang)
 {
 $languageArray = array(I('Polish'), I('French'), I('English'), I('German'), I('Italian'), I('Russian'), I('Portuguese'), I('Spanish'), I('Esperanto'));
 return $languageArray[($id_lang-1)];
@@ -150,7 +152,7 @@ function getLanguages()
    while ($languages_data = $languages->fetch())
    {
      array_push($_SESSION['languagesArray']['language_id'], $languages_data['id_language']);
-     array_push($_SESSION['languagesArray']['language'], languageId($languages_data['id_language']));
+     array_push($_SESSION['languagesArray']['language'], languageToId($languages_data['id_language']));
    }
    $languages->closeCursor();
 }
