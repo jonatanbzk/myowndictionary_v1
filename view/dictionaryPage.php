@@ -3,7 +3,9 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 {
     require('../index.php');
 }
-ob_start(); ?>
+ob_start();
+print_r($_SESSION);
+ ?>
 
 <script type="text/javascript">
 // pass length of words list to dictionaryPage.js

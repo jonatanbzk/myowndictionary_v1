@@ -1,10 +1,14 @@
 <div id="responseId" style="display: block">
-<?php if (isset($_SESSION['evaluation']))
+<?php
+global $evaluationNote;
+if (isset ($evaluationNote))
 {
-echo $_SESSION['evaluation']['note'] . ' ';
-echo $_SESSION['evaluation']['comment'] . '<br>';
+echo $evaluationNote;                   
+}
+if (isset ($comment))
+{
+echo $comment;  
 }?>
-
 <button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')"><?php echo I('result_detail');?></button>
 </div>
 <div id="response_div" style="display: none">

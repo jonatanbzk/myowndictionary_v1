@@ -379,8 +379,10 @@ $test->closeCursor();
 }
 
 
+$evaluationNote = "";
 function testRecord()
 {
+  global $evaluationNote;
   $testLength = $_POST['testLength'];
   $point = 0;
   $_SESSION['testLength'] = $testLength;
@@ -457,7 +459,8 @@ function testRecord()
   }
   $evaluation = $point/$testLength;
   $comment = "";
-  if ($evaluation<(1/3))
+  $_SESSION['evaluation'] = "";
+if ($evaluation<(1/3))
   {
     $comment = I('test_comment_one');
   }
@@ -470,8 +473,7 @@ function testRecord()
   elseif ($evaluation>=(4/5)) {
     $comment = I('test_comment_four');
   }
-  $_SESSION['evaluation']['note'] = ($evaluation*$testLength) . "/" . $testLength;
-  $_SESSION['evaluation']['comment'] = $comment;
+  $evaluationNote = ($evaluation*$testLength) . "/" . $testLength . "<br>";
   unset($_SESSION['testArray']);
 }
 
