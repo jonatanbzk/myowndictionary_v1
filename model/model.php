@@ -136,25 +136,28 @@ function logIn()
 // convert id language to language string
 function languageToId($id_lang)
 {
-$languageArray = array(I('Polish'), I('French'), I('English'), I('German'), I('Italian'), I('Russian'), I('Portuguese'), I('Spanish'), I('Esperanto'));
-return $languageArray[($id_lang-1)];
+$languageList = array('test function languageToId', I('Polish'), I('French'), I('English'), I('German'), I('Italian'), I('Russian'), I('Portuguese'), I('Spanish'), I('Esperanto'));
+return $languageList[($id_lang-1)];
 }
 
 
+$languagesArray = array();
 // get language list
 function getLanguages()
 {
-   $_SESSION['languagesArray'] = array(
-     'language_id' => array(), 'language' =>array()
-   );
+   global $languagesArray;
+//   $languagesArray = array(
+//    'language_id' => array(), 'language' =>array()
+//   );
    $db = dbConnect();
    $languages = $db->query('SELECT id_language FROM languages');
-   while ($languages_data = $languages->fetch())
-   {
-     array_push($_SESSION['languagesArray']['language_id'], $languages_data['id_language']);
-     array_push($_SESSION['languagesArray']['language'], languageToId($languages_data['id_language']));
-   }
+//   while ($languages_data = $languages->fetch())
+//   {
+//     array_push($languagesArray['language_id'], $languages_data['id_language']);
+//     array_push($languagesArray, (languageToId($languages_data['id_language'])));
+//   }
    $languages->closeCursor();
+ $languagesArray=array('test languagesArray', I('Polish'), I('French'), I('English'), I('German'), I('Italian'), I('Russian'), I('Portuguese'), I('Spanish'), I('Esperanto'));
 }
 
 

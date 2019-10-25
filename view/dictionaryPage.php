@@ -5,6 +5,9 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 }
 ob_start();
 print_r($_SESSION);
+echo "----------------";
+global $languagesArray;
+print_r($languagesArray);
  ?>
 
 <script type="text/javascript">
@@ -39,11 +42,12 @@ foreach ($colorArray as $color) {
       <select class="language_1" name="language1">
         <option value="select"><?php echo I('dictionary_select_language_one');?></option>
         <?php
-        $listLength = count($_SESSION['languagesArray']['language_id']);
+        global $languagesArray;
+	$listLength = count($languagesArray);
         for ($i=0; $i<$listLength; $i++)
         {
           ?>
-          <option value="<?php echo $_SESSION['languagesArray']['language_id'][$i] ?>"><?php echo $_SESSION['languagesArray']['language'][$i] ?></option>
+          <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>  <?php // <?php echo $languagesArray['language_id'][$i]  III $languagesArray['language'][$i] ?>
           <?php
         } ?>
       </select> <br>
@@ -53,7 +57,7 @@ foreach ($colorArray as $color) {
         for ($i=0; $i<$listLength; $i++)
         {
           ?>
-          <option value="<?php echo $_SESSION['languagesArray']['language_id'][$i] ?>"><?php echo $_SESSION['languagesArray']['language'][$i] ?></option>
+          <option value="<?php echo ($i+1); ?>"></option>
           <?php
         } ?>
       </select> <br>
