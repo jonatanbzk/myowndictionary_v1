@@ -25,7 +25,7 @@ function haveAccountLink ()
 function connect ()
 {
   $log = logIn();
-  $languages = getLanguages();
+  getLanguages();
   $tag = getTag();
   require('view/dictionaryPage.php');
 }

@@ -3,12 +3,12 @@ if (empty($_SESSION['login_data']['id_user']) AND empty($_SESSION['login_data'][
 {
     require('../index.php');
 }
-ob_start();
-print_r($_SESSION);
-echo "----------------";
 global $languagesArray;
+global $languagesId;
 print_r($languagesArray);
- ?>
+print_r($languagesId);
+ob_start();
+?>
 
 <script type="text/javascript">
 // pass length of words list to dictionaryPage.js
@@ -47,7 +47,7 @@ foreach ($colorArray as $color) {
         for ($i=0; $i<$listLength; $i++)
         {
           ?>
-          <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>  <?php // <?php echo $languagesArray['language_id'][$i]  III $languagesArray['language'][$i] ?>
+          <option value="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></option>
           <?php
         } ?>
       </select> <br>
