@@ -23,3 +23,10 @@ function I($key) {
     return $key;
   }
 }
+?>
+<script type="text/javascript">
+// pass language user choice to sign_up.js
+var lang='<?php if (array_key_exists(
+        'locale', $_SESSION)):echo $_SESSION['locale'];endif; ?>';
+</script>
+<script type="text/javascript" src="sign_up.js"></script>

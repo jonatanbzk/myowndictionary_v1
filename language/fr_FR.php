@@ -19,7 +19,7 @@ $lang['sign_login'] = "Je me connecte";
 $lang['reset_email_back'] = "Retourner à la page d'acceuil";
 //reset_password_password.php
 $lang['reset_new_password'] = "Nouveau mot de passe";
-$lang['reset_repeat_password'] = "Répétez nouveau mot de passe";
+$lang['reset_repeat_password'] = "Répéter nouveau mot de passe";
 //dictionaryPage.php
 $lang['dictionary_theme_choice'] = "Choix thème";
 $lang['dictionary_hello'] = "Bonjour  ";
@@ -34,7 +34,7 @@ $lang['dictionary_close_dictionary'] = "Fermer son dictionnaire";
 $lang['dictionary_edit'] = "modifier";
 $lang['dictionary_erase'] = "supprimer";
 $lang['dictionary_add_word'] = "Ajouter un mot";
-$lang['dictionary_in'] = "En";
+$lang['dictionary_in'] = "En ";
 $lang['dictionary_translation_in'] = "La traduction en ";
 $lang['dictionary_cancel'] = "Annuler";
 $lang['dictionary_show_test'] = "Faire un test";

@@ -54,7 +54,8 @@ try {
       {
         throw new Exception(I('index_two_languages'));
       }
-      elseif ($_POST['language1'] == "select" or $_POST['language2'] == "select")
+      elseif ($_POST['language1'] == "select"
+              or $_POST['language2'] == "select")
       {
         throw new Exception(I('index_two_languages'));
       }
@@ -62,10 +63,6 @@ try {
       {
         throw new Exception(I('index_different_languages'));
       }
-/*      elseif (!in_array($_POST['language1'], $languagesId) or !in_array($_POST['language2'], $languagesId))
-      {
-        throw new Exception(I('index_no_choice'));
-      }   */
       else
       {
         addtab ();
@@ -84,15 +81,21 @@ try {
       {
         throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
+      elseif (empty(trim($_POST['addWord1']))
+              or empty(trim($_POST['addWord2'])))
       {
         throw new Exception(I('index_add_word_add'));
       }
-      elseif (!is_string($_POST['addWord1']) and !is_string($_POST['addWord2']))
+      elseif (!is_string($_POST['addWord1'])
+              and !is_string($_POST['addWord2']))
       {
         throw new Exception(I('index_letter'));
       }
-      elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
+      elseif (isset(
+        $_POST['language1'],
+        $_POST['language2'],
+        $_POST['addWord1'],
+        $_POST['addWord2']))
       {
         addWord ();
       }
@@ -110,15 +113,20 @@ try {
       {
         throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (empty(trim($_POST['newWord'])) or empty(trim($_POST['newTranslation'])))
+      elseif (empty(trim($_POST['newWord']))
+              or empty(trim($_POST['newTranslation'])))
       {
         throw new Exception(I('index_add_word'));
       }
-      elseif (!is_string($_POST['newWord']) and !is_string($_POST['newTranslation']))
+      elseif (!is_string($_POST['newWord'])
+              and !is_string($_POST['newTranslation']))
       {
         throw new Exception(I('index_letter'));
       }
-      elseif (isset($_POST['idWord'], $_POST['newWord'], $_POST['newTranslation']))
+      elseif (isset(
+              $_POST['idWord'],
+              $_POST['newWord'],
+              $_POST['newTranslation']))
       {
         edit ();
       }
@@ -129,14 +137,19 @@ try {
       {
         throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (isset($_POST['numberQuestion']) and is_int($_POST['numberQuestion']) and $_POST['numberQuestion'] > 100)
+      elseif (isset($_POST['numberQuestion'])
+              and is_int($_POST['numberQuestion'])
+              and $_POST['numberQuestion'] > 100)
       {
         throw new Exception(I('index_test_length'));
       }
       elseif ($_POST['typeTest'] == 'select') {
         throw new Exception(I('index_test_type'));
       }
-      elseif (isset($_POST['typeTest'], $_POST['numberQuestion'], $_SESSION['login_data']['id_user']))
+      elseif (isset(
+              $_POST['typeTest'],
+              $_POST['numberQuestion'],
+              $_SESSION['login_data']['id_user']))
       {
         lunchTest ();
       }
@@ -189,9 +202,14 @@ try {
     }
     elseif ($_GET['action'] == 'newpasswordform')
     {
-      if (isset($_POST['newpassword'], $_POST['newpassword2'], $_POST['username'], $_POST['code']))
+      if (isset(
+          $_POST['newpassword'],
+          $_POST['newpassword2'],
+          $_POST['username'],
+          $_POST['code']))
       {
-        if (!empty($_POST['newpassword']) and $_POST['newpassword'] == $_POST['newpassword2'])
+        if (!empty($_POST['newpassword'])
+            and $_POST['newpassword'] == $_POST['newpassword2'])
         {
           newpasswordform();
         }
