@@ -1,13 +1,14 @@
 <div id="responseId" style="display: block">
 <?php
-global $evaluationNote;
+ global $evaluationNote;
+ global $comment;
 if (isset ($evaluationNote))
 {
-echo $evaluationNote;                   
+echo $evaluationNote;
 }
 if (isset ($comment))
 {
-echo $comment;  
+echo I($comment) . "<br>" ;
 }?>
 <button type="button" name="button" id="show_result_button" onclick="toggleForm('response_div', 'show_result_button')"><?php echo I('result_detail');?></button>
 </div>

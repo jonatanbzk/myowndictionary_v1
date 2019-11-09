@@ -12,8 +12,11 @@ $lang['login_register'] = "Je m'inscris";
 $lang['sign_registration'] = "Inscription";
 $lang['sign_confirm_password'] = "Confirmer votre mot de passe";
 $lang['sign_email'] = "Adresse e-mail";
-$lang['sign_I_already_have_account'] = "J'ai déjà un compte MyOwnDictionary ... ";
+$lang['sign_I_already_have_account'] = "J'ai déjà un compte MyOwnDictionary
+ ... ";
 $lang['sign_login'] = "Je me connecte";
+//reset_password_email.php
+$lang['reset_email_back'] = "Retourner à la page d'acceuil";
 //reset_password_password.php
 $lang['reset_new_password'] = "Nouveau mot de passe";
 $lang['reset_repeat_password'] = "Répétez nouveau mot de passe";
@@ -55,15 +58,28 @@ $lang['model_username_used'] = "Pseudo déjà prit";
 $lang['model_email_used'] = "Email déjà utilisé";
 $lang['model_check_email'] = "Vous êtes inscrit, vérifier votre boite mail";
 $lang['model_wrong_id'] = "Mauvais identifiant ou mot de passe !";
-$lang['model_dictionary_exist'] = "Vous avez déjà un dictionnaire avec ces langues";
-$lang['model_dictionary'] = "Votre dictionnaire";
+$lang['model_confirm_email'] = "Veuillez vérifier votre adresse email ! <br>
+Vous n'avez pas reçu d'email de vérification ?";
+$lang['model_click'] = "Cliquer ici pour reçevoir un nouveau email de
+vérification";
+$lang['model_dictionary_exist'] = "Vous avez déjà un dictionnaire avec ces
+langues";
+$lang['model_dictionary'] = "Votre dictionnaire ";
 $lang['model_create'] = " a bien été crée";
 $lang['model_word_exist'] = "Vous avez déjà ce mot dans votre dictionnaire";
 $lang['model_count_noexist'] = "Vous n'avez pas de compte créé";
 $lang['model_email_valid'] = "Votre email est vérifié";
-$lang['model_email_already_valid'] = "Your email is already validated";
-$lang['model_email_resend'] = "Un nouveau email de vérification vous a été envoyé";
-$lang['model_no_count'] = "Vous n'avez pas de compte créé avec cette adresse email";
+$lang['model_email_already_valid'] = "Votre email a bien été vérifié";
+$lang['model_email_verification'] = "Vérification de l'adresse mail";
+$lang['model_email_link'] = "Veuillez cliquer sur ce lien pour confirmer votre
+adresse mail";
+$lang['model_email_resend'] = "Un nouveau email de vérification vous a été
+envoyé";
+$lang['model_no_count'] = "Vous n'avez pas de compte créé avec cette adresse
+email";
+$lang['model_password_subject'] = "Réinitilisation du mot de passe";
+$lang['model_password_link'] = "Veuillez cliquer sur ce lien pour réinitiliser
+votre mot de passe";
 $lang['model_password'] = "Votre mot de passe a bien été changé";
 // model.php results test
 $lang['test_comment_one'] = "Travailles encore un peu !";
@@ -75,15 +91,19 @@ $lang['controller_disconnect'] = "Vous êtes bien déconnecté";
 // index.php
 $lang['index_empty_input'] = "Veuiller compléter tout les champs";
 $lang['index_two_languages'] = "Veuillez choisir deux langues";
-$lang['index_different_languages'] = "Veuillez choisir deux langues différentes";
-$lang['index_no_choice'] = "Ces langues ne font pas partie des choix possibles";
+$lang['index_different_languages'] = "Veuillez choisir deux langues
+différentes";
+$lang['index_no_choice'] = "Ces langues ne font pas partie des choix
+possibles";
 $lang['index_choose_dictionary'] = "Veuillez choisir un dictionnaire";
 $lang['index_add_word'] = "Veuillez ajouter un mot et sa traduction";
 $lang['index_letter'] = "Veuillez n\'utiliser que des lettres";
-$lang['index_test_length'] = "Le test ne peut pas contenir plus de 100 questions";
+$lang['index_test_length'] = "Le test ne peut pas contenir plus de 100
+questions";
 $lang['index_test_type'] = "Veuillez choisir le type de test voulu";
 $lang['index_password'] = "Les mot de passe ne sont pas identique";
-$lang['index_error_password'] = "Erreur, votre mot de passe n'a pas été changé";
+$lang['index_error_password'] = "Erreur, votre mot de passe n'a pas été
+changé";
 $lang['index_id'] = "Erreur : aucun identifiant de billet envoyé";
 // db languages list
 $lang['Polish'] = "Polonais";

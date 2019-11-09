@@ -11,12 +11,23 @@
       {
         for ($i=0; $i<$testLength; $i++)
         {
-          if ($i==0)
+          if ($testLength==1)
           {
             echo '<div id="question' . ($i+1) . '" style="display: block;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][1]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][1]))
+              . '" > <button type="submit" name="button">';
+              echo I('login_submit') . '</button></div>';
+          }
+          elseif ($i==0 and $testLength>1)
+          {
+            echo '<div id="question' . ($i+1) . '" style="display: block;">' .
+            ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
+             . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
+             echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][1]))
               . '" > <button type="button" name="button" onclick="toggleForm(`question' . ($i+2) . '`, `question' . ($i+1) . '`)">';
               echo I('login_submit') . '</button></div>';
           }
@@ -25,7 +36,8 @@
             echo '<div id="question' . ($i+1) . '" style="display: none;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][1]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][1]))
               . '" > <button type="button" name="button" onclick="toggleForm(`question' . ($i+2) . '`, `question' . ($i+1) . '`)">';
               echo I('login_submit') . '</button></div>';
           }
@@ -34,7 +46,8 @@
             echo '<div id="question' . ($i+1) . '" style="display: none;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][1]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][1]))
               . '" > <button type="submit" name="button">';
               echo I('login_submit') . '</button></div>';
           }
@@ -44,12 +57,23 @@
       {
         for ($i=0; $i<$testLength; $i++)
         {
-          if ($i==0)
+          if ($testLength==1)
+          {
+            echo '<div id="question' . ($i+1) . '" style="display: block;">' .
+            ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
+             . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][1]))
+              . '" > <button type="submit" name="button">';
+              echo I('login_submit') . '</button></div>';
+          }
+          elseif ($i==0 and $testLength>1)
           {
             echo '<div id="question' . ($i+1) . '" style="display: block;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][0]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][0]))
               . '" > <button type="button" name="button" onclick="toggleForm(`question' . ($i+2) . '`, `question' . ($i+1) . '`)">';
               echo I('login_submit') . '</button></div>';
           }
@@ -58,7 +82,8 @@
             echo '<div id="question' . ($i+1) . '" style="display: none;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][0]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][0]))
               . '" > <button type="button" name="button" onclick="toggleForm(`question' . ($i+2) . '`, `question' . ($i+1) . '`)">';
               echo I('login_submit') . '</button></div>';
           }
@@ -67,7 +92,8 @@
             echo '<div id="question' . ($i+1) . '" style="display: none;">' .
             ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
              . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-             echo I('test_translation') . $_SESSION['personel_language_array'][0]
+             echo I('test_translation');
+             echo I(languageToId($_SESSION['personel_language_array'][0]))
               . '" > <button type="submit" name="button">';
               echo I('login_submit') . '</button></div>';
           }
@@ -80,12 +106,23 @@
           $rand = rand(0, 99);
           if ($rand % 2 == 0)
           {
-            if ($i==0)
+            if ($testLength==1)
+            {
+              echo '<div id="question' . ($i+1) . '" style="display: block;">' .
+              ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
+               . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
+               echo I('test_translation');
+               echo I(languageToId($_SESSION['personel_language_array'][1]))
+                . '" > <button type="submit" name="button">';
+                echo I('login_submit') . '</button></div>';
+            }
+            elseif ($i==0 and $testLength>1)
             {
               echo '<div id="question' . ($i+1) . '" style="display: block;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][1]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][1]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="0">
                 <button type="button" name="button" onclick="toggleForm(`question'
                  . ($i+2) . '`, `question' . ($i+1) . '`)">';
@@ -96,7 +133,8 @@
               echo '<div id="question' . ($i+1) . '" style="display: none;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][1]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][1]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="0">
                 <button type="button" name="button" onclick="toggleForm(`question'
                  . ($i+2) . '`, `question' . ($i+1) . '`)">';
@@ -107,7 +145,8 @@
               echo '<div id="question' . ($i+1) . '" style="display: none;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][1]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][1]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="0">
                 <button type="submit" name="button">';
                  echo I("login_submit") . '</button></div>';
@@ -115,12 +154,23 @@
           }
           elseif ($rand % 2 != 0)
           {
-            if ($i==0)
+            if ($testLength==1)
+            {
+              echo '<div id="question' . ($i+1) . '" style="display: block;">' .
+              ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['words'][$i])
+               . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
+               echo I('test_translation');
+               echo I(languageToId($_SESSION['personel_language_array'][1]))
+                . '" > <button type="submit" name="button">';
+                echo I('login_submit') . '</button></div>';
+            }
+            elseif ($i==0 and $testLength>1)
             {
               echo '<div id="question' . ($i+1) . '" style="display: block;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][0]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][0]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="1">
                 <button type="button" name="button" onclick="toggleForm(`question'
                  . ($i+2) . '`, `question' . ($i+1) . '`)">';
@@ -131,7 +181,8 @@
               echo '<div id="question' . ($i+1) . '" style="display: none;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][0]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][0]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="1">
                 <button type="button" name="button" onclick="toggleForm(`question'
                  . ($i+2) . '`, `question' . ($i+1) . '`)">';
@@ -142,7 +193,8 @@
               echo '<div id="question' . ($i+1) . '" style="display: none;">' .
                ($i+1) . "/" . $testLength . "  " . ucfirst($_SESSION['testArray']['translations'][$i])
                 . ' ==>   <input type="text" name="answer' . ($i+1) . '" value="" placeholder="';
-              echo I('test_translation') . $_SESSION['personel_language_array'][0]
+              echo I('test_translation');
+              echo I(languageToId($_SESSION['personel_language_array'][0]))
                . '" > <input type="hidden" name="indexTest' . ($i+1) . '" value="1">
                 <button type="submit" name="button">';
                  echo I("login_submit") . '</button></div>';

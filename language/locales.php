@@ -1,7 +1,6 @@
 <?php
 if (isset($_GET['locale'])) {
   $_SESSION['locale'] = $_GET['locale'];
-//  $_SESSION['error'] = $_GET['locale'];
 }
 if (!isset($_SESSION['locale'])) {
   $_SESSION['locale'] = 'fr_FR';
@@ -17,10 +16,10 @@ function I($key) {
   $lang = $_SESSION['locale'];
   $default = 'fr_FR';
   if (isset($loc[$lang][$key])) {
-    echo $loc[$lang][$key];
+    return $loc[$lang][$key];
   } else if (isset($loc[$default][$key])) {
-    echo $loc[$default][$key];
+    return $loc[$default][$key];
   } else {
-    echo $key;
+    return $key;
   }
 }

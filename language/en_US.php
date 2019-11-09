@@ -1,19 +1,23 @@
 <?php
 $lang = array();
-
+//login_Page.php
 $lang['login_login'] = "Login";
 $lang['login_username'] = "username";
 $lang['login_password'] = "Password";
 $lang['login_submit'] = "Submit";
 $lang['login_forgot_your_password'] = "Forgot your password ?";
-$lang['login_not_registered_yet'] = "Don't you have an account on MyOwnDictionary?";
+$lang['login_not_registered_yet'] = "Don't you have an account on
+MyOwnDictionary?";
 $lang['login_register'] = "Register";
 //sign_up.php
 $lang['sign_registration'] = "Create account";
 $lang['sign_confirm_password'] = "Confirm your password";
 $lang['sign_email'] = "Email address";
-$lang['sign_I_already_have_account'] = "Already have a MyOwnDictionary account ... ";
+$lang['sign_I_already_have_account'] = "Already have a MyOwnDictionary
+account ... ";
 $lang['sign_login'] = "Log in";
+//reset_password_email.php
+$lang['reset_email_back'] = "Back to login page";
 //reset_password_password.php
 $lang['reset_new_password'] = "New password";
 $lang['reset_repeat_password'] = "Repeat new password";
@@ -53,17 +57,26 @@ $lang['model_email_send'] = "email send";
 $lang['model_email_no_send'] = "email not send";
 $lang['model_username_used'] = "Username already used";
 $lang['model_email_used'] = "Email already used";
-$lang['model_check_email'] = "You have been registered, please check your email";
+$lang['model_check_email'] = "You have been registered, please check your
+email";
 $lang['model_wrong_id'] = "Wrong username or password";
-$lang['model_dictionary_exist'] = "You already have a dictionary with these langues";
-$lang['model_dictionary'] = "Your dictionary";
+$lang['model_confirm_email'] = "Please confirm your email adress ! <br>
+You are not received your confirmation email ?";
+$lang['model_click'] = "Click here to received a new confirmation email";
+$lang['model_dictionary_exist'] = "You already have a dictionary with these
+langues";
+$lang['model_dictionary'] = "Your dictionary ";
 $lang['model_create'] = " has been created";
 $lang['model_word_exist'] = "You already have this word in your dictionary";
 $lang['model_count_noexist'] = "You don't have any account";
 $lang['model_email_valid'] = "Your email is now validated";
 $lang['model_email_already_valid'] = "Your email is already validated";
+$lang['model_email_verification'] = "Email verification";
+$lang['model_email_link'] = "Please click this link to confirm your email";
 $lang['model_email_resend'] = "An new verification email has been send";
 $lang['model_no_count'] = "You don't have any account with this email adress";
+$lang['model_password_subject'] = "Password reset";
+$lang['model_password_link'] = "Please click this link to reset your password";
 $lang['model_password'] = "Your password has been successfully changed";
 // model.php results test
 $lang['test_comment_one'] = "Work a bit more !";

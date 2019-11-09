@@ -62,10 +62,10 @@ try {
       {
         throw new Exception(I('index_different_languages'));
       }
-      elseif (!in_array($_POST['language1'], $_SESSION['languagesArray']) or !in_array($_POST['language2'], $_SESSION['languagesArray']))
+/*      elseif (!in_array($_POST['language1'], $languagesId) or !in_array($_POST['language2'], $languagesId))
       {
         throw new Exception(I('index_no_choice'));
-      }
+      }   */
       else
       {
         addtab ();
