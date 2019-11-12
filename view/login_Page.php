@@ -27,9 +27,7 @@
 </form>
 <br>
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'] . '<br>';endif;
-  $_SESSION['error'] = "";
-  if (isset($_SESSION['mail'])): echo $_SESSION['mail'];endif;
-    $_SESSION['mail'] = ""; ?>
+  $_SESSION['error'] = "";?>
 <br>
 <form action="index.php?action=forgotPasswordLink" method="post">
     <button type="submit" name="" value="" class="btn-link">

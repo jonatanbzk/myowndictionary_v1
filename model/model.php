@@ -24,7 +24,7 @@ function emailSend($subject, $body, $email)
   if ($mail->send()) {
   }
   else {
-    $_SESSION['mail'] = I('model_email_no_send');
+    $_SESSION['error'] = I('model_email_no_send');
   }
 }
 
