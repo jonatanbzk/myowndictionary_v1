@@ -4,6 +4,7 @@ AND empty($_SESSION['login_data']['username']))
 {
     require('../index.php');
 }
+global $comment;
 ob_start();
 ?>
 
@@ -241,7 +242,7 @@ echo "block"; else: echo "none"; endif; ?>">
          style="display:
          <?php if (((array_key_exists('testArray', $_SESSION))
          and !empty($_SESSION['testArray']['words']))
-         or (array_key_exists('evaluation', $_SESSION))):
+         or (!empty($comment))):
          echo "none"; else: echo "block"; endif; ?>"
          onclick="toggleForm('show_test_form', 'show_test')">
   <form class="" action="index.php?action=lunchTest"
@@ -282,7 +283,8 @@ echo "block"; else: echo "none"; endif; ?>">
     <?php include("test.php");?>
   </div>
   <div id="result_include"
-       style="display: <?php if (array_key_exists('evaluation', $_SESSION)):
+       style="display: <?php
+       if (!empty($comment)):
        echo "block"; else: echo "none"; endif; ?>" >
     <?php include("result.php");?>
   </div>

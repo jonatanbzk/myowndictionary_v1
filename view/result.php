@@ -37,7 +37,7 @@ if (isset($_SESSION['resultArray'], $_SESSION['testLength'])) {
   }
 }
 ?>
+</div>
 <form class="" action="index.php?action=closeTest" method="post">
 <input type="submit" name="" value=<?php echo I('result_close');?>>
 </form>
-</div>

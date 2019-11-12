@@ -544,7 +544,6 @@ function testRecord()
     }
   }
   $evaluation = $point/$testLength;
-  $_SESSION['evaluation'] = "";
 if ($evaluation<(1/3))
   {
     $comment = "test_comment_one";
@@ -565,9 +564,9 @@ if ($evaluation<(1/3))
 
 function eraseTest ()
 {
-  if (array_key_exists('evaluation', $_SESSION))
+  if (isset($comment)) 
   {
-    unset($_SESSION['evaluation']);
+    unset($comment);
   }
 }
 

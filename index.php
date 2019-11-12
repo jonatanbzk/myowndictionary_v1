@@ -162,7 +162,7 @@ try {
     }
     elseif ($_GET['action'] == 'closeTest')
     {
-      closeTest();
+     closeTest();
     }
     elseif ($_GET['action'] == 'emailconfirm')
     {
