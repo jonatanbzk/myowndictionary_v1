@@ -102,9 +102,11 @@ function postSignUp()
 }
 
 
+$test_login_data = array();
 function logIn()
 {
-  $_SESSION['test_login_data'] = array (
+  global $test_login_data;
+  $test_login_data = array (
     'username' => $_POST['username'],
     'password' => $_POST['password']);
   $username = $_POST['username'];
@@ -144,7 +146,7 @@ function logIn()
       }
       elseif ($resultat['email_verify']=="yes")
       {
-        $_SESSION['test_login_data'] = array();
+        $test_login_data = array();
         $_SESSION['login_data'] = array (
           'username' => $_POST['username'],
           'id_user' => $resultat['id_user']);
