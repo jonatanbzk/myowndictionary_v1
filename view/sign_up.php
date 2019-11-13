@@ -5,29 +5,29 @@
 <form id="formSignUp" action="../index.php?action=signUp" method="post">
   <label for="username"><?php echo I('login_username');?></label> <br>
   <input type="text" name="username" id="username"
-         value="<?php if (array_key_exists('form_data', $_SESSION)
-         && array_key_exists('username', $_SESSION['form_data'])):
-         echo $_SESSION['form_data']['username'];endif; ?>"
+         value="<?php if (!empty($form_data)
+         && array_key_exists('username', $form_data)):
+         echo $form_data['username'];endif; ?>"
          required> <br>
   <label for="password"><?php echo I('login_password');?></label> <br>
   <input type="password" name="password"
-         value="<?php if (array_key_exists('form_data', $_SESSION)
-         && array_key_exists('password', $_SESSION['form_data'])):
-         echo $_SESSION['form_data']['password'];endif; ?>"
+         value="<?php if (!empty($form_data)
+         && array_key_exists('password', $form_data)):
+         echo $form_data['password'];endif; ?>"
          required> <br>
   <label for="repeatpassword">
     <?php echo I('sign_confirm_password');?>
   </label> <br>
   <input type="password" name="repeatpassword"
-         value="<?php if (array_key_exists('form_data', $_SESSION)
-         && array_key_exists('password', $_SESSION['form_data'])):
-         echo $_SESSION['form_data']['password'];endif; ?>"
+         value="<?php if (!empty($form_data)
+         && array_key_exists('password', $form_data)):
+         echo $form_data['password'];endif; ?>"
          required> <br>
   <label for="email"><?php echo I('sign_email');?></label> <br>
   <input type="email" name="email" id="email"
-         value="<?php if (array_key_exists('form_data', $_SESSION)
-         && array_key_exists('email', $_SESSION['form_data'])):
-         echo $_SESSION['form_data']['email'];endif; ?>"
+         value="<?php if (!empty($form_data)
+         && array_key_exists('email', $form_data)):
+         echo $form_data['email'];endif; ?>"
          required> <br>
   <p id="validiteCourriel"></p>
   <input type="submit" name="" value=<?php echo I('login_submit');?>>

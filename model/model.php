@@ -29,15 +29,17 @@ function emailSend($subject, $body, $email)
 }
 
 
+$form_data = array();
 // create account
 function postSignUp()
 {
   global $loc;
+  global $form_data;
   $username=$_POST['username'];
   $password=$_POST['password'];
   $email=$_POST['email'];
   $pass_hache = password_hash($_POST['password'], PASSWORD_DEFAULT);
-  $_SESSION['form_data'] = array (
+  $form_data = array (
     'username' => $_POST['username'],
     'password' => $_POST['password'],
     'email' => $_POST['email']);
@@ -95,7 +97,6 @@ function postSignUp()
     I('model_email_link') . "</a>";
     emailSend($subject, $body, $email);
     $_SESSION['error'] = I('model_check_email');
-    $_SESSION['form_data'] = array();
     require('view/login_Page.php');
   }
 }
