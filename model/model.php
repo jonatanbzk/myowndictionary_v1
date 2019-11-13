@@ -445,7 +445,6 @@ function testRecord()
   $testLength = $_POST['testLength'];
   $testDirection = $_POST['testDirection'];
   $point = 0;
-  $_SESSION['testLength'] = $testLength;
   $_SESSION['resultArray'] = array(
     'goodwords' => array(),
     'goodtranslations' => array(),

@@ -27,7 +27,7 @@ if (!empty($_SESSION['resultArray']['goodwords'])
 ?>
 <p><?php echo I('result_wrong');?></p>
 <?php
-if (isset($_SESSION['resultArray'], $_SESSION['testLength'])) {
+if (isset($_SESSION['resultArray'])) {
   $badResponseLength = count($_SESSION['resultArray']['badwords']);
   for ($i=0; $i<$badResponseLength; $i++) {
     echo ucfirst($_SESSION['resultArray']['badwords'][$i]) . " ≠ " .
