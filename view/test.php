@@ -7,12 +7,12 @@
       {e.preventDefault();return false;}}},true);
   </script>
   <?php
+global $testDirection;
 // test direction = language1 => language2 or languague2 => language1 or Random
-  if (isset($_SESSION['testDirection'])
-      and isset($_SESSION['testArray'])
+  if ((!empty($testDirection)) and isset($_SESSION['testArray'])
       and isset($_SESSION['personel_language_array'])) {
       $testLength = count($_SESSION['testArray']['words']);
-      if ($_SESSION['testDirection']==0) {
+      if ($testDirection==1) {
         for ($i=0; $i<$testLength; $i++) {
           if ($testLength==1) {
             echo '<div id="question' . ($i+1) . '" style="display: block;">' .
@@ -58,7 +58,7 @@
           }
         }
       }
-      elseif ($_SESSION['testDirection']==1) {
+      elseif ($testDirection==2) {
         for ($i=0; $i<$testLength; $i++) {
           if ($testLength==1) {
             echo '<div id="question' . ($i+1) . '" style="display: block;">' .
@@ -104,7 +104,7 @@
           }
         }
       }
-      elseif ($_SESSION['testDirection']==2) {
+      elseif ($testDirection==3) {
         for ($i=0; $i<$testLength ; $i++) {
           $rand = rand(0, 99);
           if ($rand % 2 == 0) {
@@ -205,6 +205,8 @@
           }
       }
     }
-    echo '<input type="hidden" name="testLength" value="' . $testLength . '">';
-  }  ?>
+    echo '<input type="hidden" name="testLength" value="' . $testLength . '">
+    <br>
+    <input type="hidden" name="testDirection" value="' . $testDirection . '">';
+  } ?>
 </form>

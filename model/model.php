@@ -384,8 +384,10 @@ function editAWord()
 }
 
 
+$testDirection = 0;
 function startTest ()
 {
+  global $testDirection;
   if (!empty($_POST['numberQuestion']) and $_POST['numberQuestion']>0)
   {
     $nbrQuestion = $_POST['numberQuestion'];
@@ -417,20 +419,19 @@ function startTest ()
       $_SESSION['testArray']['translations'], $testList['translation']);
   }
 $test->closeCursor();
-  $_SESSION['testDirection'] = '';
   if ($_SESSION['personel_language_array'][0]==$language[0]
   and $_SESSION['personel_language_array'][1]==$language[1])
   {
-    $_SESSION['testDirection'] = 0;
+    $testDirection = 1;
   }
   elseif ($_SESSION['personel_language_array'][1]==$language[0]
   and $_SESSION['personel_language_array'][0]==$language[1])
   {
-    $_SESSION['testDirection'] = 1;
+    $testDirection = 2;
   }
   elseif ($_POST['typeTest'] == "random")
   {
-    $_SESSION['testDirection'] = 2;
+    $testDirection = 3;
   }
 }
 
@@ -442,6 +443,7 @@ function testRecord()
   global $evaluationNote;
   global $comment;
   $testLength = $_POST['testLength'];
+  $testDirection = $_POST['testDirection'];
   $point = 0;
   $_SESSION['testLength'] = $testLength;
   $_SESSION['resultArray'] = array(
@@ -454,7 +456,7 @@ function testRecord()
   for ($i=0; $i < $testLength; $i++)
   {
     $answerName = 'answer' . ($i+1);
-    if ($_SESSION['testDirection']==0)
+    if ($testDirection==1)
     {
       if ((strcasecmp($_POST[$answerName],
       $_SESSION['testArray']['translations'][$i]) == 0))
@@ -475,7 +477,7 @@ function testRecord()
         $_SESSION['testArray']['translations'][$i]);
       }
     }
-    elseif ($_SESSION['testDirection']==1)
+    elseif ($testDirection==2)
     {
       if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['words'][$i])
        == 0))
@@ -496,7 +498,7 @@ function testRecord()
         $_SESSION['testArray']['words'][$i]);
       }
     }
-    elseif ($_SESSION['testDirection']==2)
+    elseif ($testDirection==3)
     {
       $index = 'indexTest' . ($i+1);
       if ($_POST[$index]==0)

@@ -156,7 +156,7 @@ try {
     }
     elseif ($_GET['action'] == 'test')
     {
-      if (isset($_SESSION['testDirection'], $_SESSION['testArray'])) {
+      if (!empty($_POST['testDirection']) and isset($_SESSION['testArray'])) {
         testVerify ();
       }
     }
