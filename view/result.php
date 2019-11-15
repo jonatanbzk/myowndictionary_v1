@@ -2,6 +2,7 @@
 <?php
  global $evaluationNote;
  global $comment;
+ global $resultArray;
 if (isset ($evaluationNote)) {
 echo $evaluationNote;
 }
@@ -16,24 +17,24 @@ echo I($comment) . "<br>" ;
 <div id="response_div" style="display: none">
 <p><?php echo I('result_good');?></p>
 <?php
-if (!empty($_SESSION['resultArray']['goodwords'])
-   and !empty($_SESSION['resultArray']['goodtranslations'])) {
-  $goodResponseLength = count($_SESSION['resultArray']['goodwords']);
+if (!empty($resultArray['goodwords'])
+   and !empty($resultArray['goodtranslations'])) {
+  $goodResponseLength = count($resultArray['goodwords']);
   for ($i=0; $i<$goodResponseLength; $i++) {
-    echo ucfirst($_SESSION['resultArray']['goodwords'][$i]) . "=>" .
-    ucfirst($_SESSION['resultArray']['goodtranslations'][$i]) . "<br>";
+    echo ucfirst($resultArray['goodwords'][$i]) . "=>" .
+    ucfirst($resultArray['goodtranslations'][$i]) . "<br>";
   }
 }
 ?>
 <p><?php echo I('result_wrong');?></p>
 <?php
-if (isset($_SESSION['resultArray'])) {
-  $badResponseLength = count($_SESSION['resultArray']['badwords']);
+if (isset($resultArray)) {
+  $badResponseLength = count($resultArray['badwords']);
   for ($i=0; $i<$badResponseLength; $i++) {
-    echo ucfirst($_SESSION['resultArray']['badwords'][$i]) . " ≠ " .
-    ucfirst($_SESSION['resultArray']['badtranslations'][$i]) . '   ' .
+    echo ucfirst($resultArray['badwords'][$i]) . " ≠ " .
+    ucfirst($resultArray['badtranslations'][$i]) . '   ' .
     I('result_good_answer') .
-    ucfirst($_SESSION['resultArray']['response'][$i]) . "<br>";
+    ucfirst($resultArray['response'][$i]) . "<br>";
   }
 }
 ?>

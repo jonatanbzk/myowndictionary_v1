@@ -439,16 +439,18 @@ $test->closeCursor();
 }
 
 
+$resultArray = array();
 $evaluationNote = "";
 $comment ="";
 function testRecord()
 {
+  global $resultArray;
   global $evaluationNote;
   global $comment;
   $testLength = $_POST['testLength'];
   $testDirection = $_POST['testDirection'];
   $point = 0;
-  $_SESSION['resultArray'] = array(
+  $resultArray = array(
     'goodwords' => array(),
     'goodtranslations' => array(),
     'badwords' => array(),
@@ -464,18 +466,18 @@ function testRecord()
       $_SESSION['testArray']['translations'][$i]) == 0))
       {
         $point++;
-        array_push($_SESSION['resultArray']['goodwords'],
+        array_push($resultArray['goodwords'],
         $_SESSION['testArray']['words'][$i]);
-        array_push($_SESSION['resultArray']['goodtranslations'],
+        array_push($resultArray['goodtranslations'],
         $_POST[$answerName]);
       }
       else
       {
-        array_push($_SESSION['resultArray']['badwords'],
+        array_push($resultArray['badwords'],
         $_SESSION['testArray']['words'][$i]);
-        array_push($_SESSION['resultArray']['badtranslations'],
+        array_push($resultArray['badtranslations'],
         $_POST[$answerName]);
-        array_push($_SESSION['resultArray']['response'],
+        array_push($resultArray['response'],
         $_SESSION['testArray']['translations'][$i]);
       }
     }
@@ -485,18 +487,18 @@ function testRecord()
        == 0))
       {
         $point++;
-        array_push($_SESSION['resultArray']['goodwords'],
+        array_push($resultArray['goodwords'],
         $_SESSION['testArray']['translations'][$i]);
-        array_push($_SESSION['resultArray']['goodtranslations'],
+        array_push($resultArray['goodtranslations'],
         $_POST[$answerName]);
       }
       else
       {
-        array_push($_SESSION['resultArray']['badwords'],
+        array_push($resultArray['badwords'],
         $_SESSION['testArray']['translations'][$i]);
-        array_push($_SESSION['resultArray']['badtranslations'],
+        array_push($resultArray['badtranslations'],
         $_POST[$answerName]);
-        array_push($_SESSION['resultArray']['response'],
+        array_push($resultArray['response'],
         $_SESSION['testArray']['words'][$i]);
       }
     }
@@ -509,18 +511,18 @@ function testRecord()
         $_POST[$answerName], $_SESSION['testArray']['translations'][$i]) == 0))
         {
           $point++;
-          array_push($_SESSION['resultArray']['goodwords'],
+          array_push($resultArray['goodwords'],
           $_SESSION['testArray']['words'][$i]);
-          array_push($_SESSION['resultArray']['goodtranslations'],
+          array_push($resultArray['goodtranslations'],
           $_POST[$answerName]);
         }
         else
         {
-          array_push($_SESSION['resultArray']['badwords'],
+          array_push($resultArray['badwords'],
           $_SESSION['testArray']['words'][$i]);
-          array_push($_SESSION['resultArray']['badtranslations'],
+          array_push($resultArray['badtranslations'],
           $_POST[$answerName]);
-          array_push($_SESSION['resultArray']['response'],
+          array_push($resultArray['response'],
           $_SESSION['testArray']['translations'][$i]);
         }
       }
@@ -530,18 +532,18 @@ function testRecord()
           $_POST[$answerName], $_SESSION['testArray']['words'][$i]) == 0))
         {
           $point++;
-          array_push($_SESSION['resultArray']['goodwords'],
+          array_push($resultArray['goodwords'],
           $_SESSION['testArray']['translations'][$i]);
-          array_push($_SESSION['resultArray']['goodtranslations'],
+          array_push($resultArray['goodtranslations'],
           $_POST[$answerName]);
         }
         else
         {
-          array_push($_SESSION['resultArray']['badwords'],
+          array_push($resultArray['badwords'],
           $_SESSION['testArray']['translations'][$i]);
-          array_push($_SESSION['resultArray']['badtranslations'],
+          array_push($resultArray['badtranslations'],
           $_POST[$answerName]);
-          array_push($_SESSION['resultArray']['response'],
+          array_push($resultArray['response'],
           $_SESSION['testArray']['words'][$i]);
         }
       }
@@ -568,7 +570,7 @@ if ($evaluation<(1/3))
 
 function eraseTest ()
 {
-  if (isset($comment)) 
+  if (isset($comment))
   {
     unset($comment);
   }
