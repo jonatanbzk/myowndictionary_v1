@@ -16,7 +16,7 @@ function toggleForm(f, b) {
 
 
 // change background color
-document.getElementById("colorSelect").addEventListener("change", function (e) {
+document.getElementById("colorSelect").addEventListener("change", function (e){
 document.body.style.backgroundColor = e.target.value;
 var color = e.target.value;
 localStorage.setItem('color', color);
@@ -31,13 +31,16 @@ window.onload = function() {
 
 
 // keep dictionary words list open when window refresh event
-    document.getElementById('show_words_button').addEventListener("click", function(event){
+    document.getElementById('show_words_button').addEventListener(
+      "click", function(event){
       sessionStorage.setItem('wordsList', true);
     });
-    document.getElementById('hide_words_button').addEventListener("click", function(event){
+    document.getElementById('hide_words_button').addEventListener(
+      "click", function(event){
       sessionStorage.setItem('wordsList', false);
     });
-    document.getElementById('logOutButton').addEventListener("click", function(event){
+    document.getElementById('logOutButton').addEventListener(
+      "click", function(event){
     sessionStorage.removeItem('wordsList');
     });
 
@@ -54,7 +57,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // show form to edit/erase word when checkbox is checked
 var element=[];
-    for (var i = 1; i <= lengthWordList; i++)     
+    for (var i = 1; i <= lengthWordList; i++)
     {
       var trId = 'trHide' + i;
       var checkId = 'checkboxId' + i;

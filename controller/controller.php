@@ -1,15 +1,30 @@
 <?php
-  require_once('model/model.php');
+require_once('language/locales.php');
+require_once('model/model.php');
 
 function register ()
 {
   $userCreate = postSignUp();
 }
 
+function signUpLink()
+{
+  require('view/sign_up.php');
+}
+
+function forgotPasswordLink ()
+{
+  require('view/reset_password_email.php');
+}
+
+function haveAccountLink ()
+{
+  require('view/login_Page.php');
+}
+
 function connect ()
 {
   $log = logIn();
-  $languages = getLanguages();
   $tag = getTag();
   require('view/dictionaryPage.php');
 }
@@ -98,6 +113,6 @@ function newpasswordform()
 function disconnect ()
 {
   session_destroy();
-  $_SESSION['error'] = 'Vous êtes bien déconnecté';
-  header('Location: view/login_Page.php');
+  $_SESSION['error'] = I('controller_disconnect');
+  require('view/login_Page.php');
 }

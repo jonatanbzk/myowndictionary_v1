@@ -4,20 +4,31 @@ require('controller/controller.php');
 require('config.php');
 
 try {
-
   if (isset($_GET['action']))
   {
-    if ($_GET['action'] == 'signUp')
+    if ($_GET['action'] == 'signUpLink')
+    {
+      signUpLink();
+    }
+    elseif ($_GET['action'] == 'forgotPasswordLink')
+    {
+      forgotPasswordLink();
+    }
+    elseif ($_GET['action'] == 'haveAccountLink')
+    {
+      haveAccountLink();
+    }
+    elseif ($_GET['action'] == 'signUp')
     {
       if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
       {
-        throw new Exception('Veuiller compléter tout les champs');
-        header('Location: view/sign_up.php');
+        throw new Exception(I('index_empty_input'));
+        require('view/sign_up.php');
       }
       elseif (!isset($_POST['username'], $_POST['password'], $_POST['email']))
       {
-        throw new Exception('Veuiller compléter tout les champs');
-        header('Location: view/sign_up.php');
+        throw new Exception(I('index_empty_input'));
+        require('view/sign_up.php');
       }
       else
       {
@@ -28,8 +39,8 @@ try {
     {
       if (!isset($_POST['username'], $_POST['password']))
       {
-        throw new Exception('Veuiller compléter tout les champs');
-        header('Location: view/login_Page.php');
+        throw new Exception(I('index_empty_input'));
+        require('view/login_Page.php');
         exit();
       }
       else
@@ -41,19 +52,16 @@ try {
     {
       if (empty($_POST['language1'] or empty($_POST['language2'])))
       {
-        throw new Exception('Veuillez choisir deux langues');
+        throw new Exception(I('index_two_languages'));
       }
-      elseif ($_POST['language1'] == "select" or $_POST['language2'] == "select")
+      elseif ($_POST['language1'] == "select"
+              or $_POST['language2'] == "select")
       {
-        throw new Exception('Veuillez choisir deux langues');
+        throw new Exception(I('index_two_languages'));
       }
       elseif ($_POST['language1'] == $_POST['language2'])
       {
-        throw new Exception('Veuillez choisir deux langues différentes');
-      }
-      elseif (!in_array($_POST['language1'], $_SESSION['languagesArray']) or !in_array($_POST['language2'], $_SESSION['languagesArray']))
-      {
-        throw new Exception('Ces langues ne font pas partie des choix possibles');
+        throw new Exception(I('index_different_languages'));
       }
       else
       {
@@ -71,17 +79,23 @@ try {
     {
       if (empty($_SESSION['personel_language_array']))
       {
-        throw new Exception('Veuillez choisir un dictionnaire');
+        throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (empty(trim($_POST['addWord1'])) or empty(trim($_POST['addWord2'])))
+      elseif (empty(trim($_POST['addWord1']))
+              or empty(trim($_POST['addWord2'])))
       {
-        throw new Exception('Veuillez ajouter un mot et sa traduction');
+        throw new Exception(I('index_add_word_add'));
       }
-      elseif (!is_string($_POST['addWord1']) and !is_string($_POST['addWord2']))
+      elseif (!is_string($_POST['addWord1'])
+              and !is_string($_POST['addWord2']))
       {
-        throw new Exception('Veuillez n\'utiliser que des lettres');
+        throw new Exception(I('index_letter'));
       }
-      elseif (isset($_POST['language1'], $_POST['language2'], $_POST['addWord1'], $_POST['addWord2']))
+      elseif (isset(
+        $_POST['language1'],
+        $_POST['language2'],
+        $_POST['addWord1'],
+        $_POST['addWord2']))
       {
         addWord ();
       }
@@ -97,17 +111,22 @@ try {
     {
       if (empty($_SESSION['personel_language_array']))
       {
-        throw new Exception('Veuillez choisir un dictionnaire');
+        throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (empty(trim($_POST['newWord'])) or empty(trim($_POST['newTranslation'])))
+      elseif (empty(trim($_POST['newWord']))
+              or empty(trim($_POST['newTranslation'])))
       {
-        throw new Exception('Veuillez ajouter un mot et sa traduction');
+        throw new Exception(I('index_add_word'));
       }
-      elseif (!is_string($_POST['newWord']) and !is_string($_POST['newTranslation']))
+      elseif (!is_string($_POST['newWord'])
+              and !is_string($_POST['newTranslation']))
       {
-        throw new Exception('Veuillez n\'utiliser que des lettres');
+        throw new Exception(I('index_letter'));
       }
-      elseif (isset($_POST['idWord'], $_POST['newWord'], $_POST['newTranslation']))
+      elseif (isset(
+              $_POST['idWord'],
+              $_POST['newWord'],
+              $_POST['newTranslation']))
       {
         edit ();
       }
@@ -116,29 +135,34 @@ try {
     {
       if (empty($_SESSION['personel_language_array']))
       {
-        throw new Exception('Veuillez choisir un dictionnaire');
+        throw new Exception(I('index_choose_dictionary'));
       }
-      elseif (isset($_POST['numberQuestion']) and is_int($_POST['numberQuestion']) and $_POST['numberQuestion'] > 100)
+      elseif (isset($_POST['numberQuestion'])
+              and is_int($_POST['numberQuestion'])
+              and $_POST['numberQuestion'] > 100)
       {
-        throw new Exception('Le test ne peut pas contenir plus de 100 questions');
+        throw new Exception(I('index_test_length'));
       }
       elseif ($_POST['typeTest'] == 'select') {
-        throw new Exception('Veuillez choisir le type de test voulu');
+        throw new Exception(I('index_test_type'));
       }
-      elseif (isset($_POST['typeTest'], $_POST['numberQuestion'], $_SESSION['login_data']['id_user']))
+      elseif (isset(
+              $_POST['typeTest'],
+              $_POST['numberQuestion'],
+              $_SESSION['login_data']['id_user']))
       {
         lunchTest ();
       }
     }
     elseif ($_GET['action'] == 'test')
     {
-      if (isset($_SESSION['testDirection'], $_SESSION['testArray'])) {
+      if (!empty($_POST['testDirection']) and isset($_SESSION['testArray'])) {
         testVerify ();
       }
     }
     elseif ($_GET['action'] == 'closeTest')
     {
-      closeTest();
+     closeTest();
     }
     elseif ($_GET['action'] == 'emailconfirm')
     {
@@ -162,7 +186,7 @@ try {
       }
       else
       {
-        header('Location: view/login_Page.php');
+        require('view/login_Page.php');
       }
     }
     elseif ($_GET['action'] == 'resetpasswordlink')
@@ -171,25 +195,34 @@ try {
       {
         formresetpasswordredirection();
       }
+      else
+      {
+        require('view/login_Page.php');
+      }
     }
     elseif ($_GET['action'] == 'newpasswordform')
     {
-      if (isset($_POST['newpassword'], $_POST['newpassword2'], $_POST['username'], $_POST['code']))
+      if (isset(
+          $_POST['newpassword'],
+          $_POST['newpassword2'],
+          $_POST['username'],
+          $_POST['code']))
       {
-        if (!empty($_POST['newpassword']) and $_POST['newpassword'] == $_POST['newpassword2'])
+        if (!empty($_POST['newpassword'])
+            and $_POST['newpassword'] == $_POST['newpassword2'])
         {
           newpasswordform();
         }
         else
         {
-          $_SESSION['error'] = 'Passwords are different';
-          header('Location: view/login_Page.php');
+          $_SESSION['error'] = I('index_password');
+          require('view/login_Page.php');
         }
       }
       else
       {
-        $_SESSION['error'] = "Error, your password was not changed";
-        header('Location: view/login_Page.php');
+        $_SESSION['error'] = I('index_error_password');
+        require('view/login_Page.php');
       }
     }
     elseif ($_GET['action'] == 'deco')
@@ -198,12 +231,12 @@ try {
     }
     else
     {
-      echo 'Erreur : aucun identifiant de billet envoyé';
+      echo I('index_id');
     }
   }
 else
 {
-   header('Location: view/login_Page.php');
+  include('view/login_Page.php');
 }
 }
 catch (\Exception $e)
