@@ -24,20 +24,22 @@ function emailSend($subject, $body, $email)
   if ($mail->send()) {
   }
   else {
-    $_SESSION['mail'] = I('model_email_no_send');
+    $_SESSION['error'] = I('model_email_no_send');
   }
 }
 
 
+$form_data = array();
 // create account
 function postSignUp()
 {
   global $loc;
+  global $form_data;
   $username=$_POST['username'];
   $password=$_POST['password'];
   $email=$_POST['email'];
   $pass_hache = password_hash($_POST['password'], PASSWORD_DEFAULT);
-  $_SESSION['form_data'] = array (
+  $form_data = array (
     'username' => $_POST['username'],
     'password' => $_POST['password'],
     'email' => $_POST['email']);
@@ -95,15 +97,16 @@ function postSignUp()
     I('model_email_link') . "</a>";
     emailSend($subject, $body, $email);
     $_SESSION['error'] = I('model_check_email');
-    $_SESSION['form_data'] = array();
     require('view/login_Page.php');
   }
 }
 
 
+$test_login_data = array();
 function logIn()
 {
-  $_SESSION['test_login_data'] = array (
+  global $test_login_data;
+  $test_login_data = array (
     'username' => $_POST['username'],
     'password' => $_POST['password']);
   $username = $_POST['username'];
@@ -143,7 +146,7 @@ function logIn()
       }
       elseif ($resultat['email_verify']=="yes")
       {
-        $_SESSION['test_login_data'] = array();
+        $test_login_data = array();
         $_SESSION['login_data'] = array (
           'username' => $_POST['username'],
           'id_user' => $resultat['id_user']);
@@ -384,8 +387,10 @@ function editAWord()
 }
 
 
+$testDirection = 0;
 function startTest ()
 {
+  global $testDirection;
   if (!empty($_POST['numberQuestion']) and $_POST['numberQuestion']>0)
   {
     $nbrQuestion = $_POST['numberQuestion'];
@@ -417,34 +422,35 @@ function startTest ()
       $_SESSION['testArray']['translations'], $testList['translation']);
   }
 $test->closeCursor();
-  $_SESSION['testDirection'] = '';
   if ($_SESSION['personel_language_array'][0]==$language[0]
   and $_SESSION['personel_language_array'][1]==$language[1])
   {
-    $_SESSION['testDirection'] = 0;
+    $testDirection = 1;
   }
   elseif ($_SESSION['personel_language_array'][1]==$language[0]
   and $_SESSION['personel_language_array'][0]==$language[1])
   {
-    $_SESSION['testDirection'] = 1;
+    $testDirection = 2;
   }
   elseif ($_POST['typeTest'] == "random")
   {
-    $_SESSION['testDirection'] = 2;
+    $testDirection = 3;
   }
 }
 
 
+$resultArray = array();
 $evaluationNote = "";
 $comment ="";
 function testRecord()
 {
+  global $resultArray;
   global $evaluationNote;
   global $comment;
   $testLength = $_POST['testLength'];
+  $testDirection = $_POST['testDirection'];
   $point = 0;
-  $_SESSION['testLength'] = $testLength;
-  $_SESSION['resultArray'] = array(
+  $resultArray = array(
     'goodwords' => array(),
     'goodtranslations' => array(),
     'badwords' => array(),
@@ -454,49 +460,49 @@ function testRecord()
   for ($i=0; $i < $testLength; $i++)
   {
     $answerName = 'answer' . ($i+1);
-    if ($_SESSION['testDirection']==0)
+    if ($testDirection==1)
     {
       if ((strcasecmp($_POST[$answerName],
       $_SESSION['testArray']['translations'][$i]) == 0))
       {
         $point++;
-        array_push($_SESSION['resultArray']['goodwords'],
+        array_push($resultArray['goodwords'],
         $_SESSION['testArray']['words'][$i]);
-        array_push($_SESSION['resultArray']['goodtranslations'],
+        array_push($resultArray['goodtranslations'],
         $_POST[$answerName]);
       }
       else
       {
-        array_push($_SESSION['resultArray']['badwords'],
+        array_push($resultArray['badwords'],
         $_SESSION['testArray']['words'][$i]);
-        array_push($_SESSION['resultArray']['badtranslations'],
+        array_push($resultArray['badtranslations'],
         $_POST[$answerName]);
-        array_push($_SESSION['resultArray']['response'],
+        array_push($resultArray['response'],
         $_SESSION['testArray']['translations'][$i]);
       }
     }
-    elseif ($_SESSION['testDirection']==1)
+    elseif ($testDirection==2)
     {
       if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['words'][$i])
        == 0))
       {
         $point++;
-        array_push($_SESSION['resultArray']['goodwords'],
+        array_push($resultArray['goodwords'],
         $_SESSION['testArray']['translations'][$i]);
-        array_push($_SESSION['resultArray']['goodtranslations'],
+        array_push($resultArray['goodtranslations'],
         $_POST[$answerName]);
       }
       else
       {
-        array_push($_SESSION['resultArray']['badwords'],
+        array_push($resultArray['badwords'],
         $_SESSION['testArray']['translations'][$i]);
-        array_push($_SESSION['resultArray']['badtranslations'],
+        array_push($resultArray['badtranslations'],
         $_POST[$answerName]);
-        array_push($_SESSION['resultArray']['response'],
+        array_push($resultArray['response'],
         $_SESSION['testArray']['words'][$i]);
       }
     }
-    elseif ($_SESSION['testDirection']==2)
+    elseif ($testDirection==3)
     {
       $index = 'indexTest' . ($i+1);
       if ($_POST[$index]==0)
@@ -505,18 +511,18 @@ function testRecord()
         $_POST[$answerName], $_SESSION['testArray']['translations'][$i]) == 0))
         {
           $point++;
-          array_push($_SESSION['resultArray']['goodwords'],
+          array_push($resultArray['goodwords'],
           $_SESSION['testArray']['words'][$i]);
-          array_push($_SESSION['resultArray']['goodtranslations'],
+          array_push($resultArray['goodtranslations'],
           $_POST[$answerName]);
         }
         else
         {
-          array_push($_SESSION['resultArray']['badwords'],
+          array_push($resultArray['badwords'],
           $_SESSION['testArray']['words'][$i]);
-          array_push($_SESSION['resultArray']['badtranslations'],
+          array_push($resultArray['badtranslations'],
           $_POST[$answerName]);
-          array_push($_SESSION['resultArray']['response'],
+          array_push($resultArray['response'],
           $_SESSION['testArray']['translations'][$i]);
         }
       }
@@ -526,25 +532,24 @@ function testRecord()
           $_POST[$answerName], $_SESSION['testArray']['words'][$i]) == 0))
         {
           $point++;
-          array_push($_SESSION['resultArray']['goodwords'],
+          array_push($resultArray['goodwords'],
           $_SESSION['testArray']['translations'][$i]);
-          array_push($_SESSION['resultArray']['goodtranslations'],
+          array_push($resultArray['goodtranslations'],
           $_POST[$answerName]);
         }
         else
         {
-          array_push($_SESSION['resultArray']['badwords'],
+          array_push($resultArray['badwords'],
           $_SESSION['testArray']['translations'][$i]);
-          array_push($_SESSION['resultArray']['badtranslations'],
+          array_push($resultArray['badtranslations'],
           $_POST[$answerName]);
-          array_push($_SESSION['resultArray']['response'],
+          array_push($resultArray['response'],
           $_SESSION['testArray']['words'][$i]);
         }
       }
     }
   }
   $evaluation = $point/$testLength;
-  $_SESSION['evaluation'] = "";
 if ($evaluation<(1/3))
   {
     $comment = "test_comment_one";
@@ -565,9 +570,9 @@ if ($evaluation<(1/3))
 
 function eraseTest ()
 {
-  if (array_key_exists('evaluation', $_SESSION))
+  if (isset($comment))
   {
-    unset($_SESSION['evaluation']);
+    unset($comment);
   }
 }
 
