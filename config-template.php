@@ -8,4 +8,6 @@ define( 'PHPMailer_USER', '' );
 define( 'PHPMailer_PASSWORD', '');
 define( 'PHPMailer_SMTP', '');
 define( 'PHPMailer_PORT', '');
+
+define ( 'GoogleAnalytics', '');
 ?>

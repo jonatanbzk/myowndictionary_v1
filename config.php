@@ -8,4 +8,6 @@ define( 'PHPMailer_USER', 'myowndictionaryinfo@gmail.com' );
 define( 'PHPMailer_PASSWORD', 'wY77R&bVxa&q&A4j');
 define( 'PHPMailer_SMTP', 'ssl');
 define( 'PHPMailer_PORT', 465);
+
+define ( 'GoogleAnalytics', 'UA-152618096-1');
 ?>
