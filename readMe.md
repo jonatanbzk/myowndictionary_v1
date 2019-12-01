@@ -45,3 +45,17 @@ Contributing
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
+
+Docker stuff
+
+install dependencies
+
+```
+docker run --rm -it --volume $(pwd):/app prooph/composer:7.2 install
+```
+
+run tests
+
+```
+docker run -it --entrypoint "./vendor/bin/phpunit" --volume $(pwd):/app prooph/composer:7.2 --bootstrap tests/ITest.php
+```
