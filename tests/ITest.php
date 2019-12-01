@@ -1,7 +1,7 @@
 <?php
 include_once 'language/locales.php';
 
-class testLanguage extends PHPUnit\Framework\TestCase {
+class LanguageTest extends PHPUnit\Framework\TestCase {
    
    public function testIreturnUsLang() {
         $_SESSION['locale'] = 'en_US';	
@@ -14,6 +14,9 @@ class testLanguage extends PHPUnit\Framework\TestCase {
 	$this->assertEquals('Se connecter', I('login_login') );
    } 
 
+   public function testItNumberParamReturnKey() {
+	$this->assertEquals(12, I(12) );
+   } 
 
    public function testIWithoutVarLocReturnKey() {
 	unset($GLOBALS['loc']);
