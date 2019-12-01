@@ -1,19 +1,37 @@
 <?php
 include_once 'src/ClassDivision.php';
 include_once 'src/ClassMultiplication.php';
-use \Mockery;
-  class MockMathTest extends PHPUnit\Framework\TestCase {
 
-    public function testHalf (){
-      $stub = $this->createStub(MathDouble::class);
-      $stub->method('double')
-            ->willReturn(8);
-
-//      $this->assertEquals(4, $stub->double(4));
-      $test = new MathHalf($stub);
-      $this->assertEquals(4, $test->half(4));
-    }
+class FakeMathHalf extends MathHalf {
+  function __construct($stubbed_doubler) {
+    parent::__construct();
+    // replace constructed doubler with stubbed one
+    $this->doubler = $stubbed_doubler;
   }
+}
+
+class MockMathTest extends PHPUnit\Framework\TestCase {
+  public function testHalf (){
+    // Create a stub for the SomeClass class.
+    $stub = $this->getMockBuilder(MathDouble::class)
+                 ->disableOriginalConstructor()
+                 ->disableOriginalClone()
+                 ->disableArgumentCloning()
+                 ->disallowMockingUnknownTypes()
+                 ->getMock();
+    // Configure the stub.
+    $stub->method('double')
+         ->willReturn(2);
+    // Check the stub
+    $this->assertEquals(2, $stub->double(4));
+    // Faked MathHalf will use the stubbed doubler
+    $divider = new FakeMathHalf($stub);
+    $this->assertEquals(1, $divider->half(4));
+    // regular MathHalf will user regular doubler
+    $divider = new MathHalf();
+    $this->assertNotEquals(1, $divider->half(4));
+  }
+}
 
 
 
