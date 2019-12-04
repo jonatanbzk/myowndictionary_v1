@@ -29,7 +29,7 @@ public function testMockedPDO()
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Expected Exception Message');
 
-    	  verifyEmailAdress();
+    	  verifyEmailAdress($query);
   }
 }
 
