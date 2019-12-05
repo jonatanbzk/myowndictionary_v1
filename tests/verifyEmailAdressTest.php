@@ -6,30 +6,30 @@ use PHPUnit\Framework\TestCase;
 include_once 'model/model.php';
 
 
-class mockDb extends PHPUnit\Framework\TestCase {
-public function testMockedPDO()
-{
-       $_GET['email'] = "fakeEmail@gmail.com";
-       $_GET['code'] = "qwertyytrewq";
+class MockDb extends PHPUnit\Framework\TestCase {
+  public function testMockedPDO()
+  {
+         $_GET['email'] = "fakeEmail@gmail.com";
+         $_GET['code'] = "qwertyytrewq";
 
-       $query = $this->getMockBuilder('\PDOStatement')
-                     ->disableOriginalConstructor()
-                     ->disableOriginalClone()
-                     ->disableArgumentCloning()
-                     ->disallowMockingUnknownTypes()
-                     ->getMock();
-       $query->method('execute')
-             ->willReturn(true);
-       $query->method('fetch')                    // add this
-             ->willReturn(0);   // add this
-        // check the stub
-        $this->assertEquals(true, $query->execute());
+         $query = $this->getMockBuilder('\PDOStatement')
+                       ->disableOriginalConstructor()
+                       ->disableOriginalClone()
+                       ->disableArgumentCloning()
+                       ->disallowMockingUnknownTypes()
+                       ->getMock();
+         $query->method('execute')
+               ->willReturn(true);
+         $query->method('fetch')
+               ->willReturn(0);
+          // check the stub
+          $this->assertEquals(true, $query->execute());
 
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Expected Exception Message');
+          $this->expectException(Exception::class);
+          $this->expectExceptionMessage('Expected Exception Message');
 
-    	  verifyEmailAdress($query);
+      	  verifyEmailAdress();    verifyEmailAdress($query);
   }
 }
 
@@ -51,6 +51,8 @@ public function testMockedPDO()
                      ->getMock();
        $query->method('execute')
              ->willReturn(true);
+       $query->method('fetch')                    // add this
+             ->willReturn(0);
         // check the stub
         $this->assertEquals(true, $query->execute());
 
@@ -58,8 +60,8 @@ public function testMockedPDO()
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Expected Exception Message');
 
-    	  verifyEmailAdress();
-  }
+    	  verifyEmailAdress();    verifyEmailAdress($query);
+}
 
 
 // gist gitHub  no works
