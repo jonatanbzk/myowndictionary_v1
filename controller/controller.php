@@ -96,7 +96,6 @@ function emailconfirmresend()
 function resetpassword()
 {
   $emailverify = resetpasswordverify();
-  require('view/dictionaryPage.php');
 }
 
 function formresetpasswordredirection()

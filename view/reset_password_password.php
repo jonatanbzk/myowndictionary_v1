@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-<form class="" action="../index.php?action=newpasswordform" method="post">
+<form class="" action="index.php?action=newpasswordform" method="post">
   <label for="newpassword"><?php echo I('reset_new_password');?></label> <br>
   <input type="password" name="newpassword" value="" required> <br>
   <label for="newpassword2">

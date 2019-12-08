@@ -2,7 +2,7 @@
 
 <h2><?php echo I('sign_registration');?></h2>
 
-<form id="formSignUp" action="../index.php?action=signUp" method="post">
+<form id="formSignUp" action="index.php?action=signUp" method="post">
   <label for="username"><?php echo I('login_username');?></label> <br>
   <input type="text" name="username" id="username"
          value="<?php if (!empty($form_data)
