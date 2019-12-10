@@ -170,7 +170,11 @@ function languageToId($id_lang)
     'Polish', 'French', 'English', 'German', 'Italian', 'Russian',
     'Portuguese', 'Spanish', 'Esperanto'
   );
-  $lang = I($languageList[$id_lang-1]);
+  if (is_int($id_lang) and $id_lang > 0 and $id_lang < 10) {
+      $lang = I($languageList[$id_lang-1]);
+    } else {
+      $lang = $id_lang;
+    }
   return $lang;
 }
 
