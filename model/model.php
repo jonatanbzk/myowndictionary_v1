@@ -708,13 +708,13 @@ function newpasswordedit()
   require('view/login_Page.php');
 }
 
-
 function dbConnect()
 {
 //$db = new PDO(
-//'mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+//  'mysql:host=127.0.0.1;dbname=dictionary;charset=utf8', 'root', '');
   $db = new PDO(DB_HOST_NAME_CHARSET, DB_USER, DB_PASSWORD);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
-  return $db;
+return $db;
 }
+?>

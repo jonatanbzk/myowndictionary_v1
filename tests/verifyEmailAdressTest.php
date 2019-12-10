@@ -22,7 +22,7 @@ class MockDb extends PHPUnit\Framework\TestCase {
          $query->method('execute')
                ->willReturn(true);
          $query->method('fetch')
-               ->willReturn('notEmpty');
+               ->willReturn('0');
           // check the stub
           $this->assertEquals(true, $query->execute());
 
