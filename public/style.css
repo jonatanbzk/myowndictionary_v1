@@ -3,14 +3,20 @@ h1 {
   margin-right: 30px;
 }
 
+h1, h2 {
+  color: white;
+  text-shadow: 1px -1px 11px black;
+}
+
 body {
-  background-color: #eee;
+  background-color: #63e4a3;
   margin-left: 30px;
   margin-right: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  font-family: Comic sans MS;
 }
 
 div {

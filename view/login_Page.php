@@ -22,7 +22,7 @@
          value="<?php if (!empty($test_login_data)
          && array_key_exists('password', $test_login_data)):
          echo $test_login_data['password'];endif; ?>"
-         required> <br>
+         required> <br> <br>
   <input type="submit" name="" value=<?php echo I('login_submit');?>>
 </form>
 <br>
