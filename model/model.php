@@ -170,7 +170,11 @@ function languageToId($id_lang)
     'Polish', 'French', 'English', 'German', 'Italian', 'Russian',
     'Portuguese', 'Spanish', 'Esperanto'
   );
-  $lang = I($languageList[$id_lang-1]);
+  if (is_int($id_lang) and $id_lang > 0 and $id_lang < 10) {
+	  $lang = I($languageList[$id_lang-1]);
+  } else {
+	  $lang = $id_lang;   // Or left an error ?
+  }
   return $lang;
 }
 
@@ -708,7 +712,8 @@ function newpasswordedit()
 function dbConnect()
 {
 //$db = new PDO(
-//'mysql:host=localhost;dbname=dictionary;charset=utf8', 'root', '');
+//'mysql:host=127.0.0.1;dbname=dictionary;charset=utf8', 'root', '');
+//localhost
   $db = new PDO(DB_HOST_NAME_CHARSET, DB_USER, DB_PASSWORD);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );

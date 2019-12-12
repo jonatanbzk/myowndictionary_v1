@@ -6,6 +6,7 @@ if (!isset($_SESSION['locale'])) {
   $_SESSION['locale'] = 'fr_FR';
 }
 
+global $loc;
 $loc = array();
 
 require('fr_FR.php');
@@ -19,7 +20,7 @@ function I($key) {
     return $loc[$lang][$key];
   } else if (isset($loc[$default][$key])) {
     return $loc[$default][$key];
-  } else {
+  }  else {
     return $key;
   }
 }
