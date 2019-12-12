@@ -2,15 +2,15 @@
 
 <h2><?php echo I('sign_registration');?></h2>
 
-<form id="formSignUp" action="../index.php?action=signUp" method="post">
+<form class="formLogin" id="formSignUp" action="../index.php?action=signUp" method="post">
   <label for="username"><?php echo I('login_username');?></label> <br>
-  <input type="text" name="username" id="username"
+  <input type="text" class="formText" name="username" id="username"
          value="<?php if (!empty($form_data)
          && array_key_exists('username', $form_data)):
          echo $form_data['username'];endif; ?>"
          required> <br>
   <label for="password"><?php echo I('login_password');?></label> <br>
-  <input type="password" name="password"
+  <input type="password" class="formText" name="password"
          value="<?php if (!empty($form_data)
          && array_key_exists('password', $form_data)):
          echo $form_data['password'];endif; ?>"
@@ -18,19 +18,19 @@
   <label for="repeatpassword">
     <?php echo I('sign_confirm_password');?>
   </label> <br>
-  <input type="password" name="repeatpassword"
+  <input type="password" class="formText" name="repeatpassword"
          value="<?php if (!empty($form_data)
          && array_key_exists('password', $form_data)):
          echo $form_data['password'];endif; ?>"
          required> <br>
   <label for="email"><?php echo I('sign_email');?></label> <br>
-  <input type="email" name="email" id="email"
+  <input type="email" class="formText" name="email" id="email"
          value="<?php if (!empty($form_data)
          && array_key_exists('email', $form_data)):
          echo $form_data['email'];endif; ?>"
          required> <br>
   <p id="validiteCourriel"></p>
-  <input type="submit" name="" value=<?php echo I('login_submit');?>>
+  <input type="submit" class="formSubmit" value=<?php echo I('login_submit');?>>
 </form>
 
 <?php if (array_key_exists('error', $_SESSION)):

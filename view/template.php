@@ -19,6 +19,7 @@
 
     <title>MyOwnDictionary</title>
     <link href="./public/style.css" rel="stylesheet" />
+    <link href="./public/styleInput.css" rel="stylesheet" />
   </head>
   <body>
     <div class="langLink">

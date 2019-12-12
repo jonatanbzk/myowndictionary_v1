@@ -6,24 +6,25 @@
 
 <h2><?php echo I('login_login');?></h2>
 
-<form id="formLogin" action="index.php?action=logIn" method="post">
-  <label for="username">
-    <?php echo I('login_username');?>
-  </label> <br>
-  <input type="text" name="username"
-         value="<?php if (!empty($test_login_data)
+<form class="formLogin" action="index.php?action=logIn" method="post">
+    <label for="username">
+      <?php echo I('login_username');?>
+    </label> <br>
+    <input class="formText" type="text" name="username"
+           value="<?php if (!empty($test_login_data)
                 && array_key_exists('username', $test_login_data)):
                 echo $test_login_data['username'];endif; ?>"
-         required> <br>
-  <label for="password">
-    <?php echo I('login_password');?>
-  </label> <br>
-  <input type="password" name="password"
+                required><br>
+    <label for="password">
+      <?php echo I('login_password');?>
+    </label> <br>
+    <input class="formText" type="password" name="password"
          value="<?php if (!empty($test_login_data)
          && array_key_exists('password', $test_login_data)):
          echo $test_login_data['password'];endif; ?>"
-         required> <br> <br>
-  <input type="submit" name="" value=<?php echo I('login_submit');?>>
+         required> <br>
+
+  <input type="submit" class="formSubmit" value=<?php echo I('login_submit');?>>
 </form>
 <br>
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'] . '<br>';endif;
