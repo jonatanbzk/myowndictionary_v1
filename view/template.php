@@ -12,12 +12,21 @@
 </script>
 
     <meta charset="utf-8" />
-    <a href="<?php $_SERVER['QUERY_STRING']?>?locale=fr_FR">FR</a>
-    <a href="<?php $_SERVER['QUERY_STRING']?>?locale=en_US">US</a>
+
+ <link href="https://fonts.googleapis.com/css?family=Acme|Mali&display=swap" rel="stylesheet">
+
+
+
     <title>MyOwnDictionary</title>
     <link href="./public/style.css" rel="stylesheet" />
   </head>
   <body>
+    <div class="langLink">
+      <a id="leftLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=fr_FR">
+        FR</a>
+      <a id="rightLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=en_US">
+        US</a>
+    </div>
     <h1>MyOwnDictionary</h1>
     <?= $content ?>
   </body>
