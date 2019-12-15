@@ -1,0 +1,19 @@
+
+#words_table {
+  padding: 1em;
+  padding-top: 0.5em;
+  border: solid black;
+  border-color: black;
+  border-width: 2px;
+  border-width: 3px 3px 5px 5px;
+  border-radius:4% 95% 6% 95%/95% 4% 92% 5%;
+  font-size: 1em;
+}
+
+th {
+  padding: 0.5em;
+}
+
+td {
+    text-align: center;
+}

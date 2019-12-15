@@ -161,12 +161,12 @@ var lengthWordList='<?php if (array_key_exists(
             <tr class="trHide" id="trHide' . ($i+1) . '">
               <form method="post" action="index.php?action=editWord">
                 <td>
-                  <input type="text" name="newWord" placeholder=' .
+                  <input type="text" class="inputMainPage" name="newWord" placeholder=' .
                     I(languageToId($_SESSION['personel_language_array'][0])) .
                     '>
                 </td>
                 <td>
-                  <input type="text" name="newTranslation"
+                  <input type="text" class="inputMainPage" name="newTranslation"
                     name="other" placeholder=' .
                     I(languageToId($_SESSION['personel_language_array'][1])) .
                     '>
@@ -175,12 +175,12 @@ var lengthWordList='<?php if (array_key_exists(
                   <input type="hidden" name="idWord" value="' .
                     $_SESSION['wordsAndTranslationArray']['ids'][$i] .
                     '">
-                  <button type="submit">' . I('dictionary_edit') . '</button>
+                  <button type="submit" class="btnSubCanc" id="updateWord">' . I('dictionary_edit') . '</button>
               </form>
               <form method="post" action="index.php?action=eraseWord">
                 <input type="hidden" name="idWord" value="' .
                   $_SESSION['wordsAndTranslationArray']['ids'][$i] . '" />
-                <button type="submit">';
+                <button type="submit" class="btnSubCanc">';
             echo I('dictionary_erase') . '</button></form></td></tr>';
           }
         }?>

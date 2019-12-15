@@ -22,6 +22,7 @@
     <link href="./public/styleInput.css" rel="stylesheet" />
     <link href="./public/styleDiv.css" rel="stylesheet" />
     <link href="./public/styleSelect.css" rel="stylesheet" />
+    <link href="./public/styleShowWordBox.css" rel="stylesheet" />
   </head>
   <body>
     <div class="langLink">
