@@ -1,0 +1,29 @@
+#dictionary {
+    border-top: solid black;
+    border-width: 3px;
+    border-radius: 1% 1.5% 0% 0%;
+    transform: rotate(0.5deg);
+}
+
+#viewDictionary{
+  border-top: solid black;
+  border-width: 3px;
+  border-radius:4% 95% 6% 5%/3% 4% 92% 5%;
+  transform: rotate(-0.1deg);
+}
+
+#test {
+  border-top: solid black;
+/*  border-bottom: solid black; */
+  border-width: 2px 3px 3px 5px;
+  border-radius:95% 4% 97% 5%/4% 4% 3% 5%;
+  transform: rotate(0.5deg);
+}
+
+#deconnexion {
+  border-top: solid black;
+/*  border-bottom: solid black; */
+  border-width: 2px 3px 3px 5px;
+  border-radius: 4% 3% 5% 95% 4% 97% 5%/4%;
+  transform: rotate(0.5deg);
+}

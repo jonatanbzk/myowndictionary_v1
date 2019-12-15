@@ -26,16 +26,16 @@
 
   <input type="submit" class="formSubmit" value=<?php echo I('login_submit');?>>
 </form>
-<br>
+<p id="message">
 <?php if (isset($_SESSION['error'])): echo $_SESSION['error'] . '<br>';endif;
   $_SESSION['error'] = "";?>
-<br>
+</p>
 <form action="index.php?action=forgotPasswordLink" method="post">
     <button type="submit" name="" value="" class="btn-link">
       <?php echo I('login_forgot_your_password');?>
     </button>
 </form>
-<p><?php echo I('login_not_registered_yet');?>
+<p><?php echo I('login_not_registered_yet');?></p>
   <form action="index.php?action=signUpLink" method="post">
       <button type="submit" name="" value="" class="btn-link">
         <?php echo I('login_register');?>

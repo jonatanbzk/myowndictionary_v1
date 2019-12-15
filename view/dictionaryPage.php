@@ -17,25 +17,21 @@ var lengthWordList='<?php if (array_key_exists(
 <script type="text/javascript" src="dictionaryPage.js"></script>
 
 
-<form class="" id="colorform" action="index.html" method="post">
-  <select class="" name="tagName" id="colorSelect" onchange='changeColor()'>
-    <option value=""><?php echo I('dictionary_theme_choice');?></option>
-<?php  $colorArray = array (
-  "AquaMarine", "Beige", "BlanchedAlmond", "Brown", "CadetBlue",
-  "CornflowerBlue", "Coral", "DarkCyan", "DarkGray", "DarkKhaki",
-  "DarkSalmon", "LightBlue");
-foreach ($colorArray as $color) {
-  echo '<option value=' . $color . '>' . $color . '</option>';
-}
-?>
-  </select>
-</form>
-
 <div id="hello">
-  <p><?php
+  <h2><?php
   echo I('dictionary_hello') . '   ' . $_SESSION['login_data']['username']; ?>
-  </p>
+  </h2>
 </div>
+
+<p id="errorMsg">
+<?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
+  $_SESSION['error'] = "";
+  if (!empty($e)) {
+    echo $e->getMessage();
+  }
+  ?>
+</p>
+
 
 <div id="dictionary">
   <div id="currentDictionary">
@@ -50,8 +46,8 @@ foreach ($colorArray as $color) {
   <div id="dictionary_form">
     <p>
       <button
-        type="button" name="button" id="add_languages_button"
-        style="display: block;"
+        class="btnJob" type="button" name="button"
+        id="add_languages_button" style="display: block;"
         onclick="toggleForm('add_languages_form', 'add_languages_button')">
         <?php echo I('dictionary_create_dictionary');?>
       </button>
@@ -88,14 +84,14 @@ foreach ($colorArray as $color) {
       </select> <br>
       <input type="hidden" name="user_name"
          value="<?php echo $_SESSION['login_data']['username'] ?>" />  <br>
-      <input type="submit" name="" value="<?php echo I('login_submit'); ?>"></>
-      <button type="button" name="button"
+      <input class="btnSubCanc" type="submit" name="" value="<?php echo I('login_submit'); ?>"></>
+      <button class="btnSubCanc" type="button" name="button"
          onclick="toggleForm('add_languages_form', 'add_languages_button')">
          <?php echo I('dictionary_cancel'); ?>
       </button>
     </form>
     <!--  Choose dictionary  -->
-    <form class="" action="index.php?action=changeTag" method="post">
+    <form action="index.php?action=changeTag" method="post">
       <select class="" name="tagName" onchange='this.form.submit()'>
         <option value="select">
           <?php echo I('dictionary_select_dictionary');?>
@@ -120,14 +116,13 @@ foreach ($colorArray as $color) {
   style="display:
   <?php if (array_key_exists('personel_language_array', $_SESSION))
   : echo 'block'; else: echo 'none'; endif; ?>">
-  <button
-    type="button" name="button" id="show_words_button" style="display: block;"
+  <button class="btnJob" type="button" name="button"
+  id="show_words_button" style="display: block;"
     onclick="toggleForm('show_words_div', 'show_words_button')">
     <?php echo I('dictionary_open_dictionary');?>
   </button>
   <div id="show_words_div" style="display: none;">
-    <button
-      type="button" id="hide_words_button"
+    <button type="button" class="btnJob" id="hide_words_button"
       onclick="toggleForm('show_words_div', 'show_words_button')">
       <?php echo I('dictionary_close_dictionary');?>
     </button>
@@ -196,7 +191,7 @@ foreach ($colorArray as $color) {
   <div id="addWordDiv" style="display:
     <?php if (array_key_exists('personel_language_array', $_SESSION)):
     echo "block"; else: echo "none"; endif; ?>">
-    <button type="button" name="button" id="show_add_words_button"
+    <button type="button" class="btnJob" name="button" id="show_add_words_button"
       style="display: block;"
       onclick="toggleForm('addWord', 'show_add_words_button')">
       <?php echo I('dictionary_add_word');?>
@@ -208,13 +203,13 @@ foreach ($colorArray as $color) {
         if (array_key_exists('personel_language_array', $_SESSION)):
         echo I(languageToId($_SESSION['personel_language_array'][0]));endif;?>
       </label>
-      <input type="text" name="addWord1" value="">
+      <input type="text" class="inputMainPage" name="addWord1" value="">
       <label for="addWord2">
         <?php echo I('dictionary_translation_in');
         if (array_key_exists('personel_language_array', $_SESSION)):
         echo I(languageToId($_SESSION['personel_language_array'][1]));endif;?>
       </label>
-      <input type="text" name="addWord2" value="">
+      <input id="addWordTwo" type="text" class="inputMainPage" name="addWord2" value="">
       <input
         type="hidden" name="language1"
         value="<?php if (
@@ -225,8 +220,9 @@ foreach ($colorArray as $color) {
         value="<?php if (
           array_key_exists('personel_language_array', $_SESSION)):
           echo $_SESSION['personel_language_array'][1]; endif; ?>" /> <br>
-      <input type="submit" name="" value="<?php echo I('login_submit');?>">
-      <button type="button" name="button"
+      <input class="btnSubCanc" type="submit" name=""
+      value="<?php echo I('login_submit');?>">
+      <button class="btnSubCanc" type="button" name="button"
         onclick="toggleForm('addWord', 'show_add_words_button')">
         <?php echo I('dictionary_cancel');?>
       </button>
@@ -237,7 +233,7 @@ foreach ($colorArray as $color) {
 <div id="test" style="display:
 <?php if (array_key_exists('personel_language_array', $_SESSION)):
 echo "block"; else: echo "none"; endif; ?>">
-  <input type="button" name="button" id="show_test"
+  <input type="button" class="btnJob" name="button" id="show_test"
          value="<?php echo I('dictionary_show_test');?>"
          style="display:
          <?php if (((array_key_exists('testArray', $_SESSION))
@@ -252,12 +248,14 @@ echo "block"; else: echo "none"; endif; ?>">
       <?php if (array_key_exists('personel_language_array', $_SESSION)): echo
         '<option value="' . $_SESSION["personel_language_array"][0] . '/' .
           $_SESSION["personel_language_array"][1] . '">' .
-          I(languageToId($_SESSION["personel_language_array"][0])) . '=>' .
+          I(languageToId($_SESSION["personel_language_array"][0]))
+           . ' &#8594; ' .
           I(languageToId($_SESSION["personel_language_array"][1])) .
         '</option>
         <option value="' . $_SESSION["personel_language_array"][1] . '/' .
           $_SESSION["personel_language_array"][0] . '">' .
-          I(languageToId($_SESSION["personel_language_array"][1])) . '=>' .
+          I(languageToId($_SESSION["personel_language_array"][1]))
+           . ' &#8594; ' .
           I(languageToId($_SESSION["personel_language_array"][0])) .
         '</option>
         <option value="random">' .
@@ -267,10 +265,12 @@ echo "block"; else: echo "none"; endif; ?>">
     <label for="numberQuestion">
       <?php echo I('dictionary_number_quest');?>
     </label>
-    <input type="text" name="numberQuestion" maxlength="100"
-           placeholder="<?php echo I('dictionary_default');?>: 10 questions"/>
-    <input type="submit" name="" value="Start">
-    <button type="button" name="button" id="cancel_shows_test_button"
+    <input type="text" id="testNbrQuestion" class="inputMainPage"
+    name="numberQuestion" maxlength="100" placeholder=
+    "<?php echo I('dictionary_default');?>: 10 questions"/>
+    <br>
+    <input class="btnSubCanc" type="submit" name="" value="Start">
+    <button class="btnSubCanc" type="button" name="button" id="cancel_shows_test_button"
             onclick="toggleForm('show_test_form', 'show_test')">
             <?php echo I('dictionary_cancel');?>
     </button>
@@ -290,14 +290,12 @@ echo "block"; else: echo "none"; endif; ?>">
   </div>
 </div>
 
-<div id="deconnexion">
-  <form class="" action="index.php?action=deco" method="post">
-    <input id="logOutButton" type="submit"
+<div class="formLogin" id="deconnexion">
+  <form action="index.php?action=deco" method="post">
+    <input class="formSubmit" id="logOutButton" type="submit"
            name="deco" value="<?php echo I('dictionary_disconnect');?>">
   </form>
 </div>
-<?php if (isset($_SESSION['error'])): echo $_SESSION['error'];endif;
-  $_SESSION['error'] = ""; ?>
 <script src="public/dictionaryPage.js" charset="utf-8"></script>
 <?php $content = ob_get_clean();
  require('template.php'); ?>

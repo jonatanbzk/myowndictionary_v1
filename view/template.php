@@ -20,13 +20,15 @@
     <title>MyOwnDictionary</title>
     <link href="./public/style.css" rel="stylesheet" />
     <link href="./public/styleInput.css" rel="stylesheet" />
+    <link href="./public/styleDiv.css" rel="stylesheet" />
+    <link href="./public/styleSelect.css" rel="stylesheet" />
   </head>
   <body>
     <div class="langLink">
       <a id="leftLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=fr_FR">
-        FR</a>
+        Français</a>
       <a id="rightLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=en_US">
-        US</a>
+        English</a>
     </div>
     <h1>MyOwnDictionary</h1>
     <?= $content ?>

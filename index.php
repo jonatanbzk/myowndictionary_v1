@@ -241,6 +241,6 @@ else
 }
 catch (\Exception $e)
 {
-    echo $e->getMessage();
+    $e->getMessage();
     require('view/dictionaryPage.php');
 }

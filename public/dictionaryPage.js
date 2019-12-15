@@ -14,7 +14,7 @@ function toggleForm(f, b) {
   }
 }
 
-
+/*
 // change background color
 document.getElementById("colorSelect").addEventListener("change", function (e){
 document.body.style.backgroundColor = e.target.value;
@@ -28,7 +28,7 @@ window.onload = function() {
          document.body.style.backgroundColor = data;
     }
   }
-
+*/
 
 // keep dictionary words list open when window refresh event
     document.getElementById('show_words_button').addEventListener(
