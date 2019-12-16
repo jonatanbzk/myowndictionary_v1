@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" >
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152618096-1"></script>
@@ -7,15 +7,11 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', GoogleAnalytics);
 </script>
 
     <meta charset="utf-8" />
-
- <link href="https://fonts.googleapis.com/css?family=Acme|Mali&display=swap" rel="stylesheet">
-
-
+    <link href="https://fonts.googleapis.com/css?family=Acme|Mali&display=swap" rel="stylesheet">
 
     <title>MyOwnDictionary</title>
     <link href="./public/style.css" rel="stylesheet" />

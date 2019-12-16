@@ -31,13 +31,13 @@
   $_SESSION['error'] = "";?>
 </p>
 <form action="index.php?action=forgotPasswordLink" method="post">
-    <button type="submit" name="" value="" class="btn-link">
+    <button type="submit" value="" class="btn-link">
       <?php echo I('login_forgot_your_password');?>
     </button>
 </form>
 <p><?php echo I('login_not_registered_yet');?></p>
   <form action="index.php?action=signUpLink" method="post">
-      <button type="submit" name="" value="" class="btn-link">
+      <button type="submit" value="" class="btn-link">
         <?php echo I('login_register');?>
       </button>
   </form>
