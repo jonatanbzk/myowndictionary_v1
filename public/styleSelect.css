@@ -16,6 +16,6 @@ select {
   margin-bottom: 1em;
 }
 /* Remove IE arrow */
-select::-ms-expand {
+select:-ms-expand {
   display: none;
 }

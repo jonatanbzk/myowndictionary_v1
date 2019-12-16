@@ -166,6 +166,7 @@ function logIn()
 // convert id language to language string
 function languageToId($id_lang)
 {
+  $id_lang = (int) $id_lang;
   $languageList = array (
     'Polish', 'French', 'English', 'German', 'Italian', 'Russian',
     'Portuguese', 'Spanish', 'Esperanto'
