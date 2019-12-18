@@ -44,7 +44,7 @@ var lengthWordList='<?php if (array_key_exists(
     </p>
   </div>
   <div id="dictionary_form">
-    <p>
+    <p id="buttonAddDict">
       <button
         class="btnJob" type="button" name="button"
         id="add_languages_button" style="display: block;"
@@ -139,18 +139,21 @@ var lengthWordList='<?php if (array_key_exists(
     </button>
     <form class="" id="addWord" action="index.php?action=addWord"
           method="post" style="display: none;">
-      <label for="addWord1">
+      <div id="addW">
+        <label for="addWord1">
         <?php echo I('dictionary_in');
         if (array_key_exists('personel_language_array', $_SESSION)):
         echo I(languageToId($_SESSION['personel_language_array'][0]));endif;?>
-      </label>
-      <input type="text" class="inputMainPage" name="addWord1" value="">
-      <label for="addWord2">
+        </label>
+        <input type="text" class="inputMainPage" id="addWord1"
+        name="addWord1" value=""><br>
+        <label for="addWord2">
         <?php echo I('dictionary_translation_in');
         if (array_key_exists('personel_language_array', $_SESSION)):
         echo I(languageToId($_SESSION['personel_language_array'][1]));endif;?>
-      </label>
-      <input id="addWordTwo" type="text" class="inputMainPage" name="addWord2" value="">
+        </label>
+        <input id="addWordTwo" type="text" class="inputMainPage" name="addWord2" value="">
+      </div>
       <input
         type="hidden" name="language1"
         value="<?php if (

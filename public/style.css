@@ -69,7 +69,12 @@ div {
 
 #dictionary_form {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+}
+
+#buttonAddDict {
+  margin: auto;
+  padding-bottom: 1em;
 }
 
 #addWordDiv, #viewDictionary, #test {
@@ -120,4 +125,22 @@ div {
     font-size: inherit;
     color: #36486b;
     text-decoration: none;
+}
+
+#addW {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 220px;
+  font-size: 1em;
+}
+
+#addWord1 {
+  margin-bottom: 1em;
+}
+
+#show_words_div {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
