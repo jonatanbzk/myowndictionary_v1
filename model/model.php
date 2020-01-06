@@ -465,10 +465,11 @@ function testRecord()
   for ($i=0; $i < $testLength; $i++)
   {
     $answerName = 'answer' . ($i+1);
+    $trim = trim($_POST[$answerName]);
+    $reg = '/^'. $trim .'$|^'. $trim .'[^a-z]|[^a-z]'. $trim .'[^a-z]|[^a-z]'. $trim .'$/i';  // xxx
     if ($testDirection==1)
     {
-      if ((strcasecmp($_POST[$answerName],
-      $_SESSION['testArray']['translations'][$i]) == 0))
+      if (preg_match($reg, $_SESSION['testArray']['translations'][$i]) and !empty($trim))
       {
         $point++;
         array_push($resultArray['goodwords'],
@@ -488,8 +489,7 @@ function testRecord()
     }
     elseif ($testDirection==2)
     {
-      if ((strcasecmp($_POST[$answerName], $_SESSION['testArray']['words'][$i])
-       == 0))
+      if (preg_match($reg, $_SESSION['testArray']['words'][$i]) and !empty($trim))
       {
         $point++;
         array_push($resultArray['goodwords'],
@@ -512,8 +512,7 @@ function testRecord()
       $index = 'indexTest' . ($i+1);
       if ($_POST[$index]==0)
       {
-        if ((strcasecmp(
-        $_POST[$answerName], $_SESSION['testArray']['translations'][$i]) == 0))
+        if (preg_match($reg, $_SESSION['testArray']['translations'][$i]) and !empty($trim))
         {
           $point++;
           array_push($resultArray['goodwords'],
@@ -533,8 +532,7 @@ function testRecord()
       }
       elseif ($_POST[$index]==1)
       {
-        if ((strcasecmp(
-          $_POST[$answerName], $_SESSION['testArray']['words'][$i]) == 0))
+        if (preg_match($reg, $_SESSION['testArray']['words'][$i]) and !empty($trim))
         {
           $point++;
           array_push($resultArray['goodwords'],

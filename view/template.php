@@ -11,6 +11,7 @@
 </script>
 
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Acme|Mali&display=swap" rel="stylesheet">
 
     <title>MyOwnDictionary</title>
@@ -19,6 +20,7 @@
     <link href="./public/styleDiv.css" rel="stylesheet" />
     <link href="./public/styleSelect.css" rel="stylesheet" />
     <link href="./public/styleShowWordBox.css" rel="stylesheet" />
+    <link href="./public/styleSmallScreen.css" rel="stylesheet" media="screen and (max-width: 620px)" />
   </head>
   <body>
     <div class="langLink">

@@ -3,7 +3,7 @@ var form = document.querySelector("form");
 form.addEventListener("submit", function (e) {
   if (lang == 'fr_FR') {
     var error ="ERREUR : Les deux mots de passe ne sont pas identiques !";
-    var password = "Le mot de passe est trop court (minimum 8 charactères) !";
+    var password = "Le mot de passe est trop court (minimum 8 caractères) !";
     var email = "Votre adresse mail est invalide";
   } else if (lang == 'en_US') {
       var error = "Error : Both passwords are differents !";

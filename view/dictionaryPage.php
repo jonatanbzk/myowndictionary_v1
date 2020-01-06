@@ -114,7 +114,7 @@ var lengthWordList='<?php if (array_key_exists(
 <div
   id="viewDictionary"
   style="display:
-  <?php if (array_key_exists('personel_language_array', $_SESSION))
+  <?php if (array_key_exists('personel_language_array', $_SESSION) and !isset($_SESSION['testArray']))
   : echo 'block'; else: echo 'none'; endif; ?>">
   <button class="btnJob" type="button" name="button"
   id="show_words_button" style="display: block;"
