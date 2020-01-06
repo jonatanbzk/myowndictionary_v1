@@ -10,7 +10,7 @@ $lang['login_not_registered_yet'] = "Pas encore de compte MyOwnDictionary?";
 $lang['login_register'] = "Je m'inscris";
 //sign_up.php
 $lang['sign_registration'] = "Inscription";
-$lang['sign_confirm_password'] = "Confirmer votre mot de passe";
+$lang['sign_confirm_password'] = "Veuillez confirmer votre mot de passe";
 $lang['sign_email'] = "Adresse e-mail";
 $lang['sign_I_already_have_account'] = "J'ai déjà un compte MyOwnDictionary
  ... ";

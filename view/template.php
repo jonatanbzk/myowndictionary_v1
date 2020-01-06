@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" >
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152618096-1"></script>
@@ -7,17 +7,28 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', GoogleAnalytics);
 </script>
 
     <meta charset="utf-8" />
-    <a href="<?php $_SERVER['QUERY_STRING']?>?locale=fr_FR">FR</a>
-    <a href="<?php $_SERVER['QUERY_STRING']?>?locale=en_US">US</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Mali&display=swap" rel="stylesheet">
+
     <title>MyOwnDictionary</title>
-    <link href="/public/style.css" rel="stylesheet" />
+    <link href="./public/style.css" rel="stylesheet" />
+    <link href="./public/styleInput.css" rel="stylesheet" />
+    <link href="./public/styleDiv.css" rel="stylesheet" />
+    <link href="./public/styleSelect.css" rel="stylesheet" />
+    <link href="./public/styleShowWordBox.css" rel="stylesheet" />
+    <link href="./public/styleSmallScreen.css" rel="stylesheet" media="screen and (max-width: 620px)" />
   </head>
   <body>
+    <div class="langLink">
+      <a id="leftLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=fr_FR">
+        Français</a>
+      <a id="rightLink" href="<?php $_SERVER['QUERY_STRING']?>?locale=en_US">
+        English</a>
+    </div>
     <h1>MyOwnDictionary</h1>
     <?= $content ?>
   </body>

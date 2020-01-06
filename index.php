@@ -18,6 +18,10 @@ try {
     {
       haveAccountLink();
     }
+    elseif ($_GET['action'] == 'changePageLink')
+    {
+      changePage();
+    }
     elseif ($_GET['action'] == 'signUp')
     {
       if (empty(trim($_POST['username'])) or empty(trim($_POST['email'])))
@@ -241,6 +245,6 @@ else
 }
 catch (\Exception $e)
 {
-    echo $e->getMessage();
+    $e->getMessage();
     require('view/dictionaryPage.php');
 }

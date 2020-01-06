@@ -22,6 +22,10 @@ function haveAccountLink ()
   require('view/login_Page.php');
 }
 
+function changePage () {
+  require('view/dictionaryPage.php');
+}
+
 function connect ()
 {
   $log = logIn();
